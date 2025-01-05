@@ -49,16 +49,12 @@ jobs:
           ssh-keyscan -H ${{ secrets.VPS_IP }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-      - name: Convert repository owner to lowercase
-        run: echo "GITHUB_REPO_OWNER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-
       - name: Pull and Run Docker Containers on VPS
-        env:
-          VPS_IP: ${{ secrets.VPS_IP }}
         run: |
-          ssh root@${{ env.VPS_IP }} "
+          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          ssh root@${{ secrets.VPS_IP }} "
             docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.PAT_TOKEN }}
-            docker pull ghcr.io/${{ GITHUB_REPO_OWNER }}/quackoloc-api:latest
+            docker pull ghcr.io/$REPO_OWNER/quackoloc-api:latest
             docker stop quackoloc-api || true && docker rm quackoloc-api || true
-            docker run -d --name quackoloc-api -p 3000:3000 ghcr.io/${{ GITHUB_REPO_OWNER }}/quackoloc-api:latest
+            docker run -d --name quackoloc-api -p 3000:3000 ghcr.io/$REPO_OWNER/quackoloc-api:latest
           "
