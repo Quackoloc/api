@@ -27,8 +27,8 @@ jobs:
       - name: Build and push API image
         run: |
           REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          docker build -t ghcr.io/$REPO_OWNER/quackoloc-api:latest -f ./Dockerfile .
-          docker push ghcr.io/$REPO_OWNER/quackoloc-api:latest
+          docker build -t ghcr.io/$REPO_OWNER/quackoloc.api:latest -f ./Dockerfile .
+          docker push ghcr.io/$REPO_OWNER/quackoloc.api:latest
 
       - name: Cleanup .env file
         run: rm .env
@@ -54,7 +54,7 @@ jobs:
           REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           ssh root@${{ secrets.VPS_IP }} "
             docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.PAT_TOKEN }}
-            docker pull ghcr.io/$REPO_OWNER/quackoloc-api:latest
-            docker stop quackoloc-api || true && docker rm quackoloc-api || true
-            docker run -d --name quackoloc-api -p 3000:3000 ghcr.io/$REPO_OWNER/quackoloc-api:latest
+            docker pull ghcr.io/$REPO_OWNER/quackoloc.api:latest
+            docker stop quackoloc.api || true && docker rm quackoloc.api || true
+            docker run -d --name quackoloc.api -p 3000:3000 ghcr.io/$REPO_OWNER/quackoloc.api:latest
           "
