@@ -8,6 +8,7 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UserDto } from '../users/dto/user.dto';
 import { Public } from '../../common/decorators/public.decorator';
 import { AuthService } from './auth.service';
+import { LoginDto } from './dtos/login.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -17,16 +18,17 @@ export class AuthController {
   @Public()
   @ApiOperation({ summary: 'Login with credentials' })
   @ApiResponse({ status: HttpStatus.OK, type: TokensDto })
-  @UseGuards(LocalAuthGard)
+  @ApiBody({ type: LoginDto })
   @HttpCode(HttpStatus.OK)
+  @UseGuards(LocalAuthGard)
   @Post('login')
   async login(@Request() req: any): Promise<TokensDto> {
     return this.authServiceGateway.login(req.body.email);
   }
 
   @Public()
-  @ApiOperation({ summary: 'Register a new user' })
   @ApiBody({ type: CreateUserDto })
+  @ApiOperation({ summary: 'Register a new user' })
   @ApiResponse({ status: HttpStatus.CREATED, type: UserDto })
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
