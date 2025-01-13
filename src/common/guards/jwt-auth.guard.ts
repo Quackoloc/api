@@ -14,6 +14,13 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       context.getHandler(),
       context.getClass(),
     ]);
+
+    //todo: forged jwt for prometheus metrics
+    const req = context.switchToHttp().getRequest();
+    if (req.originalUrl === '/metrics') {
+      return true;
+    }
+
     if (isPublic) {
       return true;
     }
