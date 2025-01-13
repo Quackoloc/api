@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import { User } from '../users/entities/user.entity';
+import { User } from '../modules/users/entities/user.entity';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 export const localConf = (configService: ConfigService): TypeOrmModuleOptions => ({

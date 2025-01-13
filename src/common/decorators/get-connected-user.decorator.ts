@@ -1,6 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ConnectedUser } from '../connected-user.model';
+import { ConnectedUser } from '../../modules/auth/connected-user.model';
 
 export const GetConnectedUser = createParamDecorator(
   (data, ctx: ExecutionContext): ConnectedUser => {

@@ -1,4 +1,4 @@
-import { AppException } from '../../app-exception';
+import { AppException } from '../../common/app-exception';
 import { HttpStatus } from '@nestjs/common';
 
 export class UsersException extends AppException {}

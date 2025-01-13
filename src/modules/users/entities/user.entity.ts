@@ -6,12 +6,11 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { UserInterface } from '../../user.model';
 import { hash } from 'bcryptjs';
 
 @Entity()
 @Unique(['email'])
-export class User implements UserInterface {
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
