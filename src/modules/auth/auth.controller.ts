@@ -1,18 +1,18 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
-import { LocalAuthGard } from '../guards/local-auth.guard';
-import { RefreshTokenDto } from '../dtos/refresh-token.dto';
-import { TokensDto } from '../dtos/tokens.dto';
-import { AccessTokenDto } from '../dtos/access-token.dto';
+import { LocalAuthGard } from '../../common/guards/local-auth.guard';
+import { RefreshTokenDto } from './dtos/refresh-token.dto';
+import { TokensDto } from './dtos/tokens.dto';
+import { AccessTokenDto } from './dtos/access-token.dto';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AuthServiceGateway } from '../gateways/auth.service.gateway';
-import { CreateUserDto } from '../../users/dto/create-user.dto';
-import { UserDto } from '../../users/dto/user.dto';
-import { Public } from '../guards/public.decorator';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { UserDto } from '../users/dto/user.dto';
+import { Public } from '../../common/decorators/public.decorator';
+import { AuthService } from './auth.service';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authServiceGateway: AuthServiceGateway) {}
+  constructor(private readonly authServiceGateway: AuthService) {}
 
   @Public()
   @ApiOperation({ summary: 'Login with credentials' })

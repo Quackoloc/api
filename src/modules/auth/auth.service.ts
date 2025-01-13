@@ -2,20 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compareSync } from 'bcryptjs';
 import { ConfigService } from '@nestjs/config';
-import { AccessTokenDto } from '../dtos/access-token.dto';
-import { TokensDto } from '../dtos/tokens.dto';
-import { AuthServiceGateway } from '../gateways/auth.service.gateway';
-import { CreateUserDto } from '../../users/dto/create-user.dto';
-import { UserDto } from '../../users/dto/user.dto';
-import { UsersServiceGateway } from '../../users/gateways/users.service.gateway';
-import { UserNotFoundException } from '../../users/exceptions/users-exception';
+import { AccessTokenDto } from './dtos/access-token.dto';
+import { TokensDto } from './dtos/tokens.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { UserDto } from '../users/dto/user.dto';
+import { UserNotFoundException } from '../users/users-exception';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
-export class AuthService implements AuthServiceGateway {
+export class AuthService {
   constructor(
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
-    private readonly userServiceGateway: UsersServiceGateway
+    private readonly userServiceGateway: UsersService
   ) {}
 
   async validateUser(email: string, password: string): Promise<UserDto> {
