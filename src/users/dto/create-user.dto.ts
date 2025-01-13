@@ -35,8 +35,7 @@ export class CreateUserDto {
   })
   @Matches(/(?=.*\d)/, { message: 'Password must contain at least one digit' })
   @Matches(/(?=.*[@$!%*?&])/, {
-    message:
-      'Password must contain at least one special character (@, $, !, %, *, ?, &)',
+    message: 'Password must contain at least one special character (@, $, !, %, *, ?, &)',
   })
   password: string;
 }

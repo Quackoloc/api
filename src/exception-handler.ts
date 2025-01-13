@@ -8,9 +8,7 @@ export class ExceptionHandler implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
 
     if (exception.response) {
-      response
-        .status(exception.response.statusCode)
-        .json({ message: exception.response.message });
+      response.status(exception.response.statusCode).json({ message: exception.response.message });
     } else {
       response.status(500).json({ message: 'Something went wrong' });
     }

@@ -2,9 +2,7 @@ import { ConfigService } from '@nestjs/config';
 import { User } from '../users/entities/user.entity';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-export const localConf = (
-  configService: ConfigService,
-): TypeOrmModuleOptions => ({
+export const localConf = (configService: ConfigService): TypeOrmModuleOptions => ({
   type: 'postgres',
   host: configService.get('POSTGRES_HOST'),
   port: configService.get('POSTGRES_PORT'),

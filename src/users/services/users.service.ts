@@ -10,7 +10,7 @@ import { UsersServiceGateway } from '../gateways/users.service.gateway';
 export class UserService implements UsersServiceGateway {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private readonly userRepository: Repository<User>
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {

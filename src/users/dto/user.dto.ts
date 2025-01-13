@@ -1,11 +1,4 @@
-import {
-  IsEmail,
-  IsInt,
-  IsNotEmpty,
-  IsString,
-  MaxLength,
-  Min,
-} from '@nestjs/class-validator';
+import { IsEmail, IsInt, IsNotEmpty, IsString, MaxLength, Min } from '@nestjs/class-validator';
 import { User } from '../entities/user.entity';
 
 export class UserDto {
