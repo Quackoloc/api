@@ -15,7 +15,7 @@ export class AuthService implements AuthServiceGateway {
   constructor(
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
-    private readonly userServiceGateway: UsersServiceGateway,
+    private readonly userServiceGateway: UsersServiceGateway
   ) {}
 
   async validateUser(email: string, password: string): Promise<UserDto> {
@@ -25,9 +25,7 @@ export class AuthService implements AuthServiceGateway {
       throw UserNotFoundException.emailNotFound(email);
     }
 
-    return compareSync(password, user?.password)
-      ? UserDto.fromEntity(user)
-      : null;
+    return compareSync(password, user?.password) ? UserDto.fromEntity(user) : null;
   }
 
   async login(email: string): Promise<TokensDto> {
@@ -68,7 +66,7 @@ export class AuthService implements AuthServiceGateway {
 
     const accessToken = this.jwtService.sign(
       { sub: user.id },
-      { expiresIn: this.configService.get<string>('JWT_ACCESS_TOKEN_EXPIRES') },
+      { expiresIn: this.configService.get<string>('JWT_ACCESS_TOKEN_EXPIRES') }
     );
 
     return { accessToken };

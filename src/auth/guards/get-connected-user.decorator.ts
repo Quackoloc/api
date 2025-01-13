@@ -19,5 +19,5 @@ export const GetConnectedUser = createParamDecorator(
       id: decoded.sub,
       permissions: decoded.permissions,
     };
-  },
+  }
 );
