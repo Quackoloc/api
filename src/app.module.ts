@@ -6,6 +6,7 @@ import { UsersModule } from './modules/users/users.module';
 import { localConf } from './config/database.config';
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionHandler } from '@nestjs/core/errors/exception-handler';
+import { ColocationModule } from './modules/colocation/colocation.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ExceptionHandler } from '@nestjs/core/errors/exception-handler';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ColocationModule,
   ],
   providers: [{ provide: APP_FILTER, useClass: ExceptionHandler }],
 })
