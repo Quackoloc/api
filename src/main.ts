@@ -3,9 +3,26 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { ValidationPipe } from '@nestjs/common';
+import helmet from 'helmet';
+import { WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const winstonConfig = {
+    logger: WinstonModule.createLogger({
+      transports: [
+        new winston.transports.Console({
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.colorize(),
+            winston.format.simple()
+          ),
+        }),
+      ],
+    }),
+  };
+
+  const app = await NestFactory.create(AppModule, winstonConfig);
 
   const config = new DocumentBuilder()
     .setTitle('Quackoloc API')
@@ -18,8 +35,14 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
-
   app.useGlobalPipes(new ValidationPipe());
+  app.use(helmet());
+
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,POST',
+    allowedHeaders: 'Content-Type, Authorization',
+  });
 
   await app.listen(process.env.PORT ?? 3000);
 }
