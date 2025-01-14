@@ -21,10 +21,6 @@ export class UsersService {
     } catch (err) {}
   }
 
-  findOneById(id: number): Promise<User> {
-    return this.userRepository.findOne({ where: { id } });
-  }
-
   async findOneByEmail(email: string): Promise<User> {
     return this.userRepository.findOne({ where: { email } });
   }
@@ -32,5 +28,9 @@ export class UsersService {
   async getOneById(id: number): Promise<UserDto> {
     const user = await this.userRepository.findOne({ where: { id } });
     return UserDto.fromEntity(user);
+  }
+
+  findOneById(id: number, relations?: any): Promise<User> {
+    return this.userRepository.findOne({ where: { id }, relations });
   }
 }
