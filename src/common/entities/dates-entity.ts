@@ -1,6 +1,6 @@
 import { CreateDateColumn, DeleteDateColumn, UpdateDateColumn } from 'typeorm';
 
-export abstract class DatesEntity {
+export class DatesEntity {
   @CreateDateColumn()
   createdAt: Date;
 

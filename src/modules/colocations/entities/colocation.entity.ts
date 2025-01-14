@@ -3,7 +3,7 @@ import { User } from '../../users/entities/user.entity';
 import { DatesEntity } from '../../../common/entities/dates-entity';
 
 @Entity()
-export class Colocation extends DatesEntity {
+export class Colocation {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -16,8 +16,11 @@ export class Colocation extends DatesEntity {
   @ManyToMany(() => User, (user) => user.colocations, { cascade: true })
   @JoinTable({
     name: 'colocation_users',
-    joinColumn: { name: 'colocation_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'user_id', referencedColumnName: 'id' },
+    joinColumn: { name: 'colocationId', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'userId', referencedColumnName: 'id' },
   })
   members: User[];
+
+  @Column(() => DatesEntity, { prefix: false })
+  dates: DatesEntity;
 }
