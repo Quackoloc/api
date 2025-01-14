@@ -4,9 +4,10 @@ import { ColocationsController } from './colocations.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Colocation } from './entities/colocation.entity';
 import { UsersModule } from '../users/users.module';
+import { UserColocation } from './entities/user-colocation.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Colocation]), UsersModule],
+  imports: [TypeOrmModule.forFeature([Colocation, UserColocation]), UsersModule],
   providers: [ColocationsService],
   controllers: [ColocationsController],
 })
