@@ -1,10 +1,11 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from '../../users/entities/user.entity';
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { DatesEntity } from '../../../common/entities/dates-entity';
+import { UserColocation } from './user-colocation.entity';
 
 @Entity()
 export class Colocation {
   @PrimaryGeneratedColumn()
+  @Index()
   id: number;
 
   @Column()
@@ -13,13 +14,8 @@ export class Colocation {
   @Column()
   address: string;
 
-  @ManyToMany(() => User, (user) => user.colocations, { cascade: true })
-  @JoinTable({
-    name: 'colocation_users',
-    joinColumn: { name: 'colocationId', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'userId', referencedColumnName: 'id' },
-  })
-  members: User[];
+  @OneToMany(() => UserColocation, (userColocation) => userColocation.colocation)
+  userColocations: UserColocation[];
 
   @Column(() => DatesEntity, { prefix: false })
   dates: DatesEntity;

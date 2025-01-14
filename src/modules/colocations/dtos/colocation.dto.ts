@@ -6,13 +6,18 @@ export class ColocationDto {
   title: string;
   address: string;
   members: UserDto[];
+  ownerId: number;
 
   static fromEntity(entity: Colocation): ColocationDto {
+    const members = entity.userColocations.map((m) => UserDto.fromEntity(m.user));
+    const ownerId = entity.userColocations.find((m) => m.role === 'owner').user.id;
+
     return {
       id: entity.id,
       title: entity.title,
       address: entity.address,
-      members: entity.members.map((m) => UserDto.fromEntity(m)),
+      members,
+      ownerId,
     };
   }
 }

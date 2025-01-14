@@ -1,23 +1,21 @@
 import {
   BeforeInsert,
   Column,
-  CreateDateColumn,
-  DeleteDateColumn,
   Entity,
   Index,
-  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
-  UpdateDateColumn,
 } from 'typeorm';
-import { hash } from 'bcryptjs';
-import { Colocation } from '../../colocations/entities/colocation.entity';
 import { DatesEntity } from '../../../common/entities/dates-entity';
+import { hash } from 'bcryptjs';
+import { UserColocation } from '../../colocations/entities/user-colocation.entity';
 
 @Entity()
 @Unique(['email'])
-export class User extends DatesEntity {
+export class User {
   @PrimaryGeneratedColumn()
+  @Index()
   id: number;
 
   @Column({ unique: true })
@@ -33,17 +31,11 @@ export class User extends DatesEntity {
   @Column()
   password: string;
 
-  @ManyToMany(() => Colocation, (colocation) => colocation.members)
-  colocations: Colocation[];
+  @OneToMany(() => UserColocation, (userColocation) => userColocation.user)
+  userColocations: UserColocation[];
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
+  @Column(() => DatesEntity, { prefix: false })
+  dates: DatesEntity;
 
   @BeforeInsert()
   async hashPassword() {

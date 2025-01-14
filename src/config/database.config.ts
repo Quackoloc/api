@@ -2,6 +2,7 @@ import { ConfigService } from '@nestjs/config';
 import { User } from '../modules/users/entities/user.entity';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Colocation } from '../modules/colocations/entities/colocation.entity';
+import { UserColocation } from '../modules/colocations/entities/user-colocation.entity';
 
 export const localConf = (configService: ConfigService): TypeOrmModuleOptions => ({
   type: 'postgres',
@@ -10,6 +11,6 @@ export const localConf = (configService: ConfigService): TypeOrmModuleOptions =>
   username: configService.get('POSTGRES_USER'),
   password: configService.get('POSTGRES_PASSWORD'),
   database: configService.get('POSTGRES_DB'),
-  entities: [User, Colocation],
+  entities: [User, Colocation, UserColocation],
   synchronize: true,
 });
