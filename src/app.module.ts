@@ -9,7 +9,7 @@ import { ExceptionHandler } from '@nestjs/core/errors/exception-handler';
 import { ColocationsModule } from './modules/colocations/colocations.module';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import * as promClient from 'prom-client';
-import { HttpMetricsMiddleware } from './common/middlewares/HttpMetricsMiddleware';
+import { HttpMetricsMiddleware } from './common/middlewares/http-metrics.middleware';
 
 @Module({
   imports: [
