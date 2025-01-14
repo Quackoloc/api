@@ -13,7 +13,7 @@ import { LoginDto } from './dtos/login.dto';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authServiceGateway: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Public()
   @ApiOperation({ summary: 'Login with credentials' })
@@ -23,7 +23,7 @@ export class AuthController {
   @UseGuards(LocalAuthGard)
   @Post('login')
   async login(@Request() req: any): Promise<TokensDto> {
-    return this.authServiceGateway.login(req.body.email);
+    return this.authService.login(req.body.email);
   }
 
   @Public()
@@ -32,7 +32,7 @@ export class AuthController {
   @ApiResponse({ status: HttpStatus.CREATED, type: UserDto })
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
-    return this.authServiceGateway.register(createUserDto);
+    return this.authService.register(createUserDto);
   }
 
   @Public()
@@ -41,6 +41,6 @@ export class AuthController {
   @ApiResponse({ status: HttpStatus.OK, type: AccessTokenDto })
   @Post('refresh')
   async refreshToken(@Body() dto: RefreshTokenDto): Promise<AccessTokenDto> {
-    return this.authServiceGateway.refresh(dto.refreshToken);
+    return this.authService.refresh(dto.refreshToken);
   }
 }

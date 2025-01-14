@@ -8,10 +8,10 @@ import { UsersService } from './users.service';
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userServiceGateway: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Get('me')
   async me(@GetConnectedUser() connectedUser: ConnectedUser): Promise<UserDto> {
-    return this.userServiceGateway.getOneById(connectedUser.id);
+    return this.usersService.getOneById(connectedUser.id);
   }
 }
