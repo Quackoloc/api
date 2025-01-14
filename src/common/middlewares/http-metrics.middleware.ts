@@ -8,7 +8,7 @@ export class HttpMetricsMiddleware implements NestMiddleware {
     @Inject('PROM_METRIC_HTTP_REQUEST_DURATION_SECONDS')
     private readonly histogram: Histogram<string>
   ) {}
-
+ 
   use(req: any, res: any, next: () => void) {
     const end = this.histogram.startTimer({ method: req.method, route: req.originalUrl });
 
