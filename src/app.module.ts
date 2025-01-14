@@ -6,7 +6,7 @@ import { UsersModule } from './modules/users/users.module';
 import { localConf } from './config/database.config';
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionHandler } from '@nestjs/core/errors/exception-handler';
-import { ColocationModule } from './modules/colocation/colocation.module';
+import { ColocationsModule } from './modules/colocations/colocations.module';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import * as promClient from 'prom-client';
 import { HttpMetricsMiddleware } from './common/middlewares/HttpMetricsMiddleware';
@@ -23,7 +23,7 @@ import { HttpMetricsMiddleware } from './common/middlewares/HttpMetricsMiddlewar
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    ColocationModule,
+    ColocationsModule,
     PrometheusModule.register({
       defaultMetrics: {
         enabled: true,
