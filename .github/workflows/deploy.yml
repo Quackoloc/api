@@ -57,6 +57,4 @@ jobs:
             docker pull ghcr.io/$REPO_OWNER/quackoloc.api:latest
             docker stop quackoloc.api || true && docker rm quackoloc.api || true
             docker run -d --name quackoloc.api -p 3000:3000 ghcr.io/$REPO_OWNER/quackoloc.api:latest
-            sleep 5
-            docker exec quackoloc.api npx typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts
           "
