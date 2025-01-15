@@ -4,7 +4,11 @@ import { User } from './modules/users/entities/user.entity';
 import { Colocation } from './modules/colocations/entities/colocation.entity';
 import { UserColocation } from './modules/colocations/entities/user-colocation.entity';
 
+// Apply migration on local
 dotenv.config();
+
+// Apply migration on production database
+// dotenv.config({ path: '.env.prod' });
 
 export default new DataSource({
   type: 'postgres',
