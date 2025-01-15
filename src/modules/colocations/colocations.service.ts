@@ -45,12 +45,19 @@ export class ColocationsService {
 
   async getColocations(connectedUser: ConnectedUser) {
     const user = await this.usersService.findOneById(connectedUser.id);
-    const colocations = await this.userColocationRepository.find({
+    const userColocations = await this.userColocationRepository.find({
       where: { user: { id: user.id } },
-      relations: ['user', 'colocation'],
+      relations: [
+        'user',
+        'colocation',
+        'colocation.userColocations',
+        'colocation.userColocations.user',
+      ],
     });
 
-    return [];
+    const colocations = userColocations.map((userColocation) => userColocation.colocation);
+
+    return colocations.map((colocation) => ColocationDto.fromEntity(colocation));
   }
 
   private findOneById(id: number, relations?: any) {
