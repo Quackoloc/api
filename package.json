@@ -24,6 +24,7 @@
     "migration:revert": "npx typeorm migration:revert"
   },
   "dependencies": {
+    "@azure/communication-email": "^1.0.0",
     "@nestjs/class-validator": "^0.13.4",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.3.0",

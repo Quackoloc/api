@@ -1,6 +1,7 @@
 import { Colocation } from '../entities/colocation.entity';
 import { UserDto } from '../../users/dto/user.dto';
 import { ApiProperty } from '@nestjs/swagger';
+import { PendingUserDto } from '../../users/dto/pending-user.dto';
 
 export class ColocationDto {
   @ApiProperty({ example: 2 })
@@ -15,19 +16,17 @@ export class ColocationDto {
   @ApiProperty({ example: ['flemme de faire un exemple'] })
   members: UserDto[];
 
-  @ApiProperty({ example: 2 })
-  ownerId: number;
+  @ApiProperty({ example: ['flemme de faire un exemple'] })
+  pendingMembers: PendingUserDto[];
 
+  @ApiProperty({ example: ['flemme de faire un exemple'] })
   static fromEntity(entity: Colocation): ColocationDto {
-    const members = entity.userColocations.map((m) => UserDto.fromEntity(m.user));
-    const ownerId = entity.userColocations.find((m) => m.role === 'owner').user.id;
-
     return {
       id: entity.id,
       title: entity.title,
       address: entity.address,
-      members,
-      ownerId,
+      members: entity.members.map((member) => UserDto.fromEntity(member)),
+      pendingMembers: entity.pendingMembers.map((pendingMember) => pendingMember),
     };
   }
 }

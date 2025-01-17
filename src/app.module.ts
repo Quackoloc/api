@@ -10,6 +10,7 @@ import { ColocationsModule } from './modules/colocations/colocations.module';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import * as promClient from 'prom-client';
 import { HttpMetricsMiddleware } from './common/middlewares/http-metrics.middleware';
+import { MailerModule } from './modules/mailer/mailer.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { HttpMetricsMiddleware } from './common/middlewares/http-metrics.middlew
         enabled: true,
       },
     }),
+    MailerModule,
   ],
   providers: [
     {
@@ -57,6 +59,6 @@ import { HttpMetricsMiddleware } from './common/middlewares/http-metrics.middlew
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(HttpMetricsMiddleware).forRoutes('*'); // Applique à toutes les routes
+    consumer.apply(HttpMetricsMiddleware).forRoutes('*');
   }
 }
