@@ -7,6 +7,7 @@ import { ConnectedUser } from '../auth/connected-user.model';
 import { UsersService } from '../users/users.service';
 import { ColocationDto } from './dtos/colocation.dto';
 import { MailerService } from '../mailer/mailer.service';
+import { PendingUsersService } from '../users/pending-users.service';
 
 @Injectable()
 export class ColocationsService {
@@ -14,6 +15,7 @@ export class ColocationsService {
     @InjectRepository(Colocation)
     private readonly colocationRepository: Repository<Colocation>,
     private readonly usersService: UsersService,
+    private readonly pendingUsersService: PendingUsersService,
     private readonly mailerService: MailerService
   ) {}
 
@@ -39,15 +41,15 @@ export class ColocationsService {
 
     savedColocation.pendingMembers = await Promise.all(
       pendingUsersEmails.map(async (email) => {
-        let pendingUser = await this.usersService.findPendingUserByEmail(email);
+        let pendingUser = await this.pendingUsersService.findByEmail(email);
         if (!pendingUser) {
-          pendingUser = await this.usersService.createPendingUser(email);
+          pendingUser = await this.pendingUsersService.create(email);
         }
 
         pendingUser.colocations = pendingUser.colocations || [];
         pendingUser.colocations.push(savedColocation);
 
-        await this.usersService.savePendingUser(pendingUser);
+        await this.pendingUsersService.save(pendingUser);
 
         return pendingUser;
       })
