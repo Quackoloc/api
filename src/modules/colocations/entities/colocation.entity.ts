@@ -1,6 +1,7 @@
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { DatesEntity } from '../../../common/entities/dates-entity';
-import { UserColocation } from './user-colocation.entity';
+import { User } from '../../users/entities/user.entity';
+import { PendingUser } from '../../users/entities/pending-user.entity';
 
 @Entity()
 export class Colocation {
@@ -14,8 +15,11 @@ export class Colocation {
   @Column()
   address: string;
 
-  @OneToMany(() => UserColocation, (userColocation) => userColocation.colocation)
-  userColocations: UserColocation[];
+  @OneToMany(() => User, (user) => user.colocation)
+  members: User[];
+
+  @ManyToMany(() => PendingUser, (pendingUser) => pendingUser.colocations)
+  pendingMembers: PendingUser[];
 
   @Column(() => DatesEntity, { prefix: false })
   dates: DatesEntity;

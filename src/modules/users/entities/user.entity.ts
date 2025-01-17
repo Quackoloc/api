@@ -3,13 +3,13 @@ import {
   Column,
   Entity,
   Index,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 import { DatesEntity } from '../../../common/entities/dates-entity';
 import { hash } from 'bcryptjs';
-import { UserColocation } from '../../colocations/entities/user-colocation.entity';
+import { Colocation } from '../../colocations/entities/colocation.entity';
 
 @Entity()
 @Unique(['email'])
@@ -31,8 +31,8 @@ export class User {
   @Column()
   password: string;
 
-  @OneToMany(() => UserColocation, (userColocation) => userColocation.user)
-  userColocations: UserColocation[];
+  @ManyToOne(() => Colocation, (colocation) => colocation.members, { nullable: true })
+  colocation: Colocation;
 
   @Column(() => DatesEntity, { prefix: false })
   dates: DatesEntity;

@@ -23,5 +23,5 @@ export class CreateColocationDto {
   @IsOptional()
   @IsArray({ message: 'Members must be an array' })
   @IsEmail({}, { each: true, message: 'Each member must be a valid email' })
-  membres: string[];
+  members: string[];
 }
