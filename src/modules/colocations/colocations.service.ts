@@ -25,51 +25,45 @@ export class ColocationsService {
   ): Promise<ColocationDto> {
     const user = await this.usersService.findOneById(connectedUser.id);
 
-    const registeredUsers = await this.usersService.findByEmails(createColocationDto.members);
-    registeredUsers.push(user);
-
-    const pendingUsersEmails = createColocationDto.members.filter(
-      (email) => !registeredUsers.find((user) => user.email === email)
-    );
-
     const colocation = new Colocation();
     colocation.title = createColocationDto.title;
     colocation.address = createColocationDto.address;
-    colocation.members = registeredUsers;
+    colocation.members = [user];
+    colocation.pendingMembers = [];
 
     const savedColocation = await this.colocationRepository.save(colocation);
 
-    savedColocation.pendingMembers = await Promise.all(
-      pendingUsersEmails.map(async (email) => {
-        let pendingUser = await this.pendingUsersService.findByEmail(email);
-        if (!pendingUser) {
-          pendingUser = await this.pendingUsersService.create(email);
-        }
+    //todo: move to the method to invite pple in the colocation
 
-        pendingUser.colocations = pendingUser.colocations || [];
-        pendingUser.colocations.push(savedColocation);
+    // savedColocation.pendingMembers = await Promise.all(
+    //   pendingUsersEmails.map(async (email) => {
+    //     let pendingUser = await this.pendingUsersService.findByEmail(email);
+    //     if (!pendingUser) {
+    //       pendingUser = await this.pendingUsersService.create(email);
+    //     }
+    //
+    //     pendingUser.colocations = pendingUser.colocations || [];
+    //     pendingUser.colocations.push(savedColocation);
+    //
+    //     await this.pendingUsersService.save(pendingUser);
+    //
+    //     return pendingUser;
+    //   })
+    // );
 
-        await this.pendingUsersService.save(pendingUser);
+    // //todo: add a queue with BullMQ
+    // this.mailerService.sendPendingUsersEmails(savedColocation.pendingMembers);
 
-        return pendingUser;
-      })
-    );
-
-    await this.colocationRepository.save(savedColocation);
-
-    const finalColocation = await this.findOneById(savedColocation.id, [
-      'members',
-      'pendingMembers',
-    ]);
-
-    //todo: add a queue with BullMQ
-    this.mailerService.sendPendingUsersEmails(savedColocation.pendingMembers);
-
-    return ColocationDto.fromEntity(finalColocation);
+    return ColocationDto.fromEntity(savedColocation);
   }
 
   async getColocations(connectedUser: ConnectedUser) {
-    // todo: refacto
+    const colocations = await this.colocationRepository.find({
+      where: { members: connectedUser },
+      relations: ['members', 'pendingMembers'],
+    });
+
+    return colocations.map((colocation) => ColocationDto.fromEntity(colocation));
   }
 
   private findOneById(id: number, relations?: any) {
