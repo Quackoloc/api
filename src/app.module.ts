@@ -11,6 +11,8 @@ import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import * as promClient from 'prom-client';
 import { HttpMetricsMiddleware } from './common/middlewares/http-metrics.middleware';
 import { MailerModule } from './modules/mailer/mailer.module';
+import { TasksModule } from './modules/tasks/tasks.module';
+import { ExpensesModule } from './modules/expenses/expenses.module';
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { MailerModule } from './modules/mailer/mailer.module';
       },
     }),
     MailerModule,
+    TasksModule,
+    ExpensesModule,
   ],
   providers: [
     {
