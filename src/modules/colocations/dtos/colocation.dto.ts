@@ -13,20 +13,24 @@ export class ColocationDto {
   @ApiProperty({ example: "2 place de l'Europe" })
   address: string;
 
-  @ApiProperty({ example: ['flemme de faire un exemple'] })
+  @ApiProperty({ example: [UserDto] })
   members: UserDto[];
 
-  @ApiProperty({ example: ['flemme de faire un exemple'] })
+  @ApiProperty({ example: [PendingUserDto] })
   pendingMembers: PendingUserDto[];
 
-  @ApiProperty({ example: ['flemme de faire un exemple'] })
   static fromEntity(entity: Colocation): ColocationDto {
+    console.log(entity);
+    const membres = entity.members.map((member) => UserDto.fromEntity(member));
+    const pendingMembers = entity.pendingMembers.map((pendingMember) =>
+      PendingUserDto.fromEntity(pendingMember)
+    );
     return {
       id: entity.id,
       title: entity.title,
       address: entity.address,
-      members: entity.members.map((member) => UserDto.fromEntity(member)),
-      pendingMembers: entity.pendingMembers.map((pendingMember) => pendingMember),
+      members: membres,
+      pendingMembers: pendingMembers,
     };
   }
 }
