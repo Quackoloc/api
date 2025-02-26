@@ -13,6 +13,9 @@ export class Colocation {
   title: string;
 
   @Column()
+  backgroundImage: string;
+
+  @Column()
   address: string;
 
   @OneToMany(() => User, (user) => user.colocation)

@@ -25,9 +25,8 @@ export class ColocationsController {
   @ApiResponse({ status: HttpStatus.OK, type: ColocationDto })
   @ApiOperation({ summary: "Get user's colocations" })
   @HttpCode(HttpStatus.OK)
-  @Get()
-  async getColocations(@GetConnectedUser() connectedUser: ConnectedUser): Promise<ColocationDto[]> {
-    //Promise<ColocationDto[]> {
+  @Get('me')
+  async getColocations(@GetConnectedUser() connectedUser: ConnectedUser): Promise<ColocationDto> {
     return await this.colocationsService.getColocations(connectedUser);
   }
 }
