@@ -14,12 +14,16 @@ export class UserDto {
   @ApiProperty({ example: 'Doe' })
   lastname: string;
 
+  @ApiProperty({ example: 'https://quackoloc.com/avatar.png' })
+  avatar: string;
+
   static fromEntity(user: User): UserDto {
     return {
       id: user.id,
       email: user.email,
       firstname: user.firstname,
       lastname: user.lastname,
+      avatar: user.avatar,
     };
   }
 }

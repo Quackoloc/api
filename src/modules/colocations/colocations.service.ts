@@ -29,6 +29,7 @@ export class ColocationsService {
     colocation.title = createColocationDto.title;
     colocation.address = createColocationDto.address;
     colocation.members = [user];
+    colocation.backgroundImage = '';
     colocation.pendingMembers = [];
 
     const savedColocation = await this.colocationRepository.save(colocation);
@@ -57,13 +58,13 @@ export class ColocationsService {
     return ColocationDto.fromEntity(savedColocation);
   }
 
-  async getColocations(connectedUser: ConnectedUser) {
+  async getColocations(connectedUser: ConnectedUser): Promise<ColocationDto> {
     const colocations = await this.colocationRepository.find({
       where: { members: connectedUser },
       relations: ['members', 'pendingMembers'],
     });
 
-    return colocations.map((colocation) => ColocationDto.fromEntity(colocation));
+    return colocations.map((colocation) => ColocationDto.fromEntity(colocation))[0];
   }
 
   private findOneById(id: number, relations?: any) {

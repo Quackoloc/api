@@ -13,6 +13,9 @@ export class ColocationDto {
   @ApiProperty({ example: "2 place de l'Europe" })
   address: string;
 
+  @ApiProperty({ example: 'https://quackoloc.fr/colocation/background.png' })
+  backgroundImage: string;
+
   @ApiProperty({ example: [UserDto] })
   members: UserDto[];
 
@@ -29,6 +32,7 @@ export class ColocationDto {
       id: entity.id,
       title: entity.title,
       address: entity.address,
+      backgroundImage: entity.backgroundImage,
       members: membres,
       pendingMembers: pendingMembers,
     };
