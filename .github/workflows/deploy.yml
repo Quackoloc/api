@@ -20,7 +20,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Log in to Azure Container Registry
-        run: az arc login --name ${{ secrets.ACR_NAME }}
+        run: az acr login --name ${{ secrets.ACR_NAME }}
 
 
       - name: Create .env file
@@ -39,14 +39,18 @@ jobs:
     needs: build-and-push
 
     steps:
-      - name: Log in to Azure
+      - name: Login to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Register Microsoft.App provider
+        run: |
+          az provider register --namespace Microsoft.App --wait
 
       - name: Deploy to Azure Container Apps
         run: |
           az containerapp update \
             --name quackoloc-api \
-            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+            --resource-group ${{ secrets.AZURE_RESSOURCE_GROUP }} \
             --image ${{ secrets.ACR_NAME }}.azurecr.io/quackoloc-api:latest

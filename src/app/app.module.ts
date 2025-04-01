@@ -1,18 +1,18 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AuthModule } from './modules/auth/auth.module';
-import { UsersModule } from './modules/users/users.module';
-import { localConf } from './config/database.config';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { localConf } from '../config/database.config';
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionHandler } from '@nestjs/core/errors/exception-handler';
-import { ColocationsModule } from './modules/colocations/colocations.module';
+import { ColocationsModule } from './colocations/colocations.module';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import * as promClient from 'prom-client';
-import { HttpMetricsMiddleware } from './common/middlewares/http-metrics.middleware';
-import { MailerModule } from './modules/mailer/mailer.module';
-import { TasksModule } from './modules/tasks/tasks.module';
-import { ExpensesModule } from './modules/expenses/expenses.module';
+import { HttpMetricsMiddleware } from '../common/middlewares/http-metrics.middleware';
+import { MailerModule } from './mailer/mailer.module';
+import { TasksModule } from './tasks/tasks.module';
+import { ExpensesModule } from './expenses/expenses.module';
 
 @Module({
   imports: [
