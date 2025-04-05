@@ -23,7 +23,6 @@ export class ColocationDto {
   pendingMembers: PendingUserDto[];
 
   static fromEntity(entity: Colocation): ColocationDto {
-    console.log(entity);
     const membres = entity.members.map((member) => UserDto.fromEntity(member));
     const pendingMembers = entity.pendingMembers.map((pendingMember) =>
       PendingUserDto.fromEntity(pendingMember)
