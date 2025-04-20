@@ -1,0 +1,48 @@
+name: Build and Deploy to Clever Cloud
+
+on:
+  push:
+    branches:
+      - main
+      - deploy
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT_TOKEN }}
+
+      - name: Inject .env from GitHub secret
+        run: echo "${{ secrets.ENV_FILE }}" > .env
+      
+      - name: Build and push API image
+        run: |
+          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          TAG=$(git rev-parse --short HEAD)
+          docker build --no-cache -t ghcr.io/$REPO_OWNER/quackoloc.api:$TAG -f ./build.Dockerfile .
+          docker tag ghcr.io/$REPO_OWNER/quackoloc.api:$TAG ghcr.io/$REPO_OWNER/quackoloc.api:latest
+          docker push ghcr.io/$REPO_OWNER/quackoloc.api:$TAG
+          docker push ghcr.io/$REPO_OWNER/quackoloc.api:latest
+
+      - name: Install Clever Tools
+        run: npm install -g clever-tools
+
+      - name: Login and trigger deploy
+        env:
+          CLEVER_TOKEN: ${{ secrets.CLEVER_TOKEN }}
+          CLEVER_SECRET: ${{ secrets.CLEVER_SECRET }}
+        run: |
+          clever login --token "$CLEVER_TOKEN" --secret "$CLEVER_SECRET"
+          clever link app_43701f56-4ee7-4598-a70b-303a026f1401
+          clever deploy --force
