@@ -1,0 +1,46 @@
+name: Automated Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  detect-release-merge:
+    if: startsWith(github.head_ref || github.ref_name, 'release/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Extract version from branch name
+        id: extract
+        run: |
+          BRANCH_NAME="${GITHUB_REF##*/}"
+          VERSION="${BRANCH_NAME#release/}"
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create Git tag
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git tag "v${{ steps.extract.outputs.VERSION }}"
+          git push origin "v${{ steps.extract.outputs.VERSION }}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: "v${{ steps.extract.outputs.VERSION }}"
+          name: "Release v${{ steps.extract.outputs.VERSION }}"
+          generate_release_notes: true
+
+      - name: Create next release branch
+        env:
+          VERSION: ${{ steps.extract.outputs.VERSION }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+          NEXT_MINOR=$((MINOR + 1))
+          NEXT_VERSION="${MAJOR}.${NEXT_MINOR}.0"
+          git checkout -b release/$NEXT_VERSION
+          git push origin release/$NEXT_VERSION
