@@ -12,5 +12,5 @@ export const localConf = (configService: ConfigService): TypeOrmModuleOptions =>
   password: configService.get('POSTGRES_PASSWORD'),
   database: configService.get('POSTGRES_DB'),
   entities: [User, Colocation, PendingUser],
-  synchronize: true,
+  synchronize: false,
 });
