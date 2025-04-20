@@ -24,6 +24,6 @@ jobs:
       - name: Build and push API image
         run: |
           REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          docker build -t ghcr.io/$REPO_OWNER/quackoloc.api:latest -f ./Dockerfile .
+          docker build -t ghcr.io/$REPO_OWNER/quackoloc.api:latest -f ./build.Dockerfile .
           docker push ghcr.io/$REPO_OWNER/quackoloc.api:latest
 
