@@ -1,1 +1,1 @@
-FROM ghcr.io/quackoloc/api:latest
+FROM ghcr.io/quackoloc/quackoloc.api:latest
