@@ -8,10 +8,10 @@ export class MailerService {
   private client: EmailClient;
 
   constructor(private readonly configService: ConfigService) {
-    const connectionString = this.configService.get<string>(
-      'AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING'
-    );
-    this.client = new EmailClient(connectionString);
+    // const connectionString = this.configService.get<string>(
+    //   'AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING'
+    // );
+    // this.client = new EmailClient(connectionString);
   }
 
   async sendPendingUsersEmails(pendingUsers: PendingUser[]): Promise<void> {
