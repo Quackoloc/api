@@ -1,8 +1,8 @@
 import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
-import { User } from './app/users/entities/user.entity';
-import { Colocation } from './app/colocations/entities/colocation.entity';
-import { PendingUser } from './app/users/entities/pending-user.entity';
+import { User } from './app/user/domain/entities/user.entity';
+import { Colocation } from './app/colocations/domain/entities/colocation.entity';
+import { PendingUser } from './app/user/domain/entities/pending-user.entity';
 
 // Apply migration on local
 dotenv.config();

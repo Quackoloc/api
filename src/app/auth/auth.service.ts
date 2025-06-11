@@ -4,10 +4,12 @@ import { compareSync } from 'bcryptjs';
 import { ConfigService } from '@nestjs/config';
 import { AccessTokenDto } from './dtos/access-token.dto';
 import { TokensDto } from './dtos/tokens.dto';
-import { CreateUserDto } from '../users/dto/create-user.dto';
-import { UserDto } from '../users/dto/user.dto';
-import { UserNotFoundException } from '../users/users-exception';
-import { UsersService } from '../users/users.service';
+import { UserDto } from '../user/application/dtos/user.dto';
+import { UsersService } from '../user/users.service';
+import {
+  UserEmailNotFoundException,
+  UserIdNotFoundException,
+} from '../user/domain/user-exceptions';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +23,7 @@ export class AuthService {
     const user = await this.userServiceGateway.findOneByEmail(email);
 
     if (!user) {
-      throw UserNotFoundException.emailNotFound(email);
+      throw new UserEmailNotFoundException(email);
     }
 
     return compareSync(password, user?.password) ? UserDto.fromEntity(user) : null;
@@ -48,10 +50,6 @@ export class AuthService {
     };
   }
 
-  async register(createUserDto: CreateUserDto): Promise<UserDto> {
-    return await this.userServiceGateway.create(createUserDto);
-  }
-
   async refresh(refreshToken: string): Promise<AccessTokenDto> {
     const payload = this.jwtService.verify(refreshToken, {
       secret: this.configService.get('JWT_SECRET'),
@@ -60,7 +58,7 @@ export class AuthService {
     const user = await this.userServiceGateway.findOneById(payload.sub);
 
     if (!user) {
-      throw UserNotFoundException.idNotFound(payload.sub);
+      throw new UserIdNotFoundException(payload.sub);
     }
 
     const accessToken = this.jwtService.sign(

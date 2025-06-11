@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { Colocation } from '../../colocations/entities/colocation.entity';
+import { Colocation } from '../../../colocations/domain/entities/colocation.entity';
 
 @Entity()
 @Unique(['email'])

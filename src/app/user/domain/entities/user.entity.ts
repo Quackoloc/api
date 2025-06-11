@@ -7,9 +7,9 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { DatesEntity } from '../../../common/entities/dates-entity';
+import { DatesEntity } from '../../../../common/entities/dates-entity';
 import { hash } from 'bcryptjs';
-import { Colocation } from '../../colocations/entities/colocation.entity';
+import { Colocation } from '../../../colocations/domain/entities/colocation.entity';
 
 @Entity()
 @Unique(['email'])
