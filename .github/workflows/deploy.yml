@@ -1,4 +1,4 @@
-name: Build and Deploy to Clever Cloud
+name: Build, Release and Deploy to Clever Cloud
 
 on:
   push:
@@ -9,7 +9,6 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout the code
         uses: actions/checkout@v3
@@ -25,7 +24,7 @@ jobs:
 
       - name: Inject .env from GitHub secret
         run: echo "${{ secrets.ENV_FILE }}" > .env
-      
+
       - name: Build and push API image
         run: |
           REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
@@ -34,6 +33,15 @@ jobs:
           docker tag ghcr.io/$REPO_OWNER/quackoloc.api:$TAG ghcr.io/$REPO_OWNER/quackoloc.api:latest
           docker push ghcr.io/$REPO_OWNER/quackoloc.api:$TAG
           docker push ghcr.io/$REPO_OWNER/quackoloc.api:latest
+
+      - name: Install dependencies with npm
+        run: npm ci
+
+      - name: Run semantic-release
+        if: github.ref == 'refs/heads/main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
 
       - name: Install Clever Tools
         run: npm install -g clever-tools
