@@ -2,7 +2,7 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/commo
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateColocationDto } from '../../application/dtos/create-colocation.dto';
 import { GetConnectedUser } from '../../../../common/decorators/get-connected-user.decorator';
-import { ConnectedUser } from '../../../auth/connected-user.model';
+import { ConnectedUser } from '../../../../common/types/connected-user.type';
 import { ColocationDto } from '../../application/dtos/colocation.dto';
 import { CreateColocationUseCase } from '../../application/use-cases/create-colocation.use-case';
 import { GetColocationsUseCase } from '../../application/use-cases/get-colocations.use-case';

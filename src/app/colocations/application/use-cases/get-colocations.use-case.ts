@@ -3,7 +3,7 @@ import {
   ColocationRepositoryGateway,
   ColocationRepositoryToken,
 } from '../../domain/gateways/colocation.repository.gateway';
-import { ConnectedUser } from '../../../auth/connected-user.model';
+import { ConnectedUser } from '../../../../common/types/connected-user.type';
 import { ColocationDto } from '../dtos/colocation.dto';
 
 @Injectable()
