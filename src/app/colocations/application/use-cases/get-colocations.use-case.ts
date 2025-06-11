@@ -14,11 +14,7 @@ export class GetColocationsUseCase {
   ) {}
 
   async execute(connectedUser: ConnectedUser): Promise<ColocationDto> {
-    const colocations = await this.colocationRepository.find({
-      where: { members: connectedUser },
-      relations: ['members', 'pendingMembers'],
-    });
-
+    const colocations = await this.colocationRepository.findMemberColocations(connectedUser.id);
     return colocations.map((colocation) => ColocationDto.fromEntity(colocation))[0];
   }
 }

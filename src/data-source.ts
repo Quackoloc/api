@@ -1,8 +1,5 @@
 import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
-import { User } from './app/user/domain/entities/user.entity';
-import { Colocation } from './app/colocations/domain/entities/colocation.entity';
-import { PendingUser } from './app/user/domain/entities/pending-user.entity';
 
 // Apply migration on local
 dotenv.config();
@@ -17,7 +14,7 @@ export default new DataSource({
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  entities: [User, Colocation, PendingUser],
+  entities: [__dirname + '/app/**/entities/*.entity.{ts,js}'],
   migrations: [__dirname + '/../migrations/*.ts'],
   migrationsTableName: 'migrations',
   synchronize: false,

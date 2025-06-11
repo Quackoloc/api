@@ -24,16 +24,13 @@ export class ColocationDto {
 
   static fromEntity(entity: Colocation): ColocationDto {
     const membres = entity.members.map((member) => UserDto.fromEntity(member));
-    const pendingMembers = entity.pendingMembers.map((pendingMember) =>
-      PendingUserDto.fromEntity(pendingMember)
-    );
     return {
       id: entity.id,
       title: entity.title,
       address: entity.address,
       backgroundImage: entity.backgroundImage,
       members: membres,
-      pendingMembers: pendingMembers,
+      pendingMembers: [],
     };
   }
 }
