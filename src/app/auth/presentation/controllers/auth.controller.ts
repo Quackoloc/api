@@ -1,22 +1,24 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
-import { LocalAuthGard } from '../../common/guards/local-auth.guard';
-import { RefreshTokenDto } from './dtos/refresh-token.dto';
-import { TokensDto } from './dtos/tokens.dto';
-import { AccessTokenDto } from './dtos/access-token.dto';
+import { LocalAuthGard } from '../../../../common/guards/local-auth.guard';
+import { RefreshTokenDto } from '../../application/dtos/refresh-token.dto';
+import { TokensDto } from '../../application/dtos/tokens.dto';
+import { AccessTokenDto } from '../../application/dtos/access-token.dto';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateUserDto } from '../user/application/dtos/create-user.dto';
-import { UserDto } from '../user/application/dtos/user.dto';
-import { Public } from '../../common/decorators/public.decorator';
-import { AuthService } from './auth.service';
-import { LoginDto } from './dtos/login.dto';
-import { CreateUserUseCase } from '../user/domain/use-cases/create-user.use-case';
+import { CreateUserDto } from '../../../user/application/dtos/create-user.dto';
+import { UserDto } from '../../../user/application/dtos/user.dto';
+import { Public } from '../../../../common/decorators/public.decorator';
+import { LoginDto } from '../../application/dtos/login.dto';
+import { LoginUseCase } from '../../application/use-cases/login.use-case';
+import { CreateUserUseCase } from '../../../user/application/use-cases/create-user.use-case';
+import { RefreshAccessTokenUseCase } from '../../application/use-cases/refresh-access-token.use-case';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly authService: AuthService,
-    private readonly createUserUseCase: CreateUserUseCase
+    private readonly createUserUseCase: CreateUserUseCase,
+    private readonly loginUseCase: LoginUseCase,
+    private readonly refreshAccessUseCase: RefreshAccessTokenUseCase
   ) {}
 
   @Public()
@@ -27,7 +29,7 @@ export class AuthController {
   @UseGuards(LocalAuthGard)
   @Post('login')
   async login(@Request() req: any): Promise<TokensDto> {
-    return this.authService.login(req.body.email);
+    return this.loginUseCase.execute(req.body.email);
   }
 
   @Public()
@@ -45,6 +47,6 @@ export class AuthController {
   @ApiResponse({ status: HttpStatus.OK, type: AccessTokenDto })
   @Post('refresh')
   async refreshToken(@Body() dto: RefreshTokenDto): Promise<AccessTokenDto> {
-    return this.authService.refresh(dto.refreshToken);
+    return this.refreshAccessUseCase.execute(dto.refreshToken);
   }
 }

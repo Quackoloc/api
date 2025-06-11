@@ -4,7 +4,7 @@ import {
   ColocationRepositoryToken,
 } from '../../domain/gateways/colocation.repository.gateway';
 import { CreateColocationDto } from '../dtos/create-colocation.dto';
-import { ConnectedUser } from '../../../auth/connected-user.model';
+import { ConnectedUser } from '../../../../common/types/connected-user.type';
 import {
   UserRepositoryGateway,
   UserRepositoryToken,

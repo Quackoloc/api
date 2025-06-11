@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './strategies/jwt.strategy';
-import { LocalStrategy } from './strategies/local.strategy';
-import { AuthController } from './auth.controller';
+import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
+import { LocalStrategy } from './infrastructure/strategies/local.strategy';
+import { AuthController } from './presentation/controllers/auth.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from '../user/user.module';
+import { ValidateUserUseCase } from './application/use-cases/validate-user.use-case';
+import { LoginUseCase } from './application/use-cases/login.use-case';
+import { RefreshAccessTokenUseCase } from './application/use-cases/refresh-access-token.use-case';
 
 @Module({
   imports: [
@@ -26,8 +28,13 @@ import { UserModule } from '../user/user.module';
     }),
     UserModule,
   ],
+  providers: [
+    ValidateUserUseCase,
+    LoginUseCase,
+    RefreshAccessTokenUseCase,
+    LocalStrategy,
+    JwtStrategy,
+  ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
-  exports: [AuthService],
 })
 export class AuthModule {}

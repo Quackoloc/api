@@ -1,6 +1,7 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ConnectedUser } from '../../app/auth/connected-user.model';
+import { ConnectedUser } from '../types/connected-user.type';
+import { InvalidTokenException } from '../../app/auth/domain/auth-exceptions';
 
 export const GetConnectedUser = createParamDecorator(
   (data, ctx: ExecutionContext): ConnectedUser => {
@@ -11,8 +12,7 @@ export const GetConnectedUser = createParamDecorator(
     const decoded = jwtService.decode(token);
 
     if (!decoded) {
-      //todo: refact
-      // throw AuthException.invalidToken();
+      throw new InvalidTokenException();
     }
 
     return {
