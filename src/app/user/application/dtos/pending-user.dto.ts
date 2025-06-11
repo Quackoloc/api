@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PendingUser } from '../entities/pending-user.entity';
+import { PendingUser } from '../../domain/entities/pending-user.entity';
 
 export class PendingUserDto {
   @ApiProperty({ example: 1 })

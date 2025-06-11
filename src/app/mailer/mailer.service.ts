@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { EmailClient, EmailMessage } from '@azure/communication-email';
 import { ConfigService } from '@nestjs/config';
-import { PendingUser } from '../users/entities/pending-user.entity';
+import { PendingUser } from '../user/domain/entities/pending-user.entity';
 
 @Injectable()
 export class MailerService {

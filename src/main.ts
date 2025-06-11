@@ -6,6 +6,7 @@ import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
+import { ExceptionHandler } from './app/exception-handler';
 
 async function bootstrap() {
   const winstonConfig = {
@@ -36,6 +37,7 @@ async function bootstrap() {
 
   app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new ExceptionHandler());
   app.use(helmet());
 
   app.enableCors({

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PendingUser } from './entities/pending-user.entity';
+import { PendingUser } from './domain/entities/pending-user.entity';
 import { Repository } from 'typeorm';
-import { Colocation } from '../colocations/entities/colocation.entity';
+import { Colocation } from '../colocations/domain/entities/colocation.entity';
 
 @Injectable()
 export class PendingUsersService {
@@ -18,13 +18,6 @@ export class PendingUsersService {
     });
 
     return this.save(pendingUser); // Utilise savePendingUser pour persister
-  }
-
-  async findByEmail(email: string): Promise<PendingUser | null> {
-    return this.pendingUserRepository.findOne({
-      where: { email },
-      relations: ['colocations'], // Charge les colocations associées
-    });
   }
 
   async save(pendingUser: PendingUser): Promise<PendingUser> {

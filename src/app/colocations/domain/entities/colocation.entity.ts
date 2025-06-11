@@ -1,7 +1,7 @@
 import { Column, Entity, Index, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { DatesEntity } from '../../../common/entities/dates-entity';
-import { User } from '../../users/entities/user.entity';
-import { PendingUser } from '../../users/entities/pending-user.entity';
+import { DatesEntity } from '../../../../common/entities/dates-entity';
+import { User } from '../../../user/domain/entities/user.entity';
+import { PendingUser } from '../../../user/domain/entities/pending-user.entity';
 
 @Entity()
 export class Colocation {
