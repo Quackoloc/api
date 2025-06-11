@@ -30,6 +30,7 @@ export class CreateColocationUseCase {
     colocation.members = [user];
     colocation.backgroundImage = '';
     colocation.pendingMembers = [];
+    colocation.invitationCodes = [];
 
     const savedColocation = await this.colocationRepository.save(colocation);
 

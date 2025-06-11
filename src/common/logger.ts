@@ -7,8 +7,11 @@ export const logger = createLogger({
   format: combine(
     colorize({ all: true }),
     timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    printf(({ timestamp, level, message }) => {
-      return `${timestamp} [${level}] ${message}`;
+    errors({ stack: true }),
+    printf(({ timestamp, level, message, stack }) => {
+      return stack
+        ? `${timestamp} [${level}] ${message}\n${stack}`
+        : `${timestamp} [${level}] ${message}`;
     })
   ),
   transports: [new transports.Console()],
