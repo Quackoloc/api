@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/Quackoloc/api/compare/v1.1.1...v1.2.0) (2025-06-13)
+
+
+### Features
+
+* **colocation:** update join colocation code route which not requires colocation id anymore ([7e048e1](https://github.com/Quackoloc/api/commit/7e048e184722620470d8b03c645d5f96c1a13ba6))
+* **logs:** add logger in use cases for user actions ([76d2751](https://github.com/Quackoloc/api/commit/76d27513b5d46798647b00090cc4083840dbc985))
+
 ## [1.1.1](https://github.com/Quackoloc/api/compare/v1.1.0...v1.1.1) (2025-06-13)
 
 
