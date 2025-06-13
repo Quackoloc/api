@@ -4,6 +4,8 @@ import { InvitationCode } from '../../domain/entities/invitation-code.entity';
 import { InvitationCodeRepositoryToken } from '../../infrastructure/repositories/invitation-code.repository';
 import { InvitationCodeRepositoryGateway } from '../../domain/gateways/invitation-code.repository.gateway';
 import { InvitationCodeDto } from '../dtos/invitation-code.dto';
+import { logger } from '../../../../common/logger';
+import { ConnectedUser } from '../../../../common/types/connected-user.type';
 
 @Injectable()
 export class CreateInvitationCodeUseCase {
@@ -13,7 +15,11 @@ export class CreateInvitationCodeUseCase {
     private readonly colocationCodeService: ColocationCodeServiceGateway
   ) {}
 
-  async execute(colocationId: number, expiresAt: Date): Promise<InvitationCodeDto> {
+  async execute(
+    colocationId: number,
+    expiresAt: Date,
+    connectedUser: ConnectedUser
+  ): Promise<InvitationCodeDto> {
     const code = await this.colocationCodeService.createCode();
 
     const invitationCode = new InvitationCode();
@@ -22,6 +28,10 @@ export class CreateInvitationCodeUseCase {
     invitationCode.colocationId = colocationId;
 
     const createdCode = await this.invitationCodeRepository.save(invitationCode);
+
+    logger.info(
+      `Colocation invitation code with id : ${createdCode.id} created by user with id : ${connectedUser.id}`
+    );
 
     return InvitationCodeDto.fromEntity(createdCode);
   }
