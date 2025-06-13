@@ -10,8 +10,8 @@ export const logger = createLogger({
     errors({ stack: true }),
     printf(({ timestamp, level, message, stack }) => {
       return stack
-        ? `${timestamp} [${level}] ${message}\n${stack}`
-        : `${timestamp} [${level}] ${message}`;
+        ? `${level}: ${timestamp} ${message}\n${stack}`
+        : `${level}: ${timestamp} ${message}`;
     })
   ),
   transports: [new transports.Console()],
