@@ -30,7 +30,7 @@ jobs:
         run: |
           REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           TAG=$(git rev-parse --short HEAD)
-          docker build --no-cache -t ghcr.io/$REPO_OWNER/quackoloc.api:$TAG -f ./build.Dockerfile .
+          docker build --no-cache -t ghcr.io/$REPO_OWNER/quackoloc.api:$TAG -f ./dockerfiles/build.Dockerfile .
           docker tag ghcr.io/$REPO_OWNER/quackoloc.api:$TAG ghcr.io/$REPO_OWNER/quackoloc.api:latest
           docker push ghcr.io/$REPO_OWNER/quackoloc.api:$TAG
           docker push ghcr.io/$REPO_OWNER/quackoloc.api:latest
