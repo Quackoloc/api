@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Quackoloc/api/compare/v1.1.0...v1.1.1) (2025-06-13)
+
+
+### Bug Fixes
+
+* **auth:** correct cors error ([f45a831](https://github.com/Quackoloc/api/commit/f45a83153fd194e2115a5d6767bb79582af23f42))
+
 # [1.1.0](https://github.com/Quackoloc/api/compare/v1.0.0...v1.1.0) (2025-06-13)
 
 
