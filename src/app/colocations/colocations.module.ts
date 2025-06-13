@@ -19,6 +19,7 @@ import {
 import { IsColocationMemberUseCase } from './application/use-cases/is-colocation-member.use-case';
 import { CreateInvitationCodeUseCase } from './application/use-cases/create-invitation-code.use-case';
 import { JoinColocationUseCase } from './application/use-cases/join-colocation.use-case';
+import { UpdateColocationUseCase } from './application/use-cases/update-colocation.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Colocation]), UserModule, InvitationCode, MailerModule],
@@ -28,6 +29,7 @@ import { JoinColocationUseCase } from './application/use-cases/join-colocation.u
     IsColocationMemberUseCase,
     CreateInvitationCodeUseCase,
     JoinColocationUseCase,
+    UpdateColocationUseCase,
     {
       provide: ColocationRepositoryToken,
       inject: [DataSource],

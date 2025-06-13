@@ -1,4 +1,4 @@
 export type ConnectedUser = {
   id: number;
-  permissions: string[];
+  // permissions: string[];
 };
