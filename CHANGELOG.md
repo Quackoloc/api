@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Quackoloc/api/compare/v1.2.0...v1.2.1) (2025-06-13)
+
+
+### Bug Fixes
+
+* **healthcheck:** add [@get](https://github.com/get) / route to avoir 404 errors with clever cloud healthcheck ([ed77c25](https://github.com/Quackoloc/api/commit/ed77c25144e5f03a54f3c030b47d765e9ea8b4c7))
+
 # [1.2.0](https://github.com/Quackoloc/api/compare/v1.1.1...v1.2.0) (2025-06-13)
 
 
