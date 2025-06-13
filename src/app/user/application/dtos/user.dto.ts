@@ -17,6 +17,10 @@ export class UserDto {
   @ApiProperty({ example: 'https://quackoloc.com/avatar.png' })
   avatar: string;
 
+  constructor(dto: Partial<UserDto>) {
+    Object.assign(this, dto);
+  }
+
   static fromEntity(user: User): UserDto {
     return {
       id: user.id,

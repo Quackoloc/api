@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, Length } from '@nestjs/class-validator';
+import { IsNotEmpty, IsString, Length } from 'class-validator';
 
 export class UpdateColocationDto {
   @ApiProperty({ example: 'Colocation chez les amis' })

@@ -16,8 +16,6 @@ export class IsColocationMemberUseCase {
       members: true,
     });
 
-    const response = !!colocation.members.find((member) => member.id === userId);
-
-    return response;
+    return !!colocation.members.find((member) => member.id === userId);
   }
 }

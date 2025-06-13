@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ColocationsController } from './presentation/controllers/colocations.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Colocation } from './domain/entities/colocation.entity';
-import { MailerModule } from '../mailer/mailer.module';
 import { UserModule } from '../user/user.module';
 import { ColocationRepositoryToken } from './domain/gateways/colocation.repository.gateway';
 import { DataSource } from 'typeorm';
@@ -22,7 +21,7 @@ import { JoinColocationUseCase } from './application/use-cases/join-colocation.u
 import { UpdateColocationUseCase } from './application/use-cases/update-colocation.use-case';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Colocation]), UserModule, InvitationCode, MailerModule],
+  imports: [TypeOrmModule.forFeature([Colocation]), UserModule, InvitationCode],
   providers: [
     CreateColocationUseCase,
     GetColocationsUseCase,
