@@ -48,10 +48,11 @@ describe('CreateInvitationCodeUseCase', () => {
   it('should propagate errors if createCode fails', async () => {
     const colocationId = 42;
     const expiresAt = new Date();
+    const connectedUser = { id: 123 };
 
     colocationCodeService.createCode.mockRejectedValue(new Error('Failed to generate code'));
 
-    await expect(useCase.execute(colocationId, expiresAt)).rejects.toThrow(
+    await expect(useCase.execute(colocationId, expiresAt, connectedUser)).rejects.toThrow(
       'Failed to generate code'
     );
     expect(invitationCodeRepository.save).not.toHaveBeenCalled();
@@ -61,10 +62,13 @@ describe('CreateInvitationCodeUseCase', () => {
     const colocationId = 42;
     const expiresAt = new Date();
     const generatedCode = 'XYZ789';
+    const connectedUser = { id: 123 };
 
     colocationCodeService.createCode.mockResolvedValue(generatedCode);
     invitationCodeRepository.save.mockRejectedValue(new Error('Save error'));
 
-    await expect(useCase.execute(colocationId, expiresAt)).rejects.toThrow('Save error');
+    await expect(useCase.execute(colocationId, expiresAt, connectedUser)).rejects.toThrow(
+      'Save error'
+    );
   });
 });

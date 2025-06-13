@@ -13,8 +13,8 @@ export class GetColocationsUseCase {
     private readonly colocationRepository: ColocationRepositoryGateway
   ) {}
 
-  async execute(connectedUser: ConnectedUser): Promise<ColocationDto> {
+  async execute(connectedUser: ConnectedUser): Promise<ColocationDto[]> {
     const colocations = await this.colocationRepository.findMemberColocations(connectedUser.id);
-    return colocations.map((colocation) => ColocationDto.fromEntity(colocation))[0];
+    return colocations.map((colocation) => ColocationDto.fromEntity(colocation));
   }
 }

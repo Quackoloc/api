@@ -21,8 +21,8 @@ export class JoinColocationUseCase {
     private readonly colocationCodeService: ColocationCodeServiceGateway
   ) {}
 
-  async execute(colocationId: number, userId: number, code: string): Promise<void> {
-    await this.colocationCodeService.checkIfBelongsToColocation(code, colocationId);
+  async execute(userId: number, code: string): Promise<void> {
+    const colocationId = await this.colocationCodeService.checkIfBelongsToColocation(code);
 
     const colocation = await this.colocationRepository.getById(colocationId, {
       invitationCodes: true,

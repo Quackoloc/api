@@ -51,7 +51,7 @@ export class ColocationsController {
   @ApiResponse({ status: HttpStatus.OK, type: ColocationDto })
   @ApiOperation({ summary: "Get user's colocations" })
   @HttpCode(HttpStatus.OK)
-  async getColocations(@GetConnectedUser() connectedUser: ConnectedUser): Promise<ColocationDto> {
+  async getColocations(@GetConnectedUser() connectedUser: ConnectedUser): Promise<ColocationDto[]> {
     return this.getColocationUseCase.execute(connectedUser);
   }
 
@@ -72,20 +72,15 @@ export class ColocationsController {
     );
   }
 
-  @Post(':colocationId/join')
+  @Post('join')
   @ApiResponse({ status: HttpStatus.OK, type: ColocationDto })
   @ApiOperation({ summary: 'Create a colocation invitation code' })
   @HttpCode(HttpStatus.OK)
   async joinColocation(
     @Body() joinColocationDto: JoinColocationDto,
-    @Param('colocationId', ParseIntPipe) colocationId: number,
     @GetConnectedUser() connectedUser: ConnectedUser
   ): Promise<void> {
-    return this.joinColocationUseCase.execute(
-      colocationId,
-      connectedUser.id,
-      joinColocationDto.invitationCode
-    );
+    return this.joinColocationUseCase.execute(connectedUser.id, joinColocationDto.invitationCode);
   }
 
   @Put(':colocationId')

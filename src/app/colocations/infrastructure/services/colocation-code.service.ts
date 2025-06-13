@@ -23,12 +23,14 @@ export class ColocationCodeService implements ColocationCodeServiceGateway {
     return code;
   }
 
-  async checkIfBelongsToColocation(code: string, colocationId: number): Promise<void> {
+  async checkIfBelongsToColocation(code: string): Promise<number> {
     const entity = await this.invitationCodeRepository.getOneByCode(code);
 
-    if (entity.colocationId !== colocationId) {
+    if (!entity) {
       throw new ColocationCodeNotFoundException(code);
     }
+
+    return entity.colocationId;
   }
 
   private generateRandomCode(): string {
