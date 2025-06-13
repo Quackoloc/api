@@ -8,6 +8,7 @@ import { ExceptionHandler } from '@nestjs/core/errors/exception-handler';
 import { ColocationsModule } from './colocations/colocations.module';
 import { TasksModule } from './tasks/tasks.module';
 import { UserModule } from './user/user.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -31,5 +32,6 @@ import { UserModule } from './user/user.module';
     },
   ],
   exports: [],
+  controllers: [AppController],
 })
 export class AppModule {}
