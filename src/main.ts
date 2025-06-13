@@ -6,6 +6,7 @@ import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
+import * as cookieParser from 'cookie-parser';
 import { ExceptionHandler } from './app/exception-handler';
 
 async function bootstrap() {
@@ -38,12 +39,14 @@ async function bootstrap() {
   app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new ExceptionHandler());
+  app.use(cookieParser());
   app.use(helmet());
 
   app.enableCors({
-    origin: '*',
+    origin: 'http://localhost:5173',
     methods: 'GET,POST',
     allowedHeaders: 'Content-Type, Authorization',
+    credentials: true,
   });
 
   await app.listen(process.env.PORT ?? 3000);
