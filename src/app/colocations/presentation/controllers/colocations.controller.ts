@@ -62,11 +62,13 @@ export class ColocationsController {
   @RequireColocationMember()
   async createColocationInvitationCode(
     @Param('colocationId', ParseIntPipe) colocationId: number,
-    @Body() createInvitationCodeDto: CreateInvitationCodeDto
+    @Body() createInvitationCodeDto: CreateInvitationCodeDto,
+    @GetConnectedUser() connectedUser: ConnectedUser
   ): Promise<InvitationCodeDto> {
     return this.createInvitationCodeUseCase.execute(
       colocationId,
-      createInvitationCodeDto.expiresAt
+      createInvitationCodeDto.expiresAt,
+      connectedUser
     );
   }
 

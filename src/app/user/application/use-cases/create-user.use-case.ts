@@ -7,6 +7,7 @@ import { CreateUserDto } from '../dtos/create-user.dto';
 import { UserDto } from '../dtos/user.dto';
 import { User } from '../../domain/entities/user.entity';
 import { UserEmailAlreadyExistsException } from '../../domain/user-exceptions';
+import { logger } from '../../../../common/logger';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -26,6 +27,8 @@ export class CreateUserUseCase {
     user.avatar = '';
 
     const createdUser = await this.userRepository.save(user);
+
+    logger.info(`User with id : ${user.id} created`);
 
     return UserDto.fromEntity(createdUser);
   }

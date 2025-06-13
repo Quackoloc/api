@@ -9,6 +9,7 @@ import {
 } from '../../../user/domain/gateways/user.repository.gateway';
 import { ColocationCodeServiceGateway } from '../../domain/gateways/colocation-code.service.gateway';
 import { UserIsAlreadyMemberOfColocationException } from '../../domain/colocation.exceptions';
+import { logger } from '../../../../common/logger';
 
 @Injectable()
 export class JoinColocationUseCase {
@@ -34,6 +35,8 @@ export class JoinColocationUseCase {
     }
 
     colocation.members.push(user);
+
+    logger.info(`User with id : ${userId} joined colocation with id : ${colocationId}`);
 
     await this.colocationRepository.save(colocation);
   }

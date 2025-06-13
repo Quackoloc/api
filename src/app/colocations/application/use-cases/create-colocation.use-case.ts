@@ -11,6 +11,7 @@ import {
 } from '../../../user/domain/gateways/user.repository.gateway';
 import { Colocation } from '../../domain/entities/colocation.entity';
 import { ColocationDto } from '../dtos/colocation.dto';
+import { logger } from '../../../../common/logger';
 
 @Injectable()
 export class CreateColocationUseCase {
@@ -33,6 +34,10 @@ export class CreateColocationUseCase {
     colocation.invitationCodes = [];
 
     const savedColocation = await this.colocationRepository.save(colocation);
+
+    logger.info(
+      `Colocation with id : ${savedColocation.id} created by user with id : ${connectedUser.id}`
+    );
 
     return ColocationDto.fromEntity(savedColocation);
   }
