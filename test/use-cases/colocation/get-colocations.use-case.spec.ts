@@ -62,7 +62,7 @@ describe('GetColocationsUseCase', () => {
     jest.clearAllMocks();
   });
 
-  it('should return the first colocation dto from the repository', async () => {
+  it('should return colocation dtos from the repository', async () => {
     // Mock la méthode fromEntity statique
     jest.spyOn(ColocationDto, 'fromEntity').mockReturnValue(mockColocationDto);
 
@@ -73,10 +73,10 @@ describe('GetColocationsUseCase', () => {
 
     expect(colocationRepository.findMemberColocations).toHaveBeenCalledWith(mockConnectedUser.id);
     expect(ColocationDto.fromEntity).toHaveBeenCalledWith(mockColocationEntity);
-    expect(result).toEqual(mockColocationDto);
+    expect(result).toEqual([mockColocationDto]);
   });
 
-  it('should return undefined if no colocations found', async () => {
+  it('should return empty array if no colocations found', async () => {
     jest.spyOn(ColocationDto, 'fromEntity');
 
     colocationRepository.findMemberColocations.mockResolvedValue([]);
@@ -85,7 +85,7 @@ describe('GetColocationsUseCase', () => {
 
     expect(colocationRepository.findMemberColocations).toHaveBeenCalledWith(mockConnectedUser.id);
     expect(ColocationDto.fromEntity).not.toHaveBeenCalled();
-    expect(result).toBeUndefined();
+    expect(result).toEqual([]);
   });
 
   it('should propagate errors thrown by the repository', async () => {
