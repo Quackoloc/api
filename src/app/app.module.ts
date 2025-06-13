@@ -6,9 +6,7 @@ import { localConf } from '../config/database.config';
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionHandler } from '@nestjs/core/errors/exception-handler';
 import { ColocationsModule } from './colocations/colocations.module';
-import { MailerModule } from './mailer/mailer.module';
 import { TasksModule } from './tasks/tasks.module';
-import { ExpensesModule } from './expenses/expenses.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -24,9 +22,7 @@ import { UserModule } from './user/user.module';
       isGlobal: true,
     }),
     ColocationsModule,
-    MailerModule,
     TasksModule,
-    ExpensesModule,
   ],
   providers: [
     {

@@ -92,15 +92,19 @@
       "json",
       "ts"
     ],
-    "rootDir": "test",
+    "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "src/**/*.{ts,js}",
+      "!src/**/*.module.ts",
+      "!src/**/decorators/**",
+      "!src/**/guards/**",
+      "!src/**/dtos/**"
     ],
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "coverage",
     "testEnvironment": "node"
   },
   "packageManager": "yarn@4.6.0+sha256.eaf1eeabc164a44ca0b65dbdccd54af7e55f3ff9294b3ff318d5aaec92f2b20b"

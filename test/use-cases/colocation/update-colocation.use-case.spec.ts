@@ -2,17 +2,17 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {
   ColocationRepositoryGateway,
   ColocationRepositoryToken,
-} from '../../src/app/colocations/domain/gateways/colocation.repository.gateway';
-import { UpdateColocationUseCase } from '../../src/app/colocations/application/use-cases/update-colocation.use-case';
-import { ConnectedUser } from '../../src/common/types/connected-user.type';
-import { UpdateColocationDto } from '../../src/app/colocations/application/dtos/update-colocation.dto';
-import { logger } from '../../src/common/logger';
-import { Colocation } from '../../src/app/colocations/domain/entities/colocation.entity';
+} from '../../../src/app/colocations/domain/gateways/colocation.repository.gateway';
+import { UpdateColocationUseCase } from '../../../src/app/colocations/application/use-cases/update-colocation.use-case';
+import { ConnectedUser } from '../../../src/common/types/connected-user.type';
+import { UpdateColocationDto } from '../../../src/app/colocations/application/dtos/update-colocation.dto';
+import { logger } from '../../../src/common/logger';
+import { Colocation } from '../../../src/app/colocations/domain/entities/colocation.entity';
 
-// Mock du logger
-jest.mock('../../src/common/logger', () => ({
+jest.mock('../../../src/common/logger', () => ({
   logger: {
     info: jest.fn(),
+    error: jest.fn(),
   },
 }));
 
