@@ -21,7 +21,7 @@ import { LoginDto } from '../../application/dtos/login.dto';
 import { LoginUseCase } from '../../application/use-cases/login.use-case';
 import { CreateUserUseCase } from '../../../user/application/use-cases/create-user.use-case';
 import { RefreshAccessTokenUseCase } from '../../application/use-cases/refresh-access-token.use-case';
-import { Request as Req, Response as Res } from 'express';
+import { Request as Req, Response, Response as Res } from 'express';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -78,5 +78,14 @@ export class AuthController {
   async refreshToken(@ReqDecorator() req: Req): Promise<AccessTokenDto> {
     const refreshToken = req.cookies.refreshToken;
     return this.refreshAccessUseCase.execute(refreshToken);
+  }
+
+  @Post('logout')
+  @ApiResponse({ status: HttpStatus.OK })
+  @ApiOperation({ summary: 'Logout user' })
+  async logout(@ResDecorator() response: Response) {
+    response.clearCookie('accessToken');
+    response.clearCookie('refreshToken');
+    return response.status(HttpStatus.OK).send();
   }
 }
