@@ -1,17 +1,15 @@
 import { Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { ColocationTaskPriority } from '../enums/colocation-task.priority';
+import { ColocationTaskPriority } from '../enums/colocation-task-priority.enum';
 import { Colocation } from './colocation.entity';
 import { User } from '../../../user/domain/entities/user.entity';
 import { DatesEntity } from '../../../../common/entities/dates-entity';
+import { ColocationTaskStatus } from '../enums/colocation-task-status.enum';
 
 @Entity()
 export class ColocationTask {
   @PrimaryGeneratedColumn()
   @Index()
   id: number;
-
-  @Column()
-  completed: boolean;
 
   @Column()
   title: string;
@@ -21,6 +19,13 @@ export class ColocationTask {
 
   @Column()
   dueDate: Date;
+
+  @Column({
+    type: 'enum',
+    enum: ColocationTaskStatus,
+    default: ColocationTaskStatus.TODO,
+  })
+  status: ColocationTaskStatus;
 
   @Column({
     type: 'enum',

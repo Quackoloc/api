@@ -8,6 +8,7 @@ import { ColocationTaskDto } from '../dtos/colocation-task.dto';
 import { ColocationTask } from '../../domain/entities/colocation-task.entity';
 import { ConnectedUser } from '../../../../common/types/connected-user.type';
 import { logger } from '../../../../common/logger';
+import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.enum';
 
 @Injectable()
 export class CreateColocationTaskUseCase {
@@ -23,7 +24,7 @@ export class CreateColocationTaskUseCase {
   ) {
     const taskToCreate = new ColocationTask();
     taskToCreate.title = createColocationTaskDto.title;
-    taskToCreate.completed = false;
+    taskToCreate.status = ColocationTaskStatus.TODO;
     taskToCreate.description = createColocationTaskDto.description;
     taskToCreate.dueDate = createColocationTaskDto.dueDate;
     taskToCreate.priority = createColocationTaskDto.priority;

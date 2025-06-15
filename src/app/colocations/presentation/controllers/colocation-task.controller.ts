@@ -20,8 +20,8 @@ import { ColocationDto } from '../../application/dtos/colocation.dto';
 import { RequireColocationMember } from '../decorators/colocation-member.decorator';
 import { UpdateColocationTaskDto } from '../../application/dtos/update-colocation-task.dto';
 import { UpdateColocationTaskUseCase } from '../../application/use-cases/update-colocation-task.use-case';
-import { MarkColocationTaskAsDoneUseCase } from '../../application/use-cases/mark-colocation-task-as-done.use-case';
-import { MarkColocationTaskAsUndoneUseCase } from '../../application/use-cases/mark-colocation-task-as-undone.use-case';
+import { ChangeColocationTaskStatusUseCase } from '../../application/use-cases/change-colocation-task-status.use-case';
+import { UpdateColocationTaskStatusDto } from '../../application/dtos/update-colocation-task-status.dto';
 
 @Controller('colocations/:colocationId/tasks')
 export class ColocationTaskController {
@@ -29,8 +29,7 @@ export class ColocationTaskController {
     private readonly getColocationTasksUseCase: GetColocationTasksUseCase,
     private readonly createColocationTaskUseCase: CreateColocationTaskUseCase,
     private readonly updateColocationTaskUseCase: UpdateColocationTaskUseCase,
-    private readonly markColocationTaskAsDoneUseCase: MarkColocationTaskAsDoneUseCase,
-    private readonly markColocationTaskAsUndoneUseCase: MarkColocationTaskAsUndoneUseCase
+    private readonly changeColocationTaskStatusUseCase: ChangeColocationTaskStatusUseCase
   ) {}
 
   @Get()
@@ -79,7 +78,7 @@ export class ColocationTaskController {
     );
   }
 
-  @Put(':taskId/done')
+  @Put(':taskId/status')
   @ApiResponse({ status: HttpStatus.OK, type: ColocationTaskDto })
   @ApiOperation({ summary: 'Update a colocation task' })
   @HttpCode(HttpStatus.OK)
@@ -87,24 +86,13 @@ export class ColocationTaskController {
   async markAsDone(
     @Param('colocationId', ParseIntPipe) colocationId: number,
     @Param('taskId', ParseIntPipe) taskId: number,
+    @Body() updateColocationTaskStatusDto: UpdateColocationTaskStatusDto,
     @GetConnectedUser() connectedUser: ConnectedUser
   ): Promise<void> {
-    return await this.markColocationTaskAsDoneUseCase.execute(colocationId, taskId, connectedUser);
-  }
-
-  @Put(':taskId/undone')
-  @ApiResponse({ status: HttpStatus.OK })
-  @ApiOperation({ summary: 'Update a colocation task' })
-  @HttpCode(HttpStatus.OK)
-  @RequireColocationMember()
-  async markAsUndone(
-    @Param('colocationId', ParseIntPipe) colocationId: number,
-    @Param('taskId', ParseIntPipe) taskId: number,
-    @GetConnectedUser() connectedUser: ConnectedUser
-  ): Promise<void> {
-    return await this.markColocationTaskAsUndoneUseCase.execute(
+    return await this.changeColocationTaskStatusUseCase.execute(
       colocationId,
       taskId,
+      updateColocationTaskStatusDto.status,
       connectedUser
     );
   }
