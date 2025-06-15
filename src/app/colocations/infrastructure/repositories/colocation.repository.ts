@@ -19,8 +19,8 @@ export class ColocationRepository
 
   async findMemberColocations(userId: number): Promise<Colocation[]> {
     return await this.createQueryBuilder('colocation')
-      .leftJoin('colocation.members', 'filteredMember') // pour le filtrage
-      .leftJoinAndSelect('colocation.members', 'allMembers') // pour charger tous les membres
+      .leftJoin('colocation.members', 'filteredMember')
+      .leftJoinAndSelect('colocation.members', 'allMembers')
       .where('filteredMember.id = :userId', { userId })
       .getMany();
   }

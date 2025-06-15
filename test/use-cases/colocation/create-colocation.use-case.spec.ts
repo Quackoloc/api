@@ -37,19 +37,17 @@ describe('CreateColocationUseCase', () => {
     address: '123 Street',
   };
 
-  const mockSavedColocation: Colocation = {
-    id: 1,
-    title: 'My Colocation',
-    address: '123 Street',
-    backgroundImage: '',
-    members: [mockUser],
-    invitationCodes: [],
-    pendingMembers: [],
-    dates: {
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      deletedAt: null,
-    },
+  const mockSavedColocation = new Colocation();
+  mockSavedColocation.id = 1;
+  mockSavedColocation.title = mockCreateColocationDto.title;
+  mockSavedColocation.address = mockCreateColocationDto.address;
+  mockSavedColocation.members = [mockUser];
+  mockSavedColocation.invitationCodes = [];
+  mockSavedColocation.pendingMembers = [];
+  mockSavedColocation.dates = {
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    deletedAt: null,
   };
 
   beforeEach(async () => {
