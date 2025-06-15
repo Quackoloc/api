@@ -26,8 +26,7 @@ import { ColocationTaskController } from './presentation/controllers/colocation-
 import { GetColocationTasksUseCase } from './application/use-cases/get-colocation-tasks.use-case';
 import { CreateColocationTaskUseCase } from './application/use-cases/create-colocation-task.use-case';
 import { UpdateColocationTaskUseCase } from './application/use-cases/update-colocation-task.use-case';
-import { MarkColocationTaskAsDoneUseCase } from './application/use-cases/mark-colocation-task-as-done.use-case';
-import { MarkColocationTaskAsUndoneUseCase } from './application/use-cases/mark-colocation-task-as-undone.use-case';
+import { ChangeColocationTaskStatusUseCase } from './application/use-cases/change-colocation-task-status.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Colocation]), UserModule, InvitationCode],
@@ -41,8 +40,7 @@ import { MarkColocationTaskAsUndoneUseCase } from './application/use-cases/mark-
     GetColocationTasksUseCase,
     CreateColocationTaskUseCase,
     UpdateColocationTaskUseCase,
-    MarkColocationTaskAsDoneUseCase,
-    MarkColocationTaskAsUndoneUseCase,
+    ChangeColocationTaskStatusUseCase,
     {
       provide: ColocationRepositoryToken,
       inject: [DataSource],

@@ -8,7 +8,8 @@ import { UpdateColocationTaskDto } from '../../../src/app/colocations/applicatio
 import { ColocationTask } from '../../../src/app/colocations/domain/entities/colocation-task.entity';
 import { ConnectedUser } from '../../../src/common/types/connected-user.type';
 import { logger } from '../../../src/common/logger';
-import { ColocationTaskPriority } from '../../../src/app/colocations/domain/enums/colocation-task.priority';
+import { ColocationTaskPriority } from '../../../src/app/colocations/domain/enums/colocation-task-priority.enum';
+import { ColocationTaskStatus } from '../../../src/app/colocations/domain/enums/colocation-task-status.enum';
 
 jest.mock('../../../src/common/logger', () => ({
   logger: {
@@ -32,7 +33,7 @@ describe('UpdateColocationTaskUseCase', () => {
   existingTask.priority = ColocationTaskPriority.MEDIUM;
   existingTask.assignedToId = 99;
   existingTask.colocationId = mockColocationId;
-  existingTask.completed = false;
+  existingTask.status = ColocationTaskStatus.DOING;
   existingTask.dates = {
     createdAt: new Date(),
     updatedAt: new Date(),

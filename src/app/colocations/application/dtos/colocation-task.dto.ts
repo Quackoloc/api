@@ -1,12 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ColocationTaskPriority } from '../../domain/enums/colocation-task.priority';
+import { ColocationTaskPriority } from '../../domain/enums/colocation-task-priority.enum';
+import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.enum';
 
 export class ColocationTaskDto {
   @ApiProperty({ example: 2 })
   id: number;
 
-  @ApiProperty({ example: false })
-  completed: boolean;
+  @ApiProperty({ example: 'DOING' })
+  status: ColocationTaskStatus;
 
   @ApiProperty({ example: 'Sortir les poubelles' })
   title: string;
@@ -33,7 +34,7 @@ export class ColocationTaskDto {
   static fromEntity(entity: ColocationTaskDto): ColocationTaskDto {
     return {
       id: entity.id,
-      completed: entity.completed,
+      status: entity.status,
       title: entity.title,
       description: entity.description,
       dueDate: entity.dueDate,

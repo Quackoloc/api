@@ -44,7 +44,7 @@ async function bootstrap() {
 
   app.enableCors({
     origin: ['http://localhost:5173', 'https://app.quackoloc.fr'],
-    methods: 'GET,POST',
+    methods: 'GET,POST,PUT',
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true,
   });

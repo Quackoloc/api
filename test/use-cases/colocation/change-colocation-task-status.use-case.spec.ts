@@ -1,23 +1,25 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MarkColocationTaskAsUndoneUseCase } from '../../../src/app/colocations/application/use-cases/mark-colocation-task-as-undone.use-case';
+import { ChangeColocationTaskStatusUseCase } from '../../../src/app/colocations/application/use-cases/change-colocation-task-status.use-case';
 import {
   ColocationTaskRepositoryGateway,
   ColocationTaskRepositoryToken,
 } from '../../../src/app/colocations/domain/gateways/colocation-task.repository.gateway';
 import { ConnectedUser } from '../../../src/common/types/connected-user.type';
 import { ColocationTask } from '../../../src/app/colocations/domain/entities/colocation-task.entity';
+import { ColocationTaskStatus } from '../../../src/app/colocations/domain/enums/colocation-task-status.enum';
 
-describe('MarkColocationTaskAsUndoneUseCase', () => {
-  let useCase: MarkColocationTaskAsUndoneUseCase;
+describe('ChangeColocationTaskStatusUseCase', () => {
+  let useCase: ChangeColocationTaskStatusUseCase;
   let taskRepository: jest.Mocked<ColocationTaskRepositoryGateway>;
 
   const mockColocationId = 1;
   const mockTaskId = 10;
   const mockUser: ConnectedUser = { id: 42 };
+  const mockStatus = ColocationTaskStatus.DONE;
 
   const mockTaskEntity = new ColocationTask();
   mockTaskEntity.id = mockTaskId;
-  mockTaskEntity.completed = true;
+  mockTaskEntity.status = ColocationTaskStatus.TODO;
   mockTaskEntity.colocationId = mockColocationId;
 
   beforeEach(async () => {
@@ -28,7 +30,7 @@ describe('MarkColocationTaskAsUndoneUseCase', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        MarkColocationTaskAsUndoneUseCase,
+        ChangeColocationTaskStatusUseCase,
         {
           provide: ColocationTaskRepositoryToken,
           useValue: mockRepository,
@@ -36,7 +38,7 @@ describe('MarkColocationTaskAsUndoneUseCase', () => {
       ],
     }).compile();
 
-    useCase = module.get<MarkColocationTaskAsUndoneUseCase>(MarkColocationTaskAsUndoneUseCase);
+    useCase = module.get(ChangeColocationTaskStatusUseCase);
     taskRepository = module.get(ColocationTaskRepositoryToken);
   });
 
@@ -44,14 +46,14 @@ describe('MarkColocationTaskAsUndoneUseCase', () => {
     jest.clearAllMocks();
   });
 
-  it('should mark the task as undone and save it', async () => {
+  it('should change the task status and save it', async () => {
     taskRepository.getOneById.mockResolvedValue(mockTaskEntity);
     taskRepository.save.mockResolvedValue(undefined);
 
-    await useCase.execute(mockColocationId, mockTaskId, mockUser);
+    await useCase.execute(mockColocationId, mockTaskId, mockStatus, mockUser);
 
     expect(taskRepository.getOneById).toHaveBeenCalledWith(mockTaskId);
-    expect(mockTaskEntity.completed).toBe(false);
+    expect(mockTaskEntity.status).toBe(mockStatus);
     expect(taskRepository.save).toHaveBeenCalledWith(mockTaskEntity);
   });
 
@@ -59,7 +61,10 @@ describe('MarkColocationTaskAsUndoneUseCase', () => {
     const error = new Error('Not found');
     taskRepository.getOneById.mockRejectedValue(error);
 
-    await expect(useCase.execute(mockColocationId, mockTaskId, mockUser)).rejects.toThrow(error);
+    await expect(
+      useCase.execute(mockColocationId, mockTaskId, mockStatus, mockUser)
+    ).rejects.toThrow(error);
+
     expect(taskRepository.getOneById).toHaveBeenCalledWith(mockTaskId);
     expect(taskRepository.save).not.toHaveBeenCalled();
   });
@@ -69,7 +74,10 @@ describe('MarkColocationTaskAsUndoneUseCase', () => {
     const error = new Error('Save error');
     taskRepository.save.mockRejectedValue(error);
 
-    await expect(useCase.execute(mockColocationId, mockTaskId, mockUser)).rejects.toThrow(error);
+    await expect(
+      useCase.execute(mockColocationId, mockTaskId, mockStatus, mockUser)
+    ).rejects.toThrow(error);
+
     expect(taskRepository.getOneById).toHaveBeenCalledWith(mockTaskId);
     expect(taskRepository.save).toHaveBeenCalledWith(mockTaskEntity);
   });

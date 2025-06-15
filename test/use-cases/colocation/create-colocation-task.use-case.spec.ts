@@ -9,7 +9,8 @@ import { ColocationTask } from '../../../src/app/colocations/domain/entities/col
 import { ColocationTaskDto } from '../../../src/app/colocations/application/dtos/colocation-task.dto';
 import { ConnectedUser } from '../../../src/common/types/connected-user.type';
 import { logger } from '../../../src/common/logger';
-import { ColocationTaskPriority } from '../../../src/app/colocations/domain/enums/colocation-task.priority';
+import { ColocationTaskPriority } from '../../../src/app/colocations/domain/enums/colocation-task-priority.enum';
+import { ColocationTaskStatus } from '../../../src/app/colocations/domain/enums/colocation-task-status.enum';
 
 jest.mock('../../../src/common/logger', () => ({
   logger: {
@@ -38,7 +39,7 @@ describe('CreateColocationTaskUseCase', () => {
   mockTaskEntity.description = mockCreateDto.description;
   mockTaskEntity.dueDate = mockCreateDto.dueDate;
   mockTaskEntity.priority = mockCreateDto.priority;
-  mockTaskEntity.completed = false;
+  mockTaskEntity.status = ColocationTaskStatus.TODO;
   mockTaskEntity.assignedToId = mockCreateDto.assignToId;
   mockTaskEntity.colocationId = mockColocationId;
   mockTaskEntity.dates = {
@@ -49,7 +50,7 @@ describe('CreateColocationTaskUseCase', () => {
 
   const mockTaskDto = new ColocationTaskDto({
     id: mockTaskEntity.id,
-    completed: false,
+    status: mockTaskEntity.status,
     title: mockTaskEntity.title,
     description: mockTaskEntity.description,
     dueDate: mockTaskEntity.dueDate,

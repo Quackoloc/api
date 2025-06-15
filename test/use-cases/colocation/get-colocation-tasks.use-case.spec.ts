@@ -6,6 +6,7 @@ import {
 } from '../../../src/app/colocations/domain/gateways/colocation-task.repository.gateway';
 import { ColocationTaskDto } from '../../../src/app/colocations/application/dtos/colocation-task.dto';
 import { ColocationTask } from '../../../src/app/colocations/domain/entities/colocation-task.entity';
+import { ColocationTaskStatus } from '../../../src/app/colocations/domain/enums/colocation-task-status.enum';
 
 describe('GetColocationTasksUseCase', () => {
   let useCase: GetColocationTasksUseCase;
@@ -15,7 +16,7 @@ describe('GetColocationTasksUseCase', () => {
 
   const mockTaskEntity = new ColocationTask();
   mockTaskEntity.id = 1;
-  mockTaskEntity.completed = false;
+  mockTaskEntity.status = ColocationTaskStatus.DOING;
   mockTaskEntity.title = 'Faire la vaisselle';
   mockTaskEntity.description = '';
   mockTaskEntity.dueDate = new Date();
@@ -29,7 +30,7 @@ describe('GetColocationTasksUseCase', () => {
 
   const mockTaskDto = new ColocationTaskDto({
     id: mockTaskEntity.id,
-    completed: mockTaskEntity.completed,
+    status: mockTaskEntity.status,
     title: mockTaskEntity.title,
     description: mockTaskEntity.description,
     dueDate: mockTaskEntity.dueDate,

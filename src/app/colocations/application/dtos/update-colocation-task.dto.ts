@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, Length } from '@nestjs/class-validator';
 import { IsDateString, IsNumber, IsOptional } from 'class-validator';
-import { ColocationTaskPriority } from '../../domain/enums/colocation-task.priority';
+import { ColocationTaskPriority } from '../../domain/enums/colocation-task-priority.enum';
 
 export class UpdateColocationTaskDto {
   @ApiProperty({ example: 'Faire la vaisselle' })
