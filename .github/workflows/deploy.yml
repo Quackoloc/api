@@ -19,8 +19,24 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
-      - name: Run tests
-        run: npm run test
+      - name: Run tests with coverage
+        run: npm run test:cov
+      - name: Write to Job Summary
+        run: |
+          echo "## Coverage Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f coverage/coverage-summary.json ]; then
+            echo "| Metric | Coverage |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|----------|" >> $GITHUB_STEP_SUMMARY
+            cat coverage/coverage-summary.json | jq -r '
+              "| Lines | " + (.total.lines.pct | tostring) + "% |",
+              "| Functions | " + (.total.functions.pct | tostring) + "% |", 
+              "| Branches | " + (.total.branches.pct | tostring) + "% |",
+              "| Statements | " + (.total.statements.pct | tostring) + "% |"
+            ' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Coverage data not available" >> $GITHUB_STEP_SUMMARY
+          fi
 
   build-docker:
     runs-on: ubuntu-latest
