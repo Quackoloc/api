@@ -4,12 +4,14 @@ import {
   Entity,
   Index,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 import { DatesEntity } from '../../../../common/entities/dates-entity';
 import { hash } from 'bcryptjs';
 import { Colocation } from '../../../colocations/domain/entities/colocation.entity';
+import { ColocationTask } from '../../../colocations/domain/entities/colocation-task.entity';
 
 @Entity()
 @Unique(['email'])
@@ -36,6 +38,9 @@ export class User {
 
   @ManyToOne(() => Colocation, (colocation) => colocation.members, { nullable: true })
   colocation: Colocation;
+
+  @OneToMany(() => ColocationTask, (colocationTask) => colocationTask.assignedTo)
+  tasks: ColocationTask[];
 
   @Column(() => DatesEntity, { prefix: false })
   dates: DatesEntity;

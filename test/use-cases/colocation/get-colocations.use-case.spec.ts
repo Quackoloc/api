@@ -6,6 +6,7 @@ import {
 } from '../../../src/app/colocations/domain/gateways/colocation.repository.gateway';
 import { ConnectedUser } from '../../../src/common/types/connected-user.type';
 import { ColocationDto } from '../../../src/app/colocations/application/dtos/colocation.dto';
+import { Colocation } from '../../../src/app/colocations/domain/entities/colocation.entity';
 
 describe('GetColocationsUseCase', () => {
   let useCase: GetColocationsUseCase;
@@ -13,19 +14,18 @@ describe('GetColocationsUseCase', () => {
 
   const mockConnectedUser: ConnectedUser = { id: 123 };
 
-  const mockColocationEntity = {
-    id: 1,
-    title: 'Test Colocation',
-    address: '123 Test St',
-    backgroundImage: '',
-    members: [],
-    invitationCodes: [],
-    pendingMembers: [],
-    dates: {
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      deletedAt: null,
-    },
+  const mockColocationEntity = new Colocation();
+  mockColocationEntity.id = 1;
+  mockColocationEntity.title = 'Test Colocation';
+  mockColocationEntity.address = '123 Test St';
+  mockColocationEntity.backgroundImage = '';
+  mockColocationEntity.members = [];
+  mockColocationEntity.invitationCodes = [];
+  mockColocationEntity.pendingMembers = [];
+  mockColocationEntity.dates = {
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    deletedAt: null,
   };
 
   const mockColocationDto = {

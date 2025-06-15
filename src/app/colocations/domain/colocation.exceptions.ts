@@ -34,3 +34,9 @@ export class UserIsAlreadyMemberOfColocationException extends ColocationExceptio
     super(`User with id: ${userId} is already a member of a colocation.`);
   }
 }
+
+export class ColocationTaskNotFoundException extends ColocationExceptions {
+  constructor(public readonly id: number) {
+    super(`Colocation task with id: ${id} not found.`);
+  }
+}

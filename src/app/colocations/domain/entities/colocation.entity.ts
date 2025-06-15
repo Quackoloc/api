@@ -3,6 +3,7 @@ import { DatesEntity } from '../../../../common/entities/dates-entity';
 import { User } from '../../../user/domain/entities/user.entity';
 import { PendingUser } from '../../../user/domain/entities/pending-user.entity';
 import { InvitationCode } from './invitation-code.entity';
+import { ColocationTask } from './colocation-task.entity';
 
 @Entity()
 export class Colocation {
@@ -21,6 +22,9 @@ export class Colocation {
 
   @OneToMany(() => User, (user) => user.colocation)
   members: User[];
+
+  @OneToMany(() => ColocationTask, (colocationTask) => colocationTask.colocation)
+  tasks: ColocationTask[];
 
   @OneToMany(() => InvitationCode, (invitationCode) => invitationCode.colocation)
   invitationCodes: InvitationCode[];

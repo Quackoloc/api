@@ -14,14 +14,4 @@ export class CreateColocationDto {
   @IsNotEmpty({ message: 'Address is required' })
   @Length(5, 255, { message: 'Address must be between 5 and 255 characters long' })
   address: string;
-
-  // @ApiProperty({
-  //   type: [String],
-  //   example: ['john@doe.fr', 'jane@smith.fr'],
-  //   description: 'List of emails for the members of the colocation',
-  // })
-  // @IsOptional()
-  // @IsArray({ message: 'Members must be an array' })
-  // @IsEmail({}, { each: true, message: 'Each member must be a valid email' })
-  // members: string[];
 }

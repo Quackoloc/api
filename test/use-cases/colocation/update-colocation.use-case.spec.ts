@@ -20,19 +20,18 @@ describe('UpdateColocationUseCase', () => {
   let useCase: UpdateColocationUseCase;
   let colocationRepository: jest.Mocked<ColocationRepositoryGateway>;
 
-  const mockColocation: Colocation = {
-    id: 1,
-    title: 'Old Title',
-    address: 'Old Address',
-    backgroundImage: 'old-background.jpg',
-    members: [],
-    invitationCodes: [],
-    pendingMembers: [],
-    dates: {
-      createdAt: new Date('2024-01-01T00:00:00Z'),
-      updatedAt: new Date('2024-01-01T00:00:00Z'),
-      deletedAt: null,
-    },
+  const mockColocation = new Colocation();
+  mockColocation.id = 1;
+  mockColocation.title = 'Old Title';
+  mockColocation.address = 'Old Address';
+  mockColocation.backgroundImage = 'old-background.jpg';
+  mockColocation.members = [];
+  mockColocation.invitationCodes = [];
+  mockColocation.pendingMembers = [];
+  mockColocation.dates = {
+    createdAt: new Date('2024-01-01T00:00:00Z'),
+    updatedAt: new Date('2024-01-01T00:00:00Z'),
+    deletedAt: null,
   };
 
   const mockConnectedUser: ConnectedUser = {
