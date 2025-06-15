@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/Quackoloc/api/compare/v1.2.1...v1.3.0) (2025-06-15)
+
+
+### Features
+
+* **auth:** implement logout route ([45e9de8](https://github.com/Quackoloc/api/commit/45e9de82fcc73ce88fd7952a8b9532cce349e3a1))
+* **colocation:** [QUAC-47] Créer les routes pour créer/récupérer/éditer une tâche ([0817ec9](https://github.com/Quackoloc/api/commit/0817ec9d2b8cc89986a467ce7ad36f272b6814c5))
+* **task:** update task status, update tests & add PUT to cors ([b999f6c](https://github.com/Quackoloc/api/commit/b999f6ce907109a72d750ca2bd764b437d580ab6))
+
 ## [1.2.1](https://github.com/Quackoloc/api/compare/v1.2.0...v1.2.1) (2025-06-13)
 
 
