@@ -7,7 +7,6 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Put,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateColocationDto } from '../../application/dtos/create-colocation.dto';
@@ -22,7 +21,6 @@ import { CreateInvitationCodeUseCase } from '../../application/use-cases/create-
 import { InvitationCodeDto } from '../../application/dtos/invitation-code.dto';
 import { JoinColocationDto } from '../../application/dtos/join-colocation.dto';
 import { JoinColocationUseCase } from '../../application/use-cases/join-colocation.use-case';
-import { UpdateColocationDto } from '../../application/dtos/update-colocation.dto';
 import { UpdateColocationUseCase } from '../../application/use-cases/update-colocation.use-case';
 
 @Controller('colocations')
@@ -81,15 +79,5 @@ export class ColocationsController {
     @GetConnectedUser() connectedUser: ConnectedUser
   ): Promise<void> {
     return this.joinColocationUseCase.execute(connectedUser.id, joinColocationDto.invitationCode);
-  }
-
-  @Put(':colocationId')
-  @ApiResponse({ status: HttpStatus.OK })
-  async update(
-    @Param('colocationId', ParseIntPipe) colocationId: number,
-    @Body() updateColocationDto: UpdateColocationDto,
-    @GetConnectedUser() connectedUser: ConnectedUser
-  ) {
-    await this.updateColocationUseCase.execute(colocationId, updateColocationDto, connectedUser);
   }
 }
