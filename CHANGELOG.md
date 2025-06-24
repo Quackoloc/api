@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/Quackoloc/api/compare/v1.3.0...v1.3.1) (2025-06-24)
+
+
+### Bug Fixes
+
+* **ci:** remove Docker build & push steps ([a3cd156](https://github.com/Quackoloc/api/commit/a3cd156564e70625ed1ba42ccb57b351a5ca065c))
+
 # [1.3.0](https://github.com/Quackoloc/api/compare/v1.2.1...v1.3.0) (2025-06-15)
 
 
