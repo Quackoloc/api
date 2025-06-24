@@ -15,16 +15,22 @@ async function bootstrap() {
       transports: [
         new winston.transports.Console({
           format: winston.format.combine(
-            winston.format.timestamp(),
+            winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
             winston.format.colorize(),
-            winston.format.simple()
+            winston.format.printf(({ timestamp, level, message, stack }) => {
+              return stack
+                ? `${timestamp} ${level}: ${stack}`
+                : `${timestamp} ${level}: ${message}`;
+            })
           ),
         }),
       ],
     }),
   };
 
-  const app = await NestFactory.create(AppModule, winstonConfig);
+  const app = await NestFactory.create(AppModule, {
+    logger: winstonConfig.logger,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Quackoloc API')
