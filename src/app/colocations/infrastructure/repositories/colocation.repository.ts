@@ -1,4 +1,4 @@
-import { FindOptionsRelations, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Colocation } from '../../domain/entities/colocation.entity';
 import { ColocationRepositoryGateway } from '../../domain/gateways/colocation.repository.gateway';
 import { ColocationNotFoundException } from '../../domain/colocation.exceptions';
@@ -7,8 +7,8 @@ export class ColocationRepository
   extends Repository<Colocation>
   implements ColocationRepositoryGateway
 {
-  async getById(id: number, options?: FindOptionsRelations<Colocation>): Promise<Colocation> {
-    const colocation = await this.findById(id, options);
+  async getById(id: number): Promise<Colocation> {
+    const colocation = await this.findById(id);
 
     if (!colocation) {
       throw new ColocationNotFoundException(id);
@@ -25,7 +25,7 @@ export class ColocationRepository
       .getMany();
   }
 
-  async findById(id: number, options?: FindOptionsRelations<Colocation>): Promise<Colocation> {
+  async findById(id: number): Promise<Colocation> {
     return this.createQueryBuilder('colocation')
       .leftJoinAndSelect('colocation.members', 'members')
       .where('colocation.id = :id', { id })
