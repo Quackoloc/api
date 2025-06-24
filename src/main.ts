@@ -9,6 +9,8 @@ import * as winston from 'winston';
 import * as cookieParser from 'cookie-parser';
 import { ExceptionHandler } from './app/exception-handler';
 
+import './instrument';
+
 async function bootstrap() {
   const winstonConfig = {
     logger: WinstonModule.createLogger({
