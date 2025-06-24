@@ -9,11 +9,11 @@ import { ColocationsModule } from './colocations/colocations.module';
 import { TasksModule } from './tasks/tasks.module';
 import { UserModule } from './user/user.module';
 import { AppController } from './app.controller';
+import { SentryModule } from '@sentry/nestjs/setup';
 
 @Module({
   imports: [
-    AuthModule,
-    UserModule,
+    SentryModule.forRoot(),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -22,6 +22,8 @@ import { AppController } from './app.controller';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    AuthModule,
+    UserModule,
     ColocationsModule,
     TasksModule,
   ],

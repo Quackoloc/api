@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build",
+    "build": "nest build && npm run sentry:sourcemaps",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -23,7 +23,8 @@
     "lint:check": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\""
+    "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org quackoloc --project api-production ./dist && sentry-cli sourcemaps upload --org quackoloc --project api-production ./dist"
   },
   "dependencies": {
     "@azure/communication-email": "^1.0.0",
@@ -37,6 +38,8 @@
     "@nestjs/platform-express": "^10.4.15",
     "@nestjs/swagger": "^8.1.0",
     "@nestjs/typeorm": "^10.0.2",
+    "@sentry/cli": "^2.46.0",
+    "@sentry/nestjs": "^9.31.0",
     "@types/passport-jwt": "^4.0.1",
     "@willsoto/nestjs-prometheus": "^6.0.1",
     "bcryptjs": "^2.4.3",

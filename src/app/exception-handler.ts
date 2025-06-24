@@ -12,6 +12,7 @@ import {
   ColocationNotFoundException,
   UserIsNotMemberOfColocationException,
 } from './colocations/domain/colocation.exceptions';
+import { SentryExceptionCaptured } from '@sentry/nestjs';
 
 interface HttpErrorResponse {
   status: number;
@@ -27,6 +28,7 @@ interface ExceptionHttpMapping {
 
 @Catch()
 export class ExceptionHandler implements ExceptionFilter {
+  @SentryExceptionCaptured()
   catch(exception: Error | HttpException | DomainException, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
