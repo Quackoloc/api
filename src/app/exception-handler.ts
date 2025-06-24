@@ -40,7 +40,7 @@ export class ExceptionHandler implements ExceptionFilter {
     if (exception instanceof HttpException) {
       const status = exception.getStatus();
       const exceptionResponse = exception.getResponse();
-      logger.error(`HTTP Exception: ${status}`, exceptionResponse);
+      logger.error(exception);
       response.status(status).json(exceptionResponse);
       return;
     }

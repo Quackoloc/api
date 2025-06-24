@@ -1,17 +1,13 @@
-import { createLogger, format, transports } from 'winston';
-
-const { combine, timestamp, printf, colorize, errors } = format;
+import * as winston from 'winston';
+import { createLogger, transports } from 'winston';
 
 export const logger = createLogger({
   level: 'info',
-  format: combine(
-    colorize({ all: true }),
-    timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    errors({ stack: true }),
-    printf(({ timestamp, level, message, stack }) => {
-      return stack
-        ? `${level}: ${timestamp} ${message}\n${stack}`
-        : `${level}: ${timestamp} ${message}`;
+  format: winston.format.combine(
+    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    winston.format.colorize(),
+    winston.format.printf(({ timestamp, level, message, stack }) => {
+      return stack ? `${timestamp} ${level}: ${stack}` : `${timestamp} ${level}: ${message}`;
     })
   ),
   transports: [new transports.Console()],
