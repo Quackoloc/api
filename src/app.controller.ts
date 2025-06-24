@@ -6,6 +6,6 @@ export class AppController {
   @Public()
   @Get()
   get() {
-    return { status: 'ok', message: 'API is running' };
+    return { status: 'ok', message: 'API is running !' };
   }
 }
