@@ -6,7 +6,7 @@ import {
   UserEmailNotFoundException,
   UserIdNotFoundException,
 } from './user/domain/user-exceptions';
-import { logger } from '../common/logger';
+import { logger } from '../config/logger.config';
 import { InvalidTokenException } from './auth/domain/auth-exceptions';
 import {
   ColocationNotFoundException,

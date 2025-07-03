@@ -3,7 +3,7 @@ import {
   ColocationTaskRepositoryToken,
 } from '../../domain/gateways/colocation-task.repository.gateway';
 import { Inject, Injectable } from '@nestjs/common';
-import { logger } from '../../../../common/logger';
+import { logger } from '../../../../config/logger.config';
 import { ConnectedUser } from '../../../../common/types/connected-user.type';
 import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.enum';
 
@@ -24,7 +24,7 @@ export class ChangeColocationTaskStatusUseCase {
     colocationTask.status = status;
     await this.colocationTaskRepository.save(colocationTask);
 
-    logger.info(
+    logger.log(
       `Colocation task with id : ${taskId} in colocation with id : ${colocationId} marked as ${status} by user with id : ${connectedUser.id}`
     );
   }

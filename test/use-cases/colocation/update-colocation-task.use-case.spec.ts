@@ -7,11 +7,11 @@ import {
 import { UpdateColocationTaskDto } from '../../../src/app/colocations/application/dtos/update-colocation-task.dto';
 import { ColocationTask } from '../../../src/app/colocations/domain/entities/colocation-task.entity';
 import { ConnectedUser } from '../../../src/common/types/connected-user.type';
-import { logger } from '../../../src/common/logger';
+import { logger } from '../../../src/config/logger.config';
 import { ColocationTaskPriority } from '../../../src/app/colocations/domain/enums/colocation-task-priority.enum';
 import { ColocationTaskStatus } from '../../../src/app/colocations/domain/enums/colocation-task-status.enum';
 
-jest.mock('../../../src/common/logger', () => ({
+jest.mock('../../../src/config/logger.config', () => ({
   logger: {
     info: jest.fn(),
   },
@@ -89,7 +89,7 @@ describe('UpdateColocationTaskUseCase', () => {
       })
     );
 
-    expect(logger.info).toHaveBeenCalledWith(
+    expect(logger.log).toHaveBeenCalledWith(
       `Colocation task with id : ${mockTaskId} in colocation with id : ${mockColocationId} updated by user with id : ${connectedUser.id}`
     );
   });

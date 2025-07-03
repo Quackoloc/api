@@ -1,7 +1,8 @@
 import * as winston from 'winston';
-import { createLogger, transports } from 'winston';
+import { transports } from 'winston';
+import { WinstonModule } from 'nest-winston';
 
-export const logger = createLogger({
+export const logger = WinstonModule.createLogger({
   level: 'info',
   format: winston.format.combine(
     winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
@@ -12,3 +13,7 @@ export const logger = createLogger({
   ),
   transports: [new transports.Console()],
 });
+
+export const winstonConfig = {
+  logger,
+};
