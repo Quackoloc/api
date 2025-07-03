@@ -5,7 +5,7 @@ import {
 } from '../../domain/gateways/colocation-task.repository.gateway';
 import { UpdateColocationTaskDto } from '../dtos/update-colocation-task.dto';
 import { ConnectedUser } from '../../../../common/types/connected-user.type';
-import { logger } from '../../../../common/logger';
+import { logger } from '../../../../config/logger.config';
 
 @Injectable()
 export class UpdateColocationTaskUseCase {
@@ -31,7 +31,7 @@ export class UpdateColocationTaskUseCase {
       assignedToId: updateColocationTaskDto.assignToId ?? connectedUser.id,
     });
 
-    logger.info(
+    logger.log(
       `Colocation task with id : ${taskToUpdate.id} in colocation with id : ${colocationId} updated by user with id : ${connectedUser.id}`
     );
   }

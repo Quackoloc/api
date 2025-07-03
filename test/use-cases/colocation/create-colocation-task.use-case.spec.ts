@@ -8,11 +8,11 @@ import { CreateColocationTaskDto } from '../../../src/app/colocations/applicatio
 import { ColocationTask } from '../../../src/app/colocations/domain/entities/colocation-task.entity';
 import { ColocationTaskDto } from '../../../src/app/colocations/application/dtos/colocation-task.dto';
 import { ConnectedUser } from '../../../src/common/types/connected-user.type';
-import { logger } from '../../../src/common/logger';
+import { logger } from '../../../src/config/logger.config';
 import { ColocationTaskPriority } from '../../../src/app/colocations/domain/enums/colocation-task-priority.enum';
 import { ColocationTaskStatus } from '../../../src/app/colocations/domain/enums/colocation-task-status.enum';
 
-jest.mock('../../../src/common/logger', () => ({
+jest.mock('../../../src/config/logger.config', () => ({
   logger: {
     info: jest.fn(),
   },
@@ -89,7 +89,7 @@ describe('CreateColocationTaskUseCase', () => {
 
     expect(taskRepository.save).toHaveBeenCalled();
     expect(ColocationTaskDto.fromEntity).toHaveBeenCalledWith(mockTaskEntity);
-    expect(logger.info).toHaveBeenCalledWith(
+    expect(logger.log).toHaveBeenCalledWith(
       `Colocation task with id : ${mockTaskEntity.id} created in colocation with id : ${mockColocationId} by user with id : ${mockConnectedUser.id}`
     );
     expect(result).toEqual(mockTaskDto);
