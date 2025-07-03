@@ -1,7 +1,7 @@
 import { ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { Response } from 'express';
 import { InvalidTokenException } from '../src/app/auth/domain/auth-exceptions';
-import { logger } from '../src/common/logger';
+import { logger } from '../src/config/logger.config';
 import {
   ColocationNotFoundException,
   UserIsNotMemberOfColocationException,
@@ -14,7 +14,7 @@ import {
 import { DomainException } from '../src/common/app-exception';
 import { ExceptionHandler } from '../src/app/exception-handler';
 
-jest.mock('../src/common/logger', () => ({
+jest.mock('../src/config/logger.config', () => ({
   logger: {
     info: jest.fn(),
     error: jest.fn(),

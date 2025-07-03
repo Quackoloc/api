@@ -6,10 +6,10 @@ import {
 import { UpdateColocationUseCase } from '../../../src/app/colocations/application/use-cases/update-colocation.use-case';
 import { ConnectedUser } from '../../../src/common/types/connected-user.type';
 import { UpdateColocationDto } from '../../../src/app/colocations/application/dtos/update-colocation.dto';
-import { logger } from '../../../src/common/logger';
+import { logger } from '../../../src/config/logger.config';
 import { Colocation } from '../../../src/app/colocations/domain/entities/colocation.entity';
 
-jest.mock('../../../src/common/logger', () => ({
+jest.mock('../../../src/config/logger.config', () => ({
   logger: {
     info: jest.fn(),
     error: jest.fn(),
@@ -96,10 +96,10 @@ describe('UpdateColocationUseCase', () => {
       await useCase.execute(1, mockUpdateColocationDto, mockConnectedUser);
 
       // Assert
-      expect(logger.info).toHaveBeenCalledWith(
+      expect(logger.log).toHaveBeenCalledWith(
         'Colocation with id : 1 updated by user with id : 123'
       );
-      expect(logger.info).toHaveBeenCalledTimes(1);
+      expect(logger.log).toHaveBeenCalledTimes(1);
     });
 
     it('should throw error when colocation is not found', async () => {
@@ -114,7 +114,7 @@ describe('UpdateColocationUseCase', () => {
 
       expect(colocationRepository.getById).toHaveBeenCalledWith(1);
       expect(colocationRepository.save).not.toHaveBeenCalled();
-      expect(logger.info).not.toHaveBeenCalled();
+      expect(logger.log).not.toHaveBeenCalled();
     });
 
     it('should throw error when save fails', async () => {
@@ -130,7 +130,7 @@ describe('UpdateColocationUseCase', () => {
 
       expect(colocationRepository.getById).toHaveBeenCalledWith(1);
       expect(colocationRepository.save).toHaveBeenCalledWith(mockColocation);
-      expect(logger.info).toHaveBeenCalled(); // Le log est appelé avant le save
+      expect(logger.log).toHaveBeenCalled(); // Le log est appelé avant le save
     });
 
     it('should update only the provided fields', async () => {
@@ -158,7 +158,7 @@ describe('UpdateColocationUseCase', () => {
 
       // Assert
       expect(colocationRepository.getById).toHaveBeenCalledWith(colocationId);
-      expect(logger.info).toHaveBeenCalledWith(
+      expect(logger.log).toHaveBeenCalledWith(
         `Colocation with id : ${colocationId} updated by user with id : ${mockConnectedUser.id}`
       );
     });
@@ -173,7 +173,7 @@ describe('UpdateColocationUseCase', () => {
       await useCase.execute(1, mockUpdateColocationDto, differentUser);
 
       // Assert
-      expect(logger.info).toHaveBeenCalledWith(
+      expect(logger.log).toHaveBeenCalledWith(
         'Colocation with id : 1 updated by user with id : 456'
       );
     });

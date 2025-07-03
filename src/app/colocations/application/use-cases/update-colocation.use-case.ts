@@ -4,7 +4,7 @@ import {
   ColocationRepositoryToken,
 } from '../../domain/gateways/colocation.repository.gateway';
 import { UpdateColocationDto } from '../dtos/update-colocation.dto';
-import { logger } from '../../../../common/logger';
+import { logger } from '../../../../config/logger.config';
 import { ConnectedUser } from '../../../../common/types/connected-user.type';
 
 @Injectable()
@@ -24,7 +24,7 @@ export class UpdateColocationUseCase {
     colocation.title = updateColocationDto.title;
     colocation.address = updateColocationDto.address;
 
-    logger.info(
+    logger.log(
       `Colocation with id : ${colocationId} updated by user with id : ${connectedUser.id}`
     );
 

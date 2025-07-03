@@ -7,7 +7,7 @@ import { CreateColocationTaskDto } from '../dtos/create-colocation-task.dto';
 import { ColocationTaskDto } from '../dtos/colocation-task.dto';
 import { ColocationTask } from '../../domain/entities/colocation-task.entity';
 import { ConnectedUser } from '../../../../common/types/connected-user.type';
-import { logger } from '../../../../common/logger';
+import { logger } from '../../../../config/logger.config';
 import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.enum';
 
 @Injectable()
@@ -33,7 +33,7 @@ export class CreateColocationTaskUseCase {
 
     const task = await this.colocationTaskRepository.save(taskToCreate);
 
-    logger.info(
+    logger.log(
       `Colocation task with id : ${task.id} created in colocation with id : ${colocationId} by user with id : ${connectedUser.id}`
     );
 

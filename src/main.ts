@@ -4,33 +4,14 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
-import { WinstonModule } from 'nest-winston';
-import * as winston from 'winston';
 import * as cookieParser from 'cookie-parser';
 import { ExceptionHandler } from './app/exception-handler';
-
-import './instrument';
 import { HttpExceptionFilter } from './app/http-exception-handler';
 
-async function bootstrap() {
-  const winstonConfig = {
-    logger: WinstonModule.createLogger({
-      transports: [
-        new winston.transports.Console({
-          format: winston.format.combine(
-            winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-            winston.format.colorize(),
-            winston.format.printf(({ timestamp, level, message, stack }) => {
-              return stack
-                ? `${timestamp} ${level}: ${stack}`
-                : `${timestamp} ${level}: ${message}`;
-            })
-          ),
-        }),
-      ],
-    }),
-  };
+import './instrument';
+import { winstonConfig } from './config/logger.config';
 
+async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: winstonConfig.logger,
   });

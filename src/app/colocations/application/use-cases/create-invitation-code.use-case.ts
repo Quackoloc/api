@@ -4,7 +4,7 @@ import { InvitationCode } from '../../domain/entities/invitation-code.entity';
 import { InvitationCodeRepositoryToken } from '../../infrastructure/repositories/invitation-code.repository';
 import { InvitationCodeRepositoryGateway } from '../../domain/gateways/invitation-code.repository.gateway';
 import { InvitationCodeDto } from '../dtos/invitation-code.dto';
-import { logger } from '../../../../common/logger';
+import { logger } from '../../../../config/logger.config';
 import { ConnectedUser } from '../../../../common/types/connected-user.type';
 
 @Injectable()
@@ -29,7 +29,7 @@ export class CreateInvitationCodeUseCase {
 
     const createdCode = await this.invitationCodeRepository.save(invitationCode);
 
-    logger.info(
+    logger.log(
       `Colocation invitation code with id : ${createdCode.id} created by user with id : ${connectedUser.id}`
     );
 
