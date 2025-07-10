@@ -2,9 +2,13 @@ name: Build and Deploy to Clever Cloud
 
 on:
   push:
+    branches:
+      - main
+      - deploy
   pull_request:
     branches:
       - main
+      - deploy
 
 jobs:
   test:
@@ -48,9 +52,76 @@ jobs:
           else
             echo "Coverage data not available" >> $GITHUB_STEP_SUMMARY
           fi
+  
+
+  build-docker:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/deploy'
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tag }}
+      repo-owner: ${{ steps.meta.outputs.repo-owner }}
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT_TOKEN }}
+      - name: Inject .env from GitHub secret
+        run: echo "${{ secrets.ENV_FILE }}" > .env
+      - name: Set image metadata
+        id: meta
+        run: |
+          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          TAG=$(git rev-parse --short HEAD)
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "repo-owner=$REPO_OWNER" >> $GITHUB_OUTPUT
+      - name: Build and push API image
+        run: |
+          REPO_OWNER=${{ steps.meta.outputs.repo-owner }}
+          TAG=${{ steps.meta.outputs.tag }}
+          docker build --no-cache -t ghcr.io/$REPO_OWNER/quackoloc.api:$TAG -f ./dockerfiles/build.Dockerfile .
+          docker tag ghcr.io/$REPO_OWNER/quackoloc.api:$TAG ghcr.io/$REPO_OWNER/quackoloc.api:latest
+          docker push ghcr.io/$REPO_OWNER/quackoloc.api:$TAG
+          docker push ghcr.io/$REPO_OWNER/quackoloc.api:latest
+
+  upload-sourcemaps:
+    runs-on: ubuntu-latest
+    needs: build-docker
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/deploy'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project (if needed)
+        run: npm run build
+
+      - name: Setup Sentry CLI
+        run: npm install -g @sentry/cli
+
+      - name: Upload sourcemaps to Sentry
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: npm run sentry:sourcemaps
+
 
   semantic-release:
     runs-on: ubuntu-latest
+    needs: build-docker
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout the code
@@ -68,3 +139,25 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
+
+  deploy-clever:
+    runs-on: ubuntu-latest
+    needs: build-docker
+    if: github.ref == 'refs/heads/main'  || github.ref == 'refs/heads/deploy'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup SSH key for Clever Cloud
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.CLEVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan push-n3-par-clevercloud-customers.services.clever-cloud.com >> ~/.ssh/known_hosts
+
+      - name: Add Clever remote and push
+        run: |
+          git remote add clever git+ssh://git@push-n3-par-clevercloud-customers.services.clever-cloud.com/app_c8a3f88e-d6eb-4cd0-af5e-478cb1c61458.git
+          git push clever HEAD:master --force
