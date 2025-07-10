@@ -8,4 +8,10 @@ export class AppController {
   getRoot() {
     return { status: 'ok', message: 'API is running' };
   }
+
+  @Public()
+  @Get('debug-sentry')
+  getError() {
+    throw new Error('My first Sentry error!');
+  }
 }

@@ -10,6 +10,7 @@ import * as cookieParser from 'cookie-parser';
 import { ExceptionHandler } from './app/exception-handler';
 
 import './instrument';
+import { HttpExceptionFilter } from './app/http-exception-handler';
 
 async function bootstrap() {
   const winstonConfig = {
@@ -46,7 +47,7 @@ async function bootstrap() {
 
   app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalFilters(new ExceptionHandler());
+  app.useGlobalFilters(new ExceptionHandler(), new HttpExceptionFilter());
   app.use(cookieParser());
   app.use(helmet());
 
