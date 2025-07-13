@@ -11,7 +11,7 @@ import { Colocation } from '../../../src/app/colocations/domain/entities/colocat
 
 jest.mock('../../../src/config/logger.config', () => ({
   logger: {
-    info: jest.fn(),
+    log: jest.fn(),
     error: jest.fn(),
   },
 }));
