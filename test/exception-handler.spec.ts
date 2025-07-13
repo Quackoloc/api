@@ -16,7 +16,7 @@ import { ExceptionHandler } from '../src/app/exception-handler';
 
 jest.mock('../src/config/logger.config', () => ({
   logger: {
-    info: jest.fn(),
+    log: jest.fn(),
     error: jest.fn(),
   },
 }));

@@ -14,7 +14,7 @@ import { ColocationTaskStatus } from '../../../src/app/colocations/domain/enums/
 
 jest.mock('../../../src/config/logger.config', () => ({
   logger: {
-    info: jest.fn(),
+    log: jest.fn(),
   },
 }));
 
