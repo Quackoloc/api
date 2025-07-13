@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetColocationsUseCase } from '../../../src/app/colocations/application/use-cases/get-colocations.use-case';
+import { GetColocationsUseCase } from './get-colocations.use-case';
 import {
   ColocationRepositoryGateway,
   ColocationRepositoryToken,
-} from '../../../src/app/colocations/domain/gateways/colocation.repository.gateway';
-import { ConnectedUser } from '../../../src/common/types/connected-user.type';
-import { ColocationDto } from '../../../src/app/colocations/application/dtos/colocation.dto';
-import { Colocation } from '../../../src/app/colocations/domain/entities/colocation.entity';
+} from '../../domain/gateways/colocation.repository.gateway';
+import { ConnectedUser } from '../../../../common/types/connected-user.type';
+import { ColocationDto } from '../dtos/colocation.dto';
+import { Colocation } from '../../domain/entities/colocation.entity';
 
 describe('GetColocationsUseCase', () => {
   let useCase: GetColocationsUseCase;

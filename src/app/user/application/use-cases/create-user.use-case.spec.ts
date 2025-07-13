@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateUserUseCase } from '../../../src/app/user/application/use-cases/create-user.use-case';
+import { CreateUserUseCase } from './create-user.use-case';
 import {
   UserRepositoryGateway,
   UserRepositoryToken,
-} from '../../../src/app/user/domain/gateways/user.repository.gateway';
-import { User } from '../../../src/app/user/domain/entities/user.entity';
-import { CreateUserDto } from '../../../src/app/user/application/dtos/create-user.dto';
-import { UserEmailAlreadyExistsException } from '../../../src/app/user/domain/user-exceptions';
-import { UserDto } from '../../../src/app/user/application/dtos/user.dto';
+} from '../../domain/gateways/user.repository.gateway';
+import { User } from '../../domain/entities/user.entity';
+import { CreateUserDto } from '../dtos/create-user.dto';
+import { UserEmailAlreadyExistsException } from '../../domain/user-exceptions';
+import { UserDto } from '../dtos/user.dto';
 
 describe('CreateUserUseCase', () => {
   let useCase: CreateUserUseCase;

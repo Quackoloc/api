@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoginUseCase } from '../../../src/app/auth/application/use-cases/login.use-case';
+import { LoginUseCase } from './login.use-case';
 import {
   UserRepositoryGateway,
   UserRepositoryToken,
-} from '../../../src/app/user/domain/gateways/user.repository.gateway';
+} from '../../../user/domain/gateways/user.repository.gateway';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { User } from '../../../src/app/user/domain/entities/user.entity';
-import { UserDto } from '../../../src/app/user/application/dtos/user.dto';
+import { User } from '../../../user/domain/entities/user.entity';
+import { UserDto } from '../../../user/application/dtos/user.dto';
 
 describe('LoginUseCase', () => {
   let useCase: LoginUseCase;

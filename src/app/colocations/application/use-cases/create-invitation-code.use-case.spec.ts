@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { InvitationCodeRepositoryGateway } from '../../../src/app/colocations/domain/gateways/invitation-code.repository.gateway';
-import { CreateInvitationCodeUseCase } from '../../../src/app/colocations/application/use-cases/create-invitation-code.use-case';
-import { ColocationCodeServiceGateway } from '../../../src/app/colocations/domain/gateways/colocation-code.service.gateway';
-import { InvitationCodeRepositoryToken } from '../../../src/app/colocations/infrastructure/repositories/invitation-code.repository';
+import { InvitationCodeRepositoryGateway } from '../../domain/gateways/invitation-code.repository.gateway';
+import { CreateInvitationCodeUseCase } from './create-invitation-code.use-case';
+import { ColocationCodeServiceGateway } from '../../domain/gateways/colocation-code.service.gateway';
+import { InvitationCodeRepositoryToken } from '../../infrastructure/repositories/invitation-code.repository';
 
 describe('CreateInvitationCodeUseCase', () => {
   let useCase: CreateInvitationCodeUseCase;

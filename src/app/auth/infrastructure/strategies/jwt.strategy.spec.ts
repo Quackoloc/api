@@ -1,8 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import {
-  cookieExtractor,
-  JwtStrategy,
-} from '../../src/app/auth/infrastructure/strategies/jwt.strategy';
+import { cookieExtractor, JwtStrategy } from './jwt.strategy';
 
 describe('JwtStrategy', () => {
   let strategy: JwtStrategy;

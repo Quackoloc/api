@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RefreshAccessTokenUseCase } from '../../../src/app/auth/application/use-cases/refresh-access-token.use-case';
+import { RefreshAccessTokenUseCase } from './refresh-access-token.use-case';
 import {
   UserRepositoryGateway,
   UserRepositoryToken,
-} from '../../../src/app/user/domain/gateways/user.repository.gateway';
+} from '../../../user/domain/gateways/user.repository.gateway';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { User } from '../../../src/app/user/domain/entities/user.entity';
-import { UserIdNotFoundException } from '../../../src/app/user/domain/user-exceptions';
+import { User } from '../../../user/domain/entities/user.entity';
+import { UserIdNotFoundException } from '../../../user/domain/user-exceptions';
 
 describe('RefreshAccessTokenUseCase', () => {
   let useCase: RefreshAccessTokenUseCase;

@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ValidateUserUseCase } from '../../../src/app/auth/application/use-cases/validate-user.use-case';
+import { ValidateUserUseCase } from './validate-user.use-case';
 import {
   UserRepositoryGateway,
   UserRepositoryToken,
-} from '../../../src/app/user/domain/gateways/user.repository.gateway';
-import { User } from '../../../src/app/user/domain/entities/user.entity';
-import { UserDto } from '../../../src/app/user/application/dtos/user.dto';
+} from '../../../user/domain/gateways/user.repository.gateway';
+import { User } from '../../../user/domain/entities/user.entity';
+import { UserDto } from '../../../user/application/dtos/user.dto';
 import * as bcrypt from 'bcryptjs';
 
 jest.mock('bcryptjs');

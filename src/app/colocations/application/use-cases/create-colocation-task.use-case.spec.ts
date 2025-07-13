@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateColocationTaskUseCase } from '../../../src/app/colocations/application/use-cases/create-colocation-task.use-case';
+import { CreateColocationTaskUseCase } from './create-colocation-task.use-case';
 import {
   ColocationTaskRepositoryGateway,
   ColocationTaskRepositoryToken,
-} from '../../../src/app/colocations/domain/gateways/colocation-task.repository.gateway';
-import { CreateColocationTaskDto } from '../../../src/app/colocations/application/dtos/create-colocation-task.dto';
-import { ColocationTask } from '../../../src/app/colocations/domain/entities/colocation-task.entity';
-import { ColocationTaskDto } from '../../../src/app/colocations/application/dtos/colocation-task.dto';
-import { ConnectedUser } from '../../../src/common/types/connected-user.type';
-import { logger } from '../../../src/config/logger.config';
-import { ColocationTaskPriority } from '../../../src/app/colocations/domain/enums/colocation-task-priority.enum';
-import { ColocationTaskStatus } from '../../../src/app/colocations/domain/enums/colocation-task-status.enum';
+} from '../../domain/gateways/colocation-task.repository.gateway';
+import { CreateColocationTaskDto } from '../dtos/create-colocation-task.dto';
+import { ColocationTask } from '../../domain/entities/colocation-task.entity';
+import { ColocationTaskDto } from '../dtos/colocation-task.dto';
+import { ConnectedUser } from '../../../../common/types/connected-user.type';
+import { logger } from '../../../../config/logger.config';
+import { ColocationTaskPriority } from '../../domain/enums/colocation-task-priority.enum';
+import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.enum';
 
-jest.mock('../../../src/config/logger.config', () => ({
+jest.mock('../../../../config/logger.config', () => ({
   logger: {
     log: jest.fn(),
   },

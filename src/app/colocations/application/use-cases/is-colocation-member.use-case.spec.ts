@@ -2,10 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {
   ColocationRepositoryGateway,
   ColocationRepositoryToken,
-} from '../../../src/app/colocations/domain/gateways/colocation.repository.gateway';
-import { IsColocationMemberUseCase } from '../../../src/app/colocations/application/use-cases/is-colocation-member.use-case';
-import { User } from '../../../src/app/user/domain/entities/user.entity';
-import { Colocation } from '../../../src/app/colocations/domain/entities/colocation.entity';
+} from '../../domain/gateways/colocation.repository.gateway';
+import { IsColocationMemberUseCase } from './is-colocation-member.use-case';
+import { User } from '../../../user/domain/entities/user.entity';
+import { Colocation } from '../../domain/entities/colocation.entity';
 
 describe('IsColocationMemberUseCase', () => {
   let useCase: IsColocationMemberUseCase;

@@ -1,9 +1,12 @@
 import * as winston from 'winston';
 import { transports } from 'winston';
 import { WinstonModule } from 'nest-winston';
+import * as Process from 'node:process';
+
+const shouldLog = Process.env.NODE_ENV !== 'test';
 
 export const logger = WinstonModule.createLogger({
-  level: 'info',
+  level: shouldLog ? 'info' : 'silent',
   format: winston.format.combine(
     winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
     winston.format.colorize(),
