@@ -1,4 +1,4 @@
-import { FindOptionsRelations, Repository } from 'typeorm';
+import { Between, FindOptionsRelations, IsNull, Not, Repository } from 'typeorm';
 import { ColocationTask } from '../../domain/entities/colocation-task.entity';
 import { ColocationTaskRepositoryGateway } from '../../domain/gateways/colocation-task.repository.gateway';
 import { Nullable } from 'src/common/types/nullable.type';
@@ -31,5 +31,17 @@ export class ColocationTaskRepository
     options?: FindOptionsRelations<ColocationTask>
   ): Promise<Nullable<ColocationTask>> {
     return await this.findOne({ where: { id }, relations: options });
+  }
+
+  async findTasksToReset(today: Date): Promise<ColocationTask[]> {
+    return this.find({
+      where: {
+        dueDate: Between(
+          new Date(today.setHours(0, 0, 0, 0)),
+          new Date(today.setHours(23, 59, 59, 999))
+        ),
+        frequency: Not(IsNull()),
+      },
+    });
   }
 }

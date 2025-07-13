@@ -30,6 +30,7 @@ export class CreateColocationTaskUseCase {
     taskToCreate.priority = createColocationTaskDto.priority;
     taskToCreate.assignedToId = createColocationTaskDto.assignToId ?? connectedUser.id;
     taskToCreate.colocationId = colocationId;
+    taskToCreate.frequency = createColocationTaskDto.frequency ?? null;
 
     const task = await this.colocationTaskRepository.save(taskToCreate);
 

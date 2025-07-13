@@ -12,6 +12,8 @@ export interface ColocationTaskRepositoryGateway {
     options?: FindOptionsRelations<ColocationTask>
   ): Promise<Nullable<ColocationTask>>;
 
+  findTasksToReset(today: Date): Promise<ColocationTask[]>;
+
   findByColocationId(colocationId: number): Promise<ColocationTask[]>;
 }
 
