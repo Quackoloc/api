@@ -4,6 +4,7 @@ import { Colocation } from './colocation.entity';
 import { User } from '../../../user/domain/entities/user.entity';
 import { DatesEntity } from '../../../../common/entities/dates-entity';
 import { ColocationTaskStatus } from '../enums/colocation-task-status.enum';
+import { Nullable } from '../../../../common/types/nullable.type';
 
 @Entity()
 export class ColocationTask {
@@ -45,6 +46,9 @@ export class ColocationTask {
 
   @ManyToOne(() => User, (user) => user.tasks)
   assignedTo: User;
+
+  @Column({ type: 'int', nullable: true })
+  frequency: Nullable<number>;
 
   @Column(() => DatesEntity, { prefix: false })
   dates: DatesEntity;

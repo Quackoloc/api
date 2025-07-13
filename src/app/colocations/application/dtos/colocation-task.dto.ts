@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ColocationTaskPriority } from '../../domain/enums/colocation-task-priority.enum';
 import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.enum';
+import { Nullable } from '../../../../common/types/nullable.type';
 
 export class ColocationTaskDto {
   @ApiProperty({ example: 2 })
@@ -27,6 +28,9 @@ export class ColocationTaskDto {
   @ApiProperty({ example: 1 })
   assignedToId: number;
 
+  @ApiProperty({ example: 7 })
+  frequency: Nullable<number>;
+
   constructor(colocationTask: Partial<ColocationTaskDto>) {
     Object.assign(this, colocationTask);
   }
@@ -41,6 +45,7 @@ export class ColocationTaskDto {
       priority: entity.priority,
       colocationId: entity.colocationId,
       assignedToId: entity.assignedToId,
+      frequency: entity.frequency,
     };
   }
 }

@@ -29,4 +29,9 @@ export class CreateColocationTaskDto {
   @IsOptional()
   @IsNumber()
   assignToId: number;
+
+  @ApiProperty({ example: 1 })
+  @IsOptional()
+  @IsNumber()
+  frequency: number;
 }
