@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetColocationTasksUseCase } from '../../../src/app/colocations/application/use-cases/get-colocation-tasks.use-case';
+import { GetColocationTasksUseCase } from './get-colocation-tasks.use-case';
 import {
   ColocationTaskRepositoryGateway,
   ColocationTaskRepositoryToken,
-} from '../../../src/app/colocations/domain/gateways/colocation-task.repository.gateway';
-import { ColocationTaskDto } from '../../../src/app/colocations/application/dtos/colocation-task.dto';
-import { ColocationTask } from '../../../src/app/colocations/domain/entities/colocation-task.entity';
-import { ColocationTaskStatus } from '../../../src/app/colocations/domain/enums/colocation-task-status.enum';
+} from '../../domain/gateways/colocation-task.repository.gateway';
+import { ColocationTaskDto } from '../dtos/colocation-task.dto';
+import { ColocationTask } from '../../domain/entities/colocation-task.entity';
+import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.enum';
 
 describe('GetColocationTasksUseCase', () => {
   let useCase: GetColocationTasksUseCase;

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LocalStrategy } from '../../src/app/auth/infrastructure/strategies/local.strategy';
-import { ValidateUserUseCase } from '../../src/app/auth/application/use-cases/validate-user.use-case';
-import { UserDto } from '../../src/app/user/application/dtos/user.dto';
+import { LocalStrategy } from './local.strategy';
+import { ValidateUserUseCase } from '../../application/use-cases/validate-user.use-case';
+import { UserDto } from '../../../user/application/dtos/user.dto';
 
 describe('LocalStrategy', () => {
   let strategy: LocalStrategy;

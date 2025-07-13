@@ -3,13 +3,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {
   ColocationTaskRepositoryGateway,
   ColocationTaskRepositoryToken,
-} from '../../../src/app/colocations/domain/gateways/colocation-task.repository.gateway';
-import { ColocationTask } from '../../../src/app/colocations/domain/entities/colocation-task.entity';
-import { ColocationTaskStatus } from '../../../src/app/colocations/domain/enums/colocation-task-status.enum';
-import { logger } from '../../../src/config/logger.config';
-import { ResetTaskScheduler } from '../../../src/app/schedulers/reset-task.scheduler';
+} from '../colocations/domain/gateways/colocation-task.repository.gateway';
+import { ColocationTask } from '../colocations/domain/entities/colocation-task.entity';
+import { ColocationTaskStatus } from '../colocations/domain/enums/colocation-task-status.enum';
+import { logger } from '../../config/logger.config';
+import { ResetTaskScheduler } from './reset-task.scheduler';
 
-jest.mock('../../../src/config/logger.config', () => ({
+jest.mock('../../config/logger.config', () => ({
   logger: {
     log: jest.fn(),
   },

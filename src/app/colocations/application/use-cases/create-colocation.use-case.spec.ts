@@ -2,16 +2,16 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {
   ColocationRepositoryGateway,
   ColocationRepositoryToken,
-} from '../../../src/app/colocations/domain/gateways/colocation.repository.gateway';
+} from '../../domain/gateways/colocation.repository.gateway';
 import {
   UserRepositoryGateway,
   UserRepositoryToken,
-} from '../../../src/app/user/domain/gateways/user.repository.gateway';
-import { CreateColocationUseCase } from '../../../src/app/colocations/application/use-cases/create-colocation.use-case';
-import { CreateColocationDto } from '../../../src/app/colocations/application/dtos/create-colocation.dto';
-import { Colocation } from '../../../src/app/colocations/domain/entities/colocation.entity';
-import { ColocationDto } from '../../../src/app/colocations/application/dtos/colocation.dto';
-import { User } from '../../../src/app/user/domain/entities/user.entity';
+} from '../../../user/domain/gateways/user.repository.gateway';
+import { CreateColocationUseCase } from './create-colocation.use-case';
+import { CreateColocationDto } from '../dtos/create-colocation.dto';
+import { Colocation } from '../../domain/entities/colocation.entity';
+import { ColocationDto } from '../dtos/colocation.dto';
+import { User } from '../../../user/domain/entities/user.entity';
 
 describe('CreateColocationUseCase', () => {
   let useCase: CreateColocationUseCase;
