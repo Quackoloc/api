@@ -10,9 +10,11 @@ import { TasksModule } from './tasks/tasks.module';
 import { UserModule } from './user/user.module';
 import { AppController } from './app.controller';
 import { SentryModule } from '@sentry/nestjs/setup';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     SentryModule.forRoot(),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

@@ -31,6 +31,7 @@ describe('CreateColocationTaskUseCase', () => {
     dueDate: new Date(),
     priority: ColocationTaskPriority.LOW,
     assignToId: 99,
+    frequency: null,
   };
 
   const mockTaskEntity = new ColocationTask();
@@ -42,6 +43,7 @@ describe('CreateColocationTaskUseCase', () => {
   mockTaskEntity.status = ColocationTaskStatus.TODO;
   mockTaskEntity.assignedToId = mockCreateDto.assignToId;
   mockTaskEntity.colocationId = mockColocationId;
+  mockTaskEntity.frequency = mockCreateDto.frequency;
   mockTaskEntity.dates = {
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -56,6 +58,7 @@ describe('CreateColocationTaskUseCase', () => {
     dueDate: mockTaskEntity.dueDate,
     colocationId: mockTaskEntity.colocationId,
     assignedToId: mockTaskEntity.assignedToId,
+    frequency: mockTaskEntity.frequency,
   });
 
   beforeEach(async () => {
