@@ -11,7 +11,7 @@ export class InvitationCode {
   @Column()
   code: string;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamptz' })
   expiresAt: Date;
 
   @Column({ nullable: false })

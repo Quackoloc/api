@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ColocationTaskPriority } from '../../domain/enums/colocation-task-priority.enum';
 import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.enum';
 import { Nullable } from '../../../../common/types/nullable.type';
+import { ColocationTask } from '../../domain/entities/colocation-task.entity';
 
 export class ColocationTaskDto {
   @ApiProperty({ example: 2 })
@@ -17,7 +18,7 @@ export class ColocationTaskDto {
   description: string;
 
   @ApiProperty({ example: '2023-05-01' })
-  dueDate: Date;
+  dueDate: Nullable<Date>;
 
   @ApiProperty({ example: ColocationTaskPriority.MEDIUM })
   priority: string;
@@ -28,24 +29,24 @@ export class ColocationTaskDto {
   @ApiProperty({ example: 1 })
   assignedToId: number;
 
-  @ApiProperty({ example: 7 })
-  frequency: Nullable<number>;
+  @ApiProperty({ example: true })
+  isRecurrent: boolean;
 
   constructor(colocationTask: Partial<ColocationTaskDto>) {
     Object.assign(this, colocationTask);
   }
 
-  static fromEntity(entity: ColocationTaskDto): ColocationTaskDto {
+  static fromEntity(entity: ColocationTask): ColocationTaskDto {
     return {
       id: entity.id,
       status: entity.status,
       title: entity.title,
       description: entity.description,
-      dueDate: entity.dueDate,
+      dueDate: entity.dueDate ?? null,
       priority: entity.priority,
       colocationId: entity.colocationId,
       assignedToId: entity.assignedToId,
-      frequency: entity.frequency,
+      isRecurrent: entity.isRecurrent,
     };
   }
 }

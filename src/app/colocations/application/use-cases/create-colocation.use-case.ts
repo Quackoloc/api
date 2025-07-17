@@ -32,11 +32,13 @@ export class CreateColocationUseCase {
     colocation.backgroundImage = '';
     colocation.pendingMembers = [];
     colocation.invitationCodes = [];
+    colocation.tasksRotationFrequency = 6;
 
     const savedColocation = await this.colocationRepository.save(colocation);
 
     logger.log(
-      `Colocation with id : ${savedColocation.id} created by user with id : ${connectedUser.id}`
+      `Colocation with id : ${savedColocation.id} created by user with id : ${connectedUser.id}`,
+      'CreateColocationUseCase'
     );
 
     return ColocationDto.fromEntity(savedColocation);

@@ -12,9 +12,10 @@ export interface ColocationTaskRepositoryGateway {
     options?: FindOptionsRelations<ColocationTask>
   ): Promise<Nullable<ColocationTask>>;
 
-  findTasksToReset(today: Date): Promise<ColocationTask[]>;
-
-  findByColocationId(colocationId: number): Promise<ColocationTask[]>;
+  findByColocationId(
+    colocationId: number,
+    options?: FindOptionsRelations<ColocationTask>
+  ): Promise<ColocationTask[]>;
 }
 
 export const ColocationTaskRepositoryToken = 'ColocationTaskRepositoryToken';

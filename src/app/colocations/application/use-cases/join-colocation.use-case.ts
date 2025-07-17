@@ -36,7 +36,10 @@ export class JoinColocationUseCase {
 
     colocation.members.push(user);
 
-    logger.log(`User with id : ${userId} joined colocation with id : ${colocationId}`);
+    logger.log(
+      `User with id : ${userId} joined colocation with id : ${colocationId}`,
+      'JoinColocationUseCase'
+    );
 
     await this.colocationRepository.save(colocation);
   }

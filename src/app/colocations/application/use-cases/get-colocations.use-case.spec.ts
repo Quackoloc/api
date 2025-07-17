@@ -37,6 +37,8 @@ describe('GetColocationsUseCase', () => {
     invitationCodes: mockColocationEntity.invitationCodes,
     pendingMembers: mockColocationEntity.pendingMembers,
     dates: mockColocationEntity.dates,
+    tasksRotationFrequency: mockColocationEntity.tasksRotationFrequency,
+    nextRotationDate: mockColocationEntity.nextRotationDate,
   };
 
   beforeEach(async () => {
@@ -63,10 +65,8 @@ describe('GetColocationsUseCase', () => {
   });
 
   it('should return colocation dtos from the repository', async () => {
-    // Mock la méthode fromEntity statique
     jest.spyOn(ColocationDto, 'fromEntity').mockReturnValue(mockColocationDto);
 
-    // Le repository retourne une liste avec un seul colocation
     colocationRepository.findMemberColocations.mockResolvedValue([mockColocationEntity]);
 
     const result = await useCase.execute(mockConnectedUser);

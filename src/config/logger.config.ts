@@ -10,8 +10,10 @@ export const logger = WinstonModule.createLogger({
   format: winston.format.combine(
     winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
     winston.format.colorize(),
-    winston.format.printf(({ timestamp, level, message, stack }) => {
-      return stack ? `${timestamp} ${level}: ${stack}` : `${timestamp} ${level}: ${message}`;
+    winston.format.printf(({ timestamp, level, message, context, stack }) => {
+      const ctx = context ? ` context=${context}` : '';
+      const baseMessage = stack || message;
+      return `${timestamp} ${level}:${ctx} ${baseMessage}`;
     })
   ),
   transports: [new transports.Console()],

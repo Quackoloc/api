@@ -13,7 +13,9 @@ export class GetColocationTasksUseCase {
   ) {}
 
   async execute(colocationId: number): Promise<ColocationTaskDto[]> {
-    const tasks = await this.colocationTaskRepository.findByColocationId(colocationId);
+    const tasks = await this.colocationTaskRepository.findByColocationId(colocationId, {
+      assignedTo: true,
+    });
 
     return tasks.map((task) => ColocationTaskDto.fromEntity(task));
   }

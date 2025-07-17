@@ -28,7 +28,7 @@ export class CreateUserUseCase {
 
     const createdUser = await this.userRepository.save(user);
 
-    logger.log(`User with id : ${user.id} created`);
+    logger.log(`User with id : ${user.id} created`, 'CreateUserUseCase');
 
     return UserDto.fromEntity(createdUser);
   }

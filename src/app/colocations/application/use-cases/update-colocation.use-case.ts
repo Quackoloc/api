@@ -25,7 +25,8 @@ export class UpdateColocationUseCase {
     colocation.address = updateColocationDto.address;
 
     logger.log(
-      `Colocation with id : ${colocationId} updated by user with id : ${connectedUser.id}`
+      `Colocation with id : ${colocationId} updated by user with id : ${connectedUser.id}`,
+      'UpdateColocationUseCase'
     );
 
     await this.colocationRepository.save(colocation);
