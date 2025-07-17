@@ -32,7 +32,8 @@ export class UpdateColocationTaskUseCase {
     });
 
     logger.log(
-      `Colocation task with id : ${taskToUpdate.id} in colocation with id : ${colocationId} updated by user with id : ${connectedUser.id}`
+      `Colocation task with id : ${taskToUpdate.id} in colocation with id : ${colocationId} updated by user with id : ${connectedUser.id}`,
+      'UpdateColocationTaskUseCase'
     );
   }
 }

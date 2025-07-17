@@ -90,7 +90,8 @@ describe('UpdateColocationTaskUseCase', () => {
     );
 
     expect(logger.log).toHaveBeenCalledWith(
-      `Colocation task with id : ${mockTaskId} in colocation with id : ${mockColocationId} updated by user with id : ${connectedUser.id}`
+      `Colocation task with id : ${mockTaskId} in colocation with id : ${mockColocationId} updated by user with id : ${connectedUser.id}`,
+      'UpdateColocationTaskUseCase'
     );
   });
 

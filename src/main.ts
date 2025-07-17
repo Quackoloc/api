@@ -10,6 +10,7 @@ import { HttpExceptionFilter } from './app/http-exception-handler';
 
 import './instrument';
 import { winstonConfig } from './config/logger.config';
+import { LoggerMiddleware } from './middleware/logger.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -31,6 +32,7 @@ async function bootstrap() {
   app.useGlobalFilters(new ExceptionHandler(), new HttpExceptionFilter());
   app.use(cookieParser());
   app.use(helmet());
+  app.use(new LoggerMiddleware().use);
 
   app.enableCors({
     origin: ['http://localhost:5173', 'https://app.quackoloc.fr'],

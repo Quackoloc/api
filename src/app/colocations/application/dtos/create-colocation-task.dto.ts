@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNumber, IsOptional } from 'class-validator';
+import { IsBoolean, IsDateString, IsNumber, IsOptional } from 'class-validator';
 import { IsNotEmpty, IsString, Length } from '@nestjs/class-validator';
 import { ColocationTaskPriority } from '../../domain/enums/colocation-task-priority.enum';
+import { Nullable } from '../../../../common/types/nullable.type';
 
 export class CreateColocationTaskDto {
   @ApiProperty({ example: 'Faire la vaisselle' })
@@ -19,7 +20,7 @@ export class CreateColocationTaskDto {
   @ApiProperty({ example: '2023-03-01' })
   @IsDateString()
   @IsOptional()
-  dueDate: Date;
+  dueDate: Nullable<Date>;
 
   @ApiProperty({ example: ColocationTaskPriority.MEDIUM })
   @IsOptional()
@@ -28,10 +29,9 @@ export class CreateColocationTaskDto {
   @ApiProperty({ example: 1 })
   @IsOptional()
   @IsNumber()
-  assignToId: number;
+  assignToId: Nullable<number>;
 
-  @ApiProperty({ example: 1 })
-  @IsOptional()
-  @IsNumber()
-  frequency: number;
+  @ApiProperty({ example: false })
+  @IsBoolean()
+  isRecurrent: boolean;
 }

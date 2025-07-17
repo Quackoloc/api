@@ -40,3 +40,9 @@ export class ColocationTaskNotFoundException extends ColocationExceptions {
     super(`Colocation task with id: ${id} not found.`);
   }
 }
+
+export class MembersNotFoundException extends ColocationExceptions {
+  constructor(public readonly colocationId: number) {
+    super(`Members not found in colocation with id ${colocationId}.`);
+  }
+}

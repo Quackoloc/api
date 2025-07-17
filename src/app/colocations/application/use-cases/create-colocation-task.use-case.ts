@@ -26,16 +26,20 @@ export class CreateColocationTaskUseCase {
     taskToCreate.title = createColocationTaskDto.title;
     taskToCreate.status = ColocationTaskStatus.TODO;
     taskToCreate.description = createColocationTaskDto.description;
-    taskToCreate.dueDate = createColocationTaskDto.dueDate;
+    taskToCreate.dueDate = createColocationTaskDto.isRecurrent
+      ? null
+      : createColocationTaskDto.dueDate;
     taskToCreate.priority = createColocationTaskDto.priority;
+    // todo: gérer la réassignation
     taskToCreate.assignedToId = createColocationTaskDto.assignToId ?? connectedUser.id;
     taskToCreate.colocationId = colocationId;
-    taskToCreate.frequency = createColocationTaskDto.frequency ?? null;
+    taskToCreate.isRecurrent = createColocationTaskDto.isRecurrent;
 
     const task = await this.colocationTaskRepository.save(taskToCreate);
 
     logger.log(
-      `Colocation task with id : ${task.id} created in colocation with id : ${colocationId} by user with id : ${connectedUser.id}`
+      `Colocation task with id : ${task.id} created in colocation with id : ${colocationId} by user with id : ${connectedUser.id}`,
+      'CreateColocationTaskUseCase'
     );
 
     return ColocationTaskDto.fromEntity(task);

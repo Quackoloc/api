@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { Colocation } from '../../domain/entities/colocation.entity';
 import { ColocationRepositoryGateway } from '../../domain/gateways/colocation.repository.gateway';
 import { ColocationNotFoundException } from '../../domain/colocation.exceptions';
@@ -30,5 +30,17 @@ export class ColocationRepository
       .leftJoinAndSelect('colocation.members', 'members')
       .where('colocation.id = :id', { id })
       .getOne();
+  }
+
+  async findByRotationDate(rotationDate: Date): Promise<Colocation[]> {
+    const tomorrow = new Date(rotationDate);
+    tomorrow.setUTCDate(rotationDate.getUTCDate() + 1);
+
+    return this.find({
+      where: {
+        nextRotationDate: Between(rotationDate, tomorrow),
+      },
+      relations: ['members'],
+    });
   }
 }

@@ -97,7 +97,8 @@ describe('UpdateColocationUseCase', () => {
 
       // Assert
       expect(logger.log).toHaveBeenCalledWith(
-        'Colocation with id : 1 updated by user with id : 123'
+        'Colocation with id : 1 updated by user with id : 123',
+        'UpdateColocationUseCase'
       );
       expect(logger.log).toHaveBeenCalledTimes(1);
     });
@@ -159,7 +160,8 @@ describe('UpdateColocationUseCase', () => {
       // Assert
       expect(colocationRepository.getById).toHaveBeenCalledWith(colocationId);
       expect(logger.log).toHaveBeenCalledWith(
-        `Colocation with id : ${colocationId} updated by user with id : ${mockConnectedUser.id}`
+        `Colocation with id : ${colocationId} updated by user with id : ${mockConnectedUser.id}`,
+        'UpdateColocationUseCase'
       );
     });
 
@@ -174,7 +176,8 @@ describe('UpdateColocationUseCase', () => {
 
       // Assert
       expect(logger.log).toHaveBeenCalledWith(
-        'Colocation with id : 1 updated by user with id : 456'
+        'Colocation with id : 1 updated by user with id : 456',
+        'UpdateColocationUseCase'
       );
     });
   });

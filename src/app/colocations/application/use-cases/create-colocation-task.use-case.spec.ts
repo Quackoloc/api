@@ -26,12 +26,12 @@ describe('CreateColocationTaskUseCase', () => {
   const mockConnectedUser: ConnectedUser = { id: 42 };
 
   const mockCreateDto: CreateColocationTaskDto = {
+    isRecurrent: false,
     title: 'Sortir les poubelles',
     description: 'À faire avant mardi',
     dueDate: new Date(),
     priority: ColocationTaskPriority.LOW,
     assignToId: 99,
-    frequency: null,
   };
 
   const mockTaskEntity = new ColocationTask();
@@ -43,7 +43,6 @@ describe('CreateColocationTaskUseCase', () => {
   mockTaskEntity.status = ColocationTaskStatus.TODO;
   mockTaskEntity.assignedToId = mockCreateDto.assignToId;
   mockTaskEntity.colocationId = mockColocationId;
-  mockTaskEntity.frequency = mockCreateDto.frequency;
   mockTaskEntity.dates = {
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -58,7 +57,6 @@ describe('CreateColocationTaskUseCase', () => {
     dueDate: mockTaskEntity.dueDate,
     colocationId: mockTaskEntity.colocationId,
     assignedToId: mockTaskEntity.assignedToId,
-    frequency: mockTaskEntity.frequency,
   });
 
   beforeEach(async () => {
@@ -93,7 +91,8 @@ describe('CreateColocationTaskUseCase', () => {
     expect(taskRepository.save).toHaveBeenCalled();
     expect(ColocationTaskDto.fromEntity).toHaveBeenCalledWith(mockTaskEntity);
     expect(logger.log).toHaveBeenCalledWith(
-      `Colocation task with id : ${mockTaskEntity.id} created in colocation with id : ${mockColocationId} by user with id : ${mockConnectedUser.id}`
+      `Colocation task with id : ${mockTaskEntity.id} created in colocation with id : ${mockColocationId} by user with id : ${mockConnectedUser.id}`,
+      'CreateColocationTaskUseCase'
     );
     expect(result).toEqual(mockTaskDto);
   });

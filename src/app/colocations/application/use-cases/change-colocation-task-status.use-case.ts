@@ -25,7 +25,8 @@ export class ChangeColocationTaskStatusUseCase {
     await this.colocationTaskRepository.save(colocationTask);
 
     logger.log(
-      `Colocation task with id : ${taskId} in colocation with id : ${colocationId} marked as ${status} by user with id : ${connectedUser.id}`
+      `Colocation task with id : ${taskId} in colocation with id : ${colocationId} marked as ${status} by user with id : ${connectedUser.id}`,
+      'ChangeColocationTaskStatusUseCase'
     );
   }
 }

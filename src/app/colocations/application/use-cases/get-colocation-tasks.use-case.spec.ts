@@ -68,7 +68,9 @@ describe('GetColocationTasksUseCase', () => {
 
     const result = await useCase.execute(mockColocationId);
 
-    expect(taskRepository.findByColocationId).toHaveBeenCalledWith(mockColocationId);
+    expect(taskRepository.findByColocationId).toHaveBeenCalledWith(mockColocationId, {
+      assignedTo: true,
+    });
     expect(ColocationTaskDto.fromEntity).toHaveBeenCalledWith(mockTaskEntity);
     expect(result).toEqual([mockTaskDto]);
   });
@@ -80,7 +82,9 @@ describe('GetColocationTasksUseCase', () => {
 
     const result = await useCase.execute(mockColocationId);
 
-    expect(taskRepository.findByColocationId).toHaveBeenCalledWith(mockColocationId);
+    expect(taskRepository.findByColocationId).toHaveBeenCalledWith(mockColocationId, {
+      assignedTo: true,
+    });
     expect(ColocationTaskDto.fromEntity).not.toHaveBeenCalled();
     expect(result).toEqual([]);
   });
@@ -90,6 +94,8 @@ describe('GetColocationTasksUseCase', () => {
     taskRepository.findByColocationId.mockRejectedValue(error);
 
     await expect(useCase.execute(mockColocationId)).rejects.toThrow(error);
-    expect(taskRepository.findByColocationId).toHaveBeenCalledWith(mockColocationId);
+    expect(taskRepository.findByColocationId).toHaveBeenCalledWith(mockColocationId, {
+      assignedTo: true,
+    });
   });
 });

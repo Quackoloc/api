@@ -30,7 +30,8 @@ export class CreateInvitationCodeUseCase {
     const createdCode = await this.invitationCodeRepository.save(invitationCode);
 
     logger.log(
-      `Colocation invitation code with id : ${createdCode.id} created by user with id : ${connectedUser.id}`
+      `Colocation invitation code with id : ${createdCode.id} created by user with id : ${connectedUser.id}`,
+      'CreateInvitationCodeUseCase'
     );
 
     return InvitationCodeDto.fromEntity(createdCode);

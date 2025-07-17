@@ -95,6 +95,8 @@ describe('CreateColocationUseCase', () => {
         backgroundImage: mockSavedColocation.backgroundImage,
         members: mockSavedColocation.members,
         pendingMembers: mockSavedColocation.pendingMembers,
+        tasksRotationFrequency: mockSavedColocation.tasksRotationFrequency,
+        nextRotationDate: mockSavedColocation.nextRotationDate,
       });
 
       // Act

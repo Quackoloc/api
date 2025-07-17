@@ -22,6 +22,12 @@ export class ColocationDto {
   @ApiProperty({ example: [PendingUserDto] })
   pendingMembers: PendingUserDto[];
 
+  @ApiProperty({ example: 6 })
+  tasksRotationFrequency: number;
+
+  @ApiProperty({ example: new Date('2023-05-01T00:00:00.000Z') })
+  nextRotationDate: Date;
+
   static fromEntity(entity: Colocation): ColocationDto {
     const membres = entity.members.map((member) => UserDto.fromEntity(member));
     return {
@@ -31,6 +37,8 @@ export class ColocationDto {
       backgroundImage: entity.backgroundImage,
       members: membres,
       pendingMembers: [],
+      tasksRotationFrequency: entity.tasksRotationFrequency,
+      nextRotationDate: entity.nextRotationDate,
     };
   }
 }
