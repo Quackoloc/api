@@ -1,3 +1,20 @@
+# [1.4.0](https://github.com/Quackoloc/api/compare/v1.3.1...v1.4.0) (2025-07-17)
+
+
+### Bug Fixes
+
+* **test:** fix logger in tests ([b7e7eea](https://github.com/Quackoloc/api/commit/b7e7eeab02fefcad9d0d30f1aa2e1865366c7c05))
+
+
+### Features
+
+* **ci:** add clever deploy to ci ([7eca1d6](https://github.com/Quackoloc/api/commit/7eca1d67d29453162eec9d8ba56e0ba8f81833fd))
+* **ci:** add prettier & ESLint check ([9b12a57](https://github.com/Quackoloc/api/commit/9b12a57ffa2ee0f0c36a226f2fc20b19f717a5b1))
+* **logger:** improve logger format to have timestamp first ([acc9ca0](https://github.com/Quackoloc/api/commit/acc9ca093db97e8f38b19fdfa1ea33a9c833c1ae))
+* **tasks:** [QUAC-49] Gérer le mode automatique de rotation des tâches ([c7c4b22](https://github.com/Quackoloc/api/commit/c7c4b2230066ab7c6b97dd910a2b7673bac9ae33))
+* **tasks:** [QUAC-49]: Gérer le mode automatique de rotation des tâches ([3ab9a74](https://github.com/Quackoloc/api/commit/3ab9a7488348642f6adaf21fc3307781234e48ae))
+* **tools:** add sentry ([858d98f](https://github.com/Quackoloc/api/commit/858d98fad048b3195643b7783e0f1ac48882077f))
+
 ## [1.3.1](https://github.com/Quackoloc/api/compare/v1.3.0...v1.3.1) (2025-06-24)
 
 
