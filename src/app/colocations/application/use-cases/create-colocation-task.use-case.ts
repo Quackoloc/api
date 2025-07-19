@@ -9,12 +9,18 @@ import { ColocationTask } from '../../domain/entities/colocation-task.entity';
 import { ConnectedUser } from '../../../../common/types/connected-user.type';
 import { logger } from '../../../../config/logger.config';
 import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.enum';
+import {
+  ColocationRepositoryGateway,
+  ColocationRepositoryToken,
+} from '../../domain/gateways/colocation.repository.gateway';
 
 @Injectable()
 export class CreateColocationTaskUseCase {
   constructor(
     @Inject(ColocationTaskRepositoryToken)
-    private readonly colocationTaskRepository: ColocationTaskRepositoryGateway
+    private readonly colocationTaskRepository: ColocationTaskRepositoryGateway,
+    @Inject(ColocationRepositoryToken)
+    private readonly colocationRepository: ColocationRepositoryGateway
   ) {}
 
   async execute(
@@ -30,8 +36,10 @@ export class CreateColocationTaskUseCase {
       ? null
       : createColocationTaskDto.dueDate;
     taskToCreate.priority = createColocationTaskDto.priority;
-    // todo: gérer la réassignation
-    taskToCreate.assignedToId = createColocationTaskDto.assignToId ?? connectedUser.id;
+    taskToCreate.assignedToId =
+      createColocationTaskDto.assignToId ??
+      (await this.getNextAssigneeId(colocationId, connectedUser.id));
+
     taskToCreate.colocationId = colocationId;
     taskToCreate.isRecurrent = createColocationTaskDto.isRecurrent;
 
@@ -43,5 +51,40 @@ export class CreateColocationTaskUseCase {
     );
 
     return ColocationTaskDto.fromEntity(task);
+  }
+
+  private async getNextAssigneeId(colocationId: number, connectedUserId: number): Promise<number> {
+    const colocation = await this.colocationRepository.getById(colocationId, { members: true });
+
+    if (!colocation.members || colocation.members.length === 0) {
+      return connectedUserId;
+    }
+
+    const tasks = await this.colocationTaskRepository.findByColocationId(colocationId, {
+      assignedTo: true,
+    });
+
+    const taskCountByUser = new Map<number, number>();
+    colocation.members.forEach((member) => {
+      taskCountByUser.set(member.id, 0);
+    });
+
+    tasks.forEach((task) => {
+      if (task.assignedToId && taskCountByUser.has(task.assignedToId)) {
+        taskCountByUser.set(task.assignedToId, (taskCountByUser.get(task.assignedToId) || 0) + 1);
+      }
+    });
+
+    let minTasks = Infinity;
+    let selectedUserId = connectedUserId;
+
+    for (const [userId, count] of taskCountByUser.entries()) {
+      if (count < minTasks || (count === minTasks && userId === connectedUserId)) {
+        minTasks = count;
+        selectedUserId = userId;
+      }
+    }
+
+    return selectedUserId;
   }
 }

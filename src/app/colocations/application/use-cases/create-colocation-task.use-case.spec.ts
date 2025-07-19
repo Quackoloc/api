@@ -11,6 +11,12 @@ import { ConnectedUser } from '../../../../common/types/connected-user.type';
 import { logger } from '../../../../config/logger.config';
 import { ColocationTaskPriority } from '../../domain/enums/colocation-task-priority.enum';
 import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.enum';
+import {
+  ColocationRepositoryGateway,
+  ColocationRepositoryToken,
+} from '../../domain/gateways/colocation.repository.gateway';
+import { User } from '../../../user/domain/entities/user.entity';
+import { Colocation } from '../../domain/entities/colocation.entity';
 
 jest.mock('../../../../config/logger.config', () => ({
   logger: {
@@ -21,6 +27,7 @@ jest.mock('../../../../config/logger.config', () => ({
 describe('CreateColocationTaskUseCase', () => {
   let useCase: CreateColocationTaskUseCase;
   let taskRepository: jest.Mocked<ColocationTaskRepositoryGateway>;
+  let colocationRepository: jest.Mocked<ColocationRepositoryGateway>;
 
   const mockColocationId = 1;
   const mockConnectedUser: ConnectedUser = { id: 42 };
@@ -60,26 +67,35 @@ describe('CreateColocationTaskUseCase', () => {
   });
 
   beforeEach(async () => {
-    const mockRepo = {
+    taskRepository = {
       save: jest.fn(),
-    };
+      findByColocationId: jest.fn(),
+    } as any;
+
+    colocationRepository = {
+      getById: jest.fn(),
+    } as any;
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CreateColocationTaskUseCase,
         {
           provide: ColocationTaskRepositoryToken,
-          useValue: mockRepo,
+          useValue: taskRepository,
+        },
+        {
+          provide: ColocationRepositoryToken,
+          useValue: colocationRepository,
         },
       ],
     }).compile();
 
     useCase = module.get(CreateColocationTaskUseCase);
-    taskRepository = module.get(ColocationTaskRepositoryToken);
   });
 
   afterEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('should create a new task and return its dto', async () => {
@@ -103,6 +119,11 @@ describe('CreateColocationTaskUseCase', () => {
 
     jest.spyOn(ColocationTaskDto, 'fromEntity').mockReturnValue(mockTaskDto);
     taskRepository.save.mockResolvedValue(taskWithConnectedUserId);
+    taskRepository.findByColocationId.mockResolvedValue([]);
+    // todo: créer des builders pour les mocks / stubs
+    colocationRepository.getById.mockResolvedValue({
+      members: [{ id: mockConnectedUser.id } as User],
+    } as Colocation);
 
     await useCase.execute(mockColocationId, dtoWithoutAssignTo, mockConnectedUser);
 
@@ -118,5 +139,70 @@ describe('CreateColocationTaskUseCase', () => {
     await expect(
       useCase.execute(mockColocationId, mockCreateDto, mockConnectedUser)
     ).rejects.toThrow(error);
+  });
+
+  it('should assign task to user with the fewest tasks', async () => {
+    const dtoWithoutAssignTo = {
+      isRecurrent: mockCreateDto.isRecurrent,
+      title: mockCreateDto.title,
+      description: mockCreateDto.description,
+      dueDate: mockCreateDto.dueDate,
+      priority: mockCreateDto.priority,
+    };
+
+    const members = [
+      { id: 1 } as User,
+      { id: 2 } as User,
+      { id: 3 },
+      { id: mockConnectedUser.id } as User,
+    ];
+
+    const tasks = [
+      { assignedToId: 1 },
+      { assignedToId: 1 },
+      { assignedToId: 2 },
+    ] as ColocationTask[];
+
+    colocationRepository.getById.mockResolvedValue({ members } as Colocation);
+    taskRepository.findByColocationId.mockResolvedValue(tasks);
+    taskRepository.save.mockImplementation(async (task) => {
+      return { ...mockTaskEntity, assignedToId: task.assignedToId };
+    });
+
+    const result = await useCase.execute(mockColocationId, dtoWithoutAssignTo, mockConnectedUser);
+
+    expect(result.assignedToId).toBe(mockConnectedUser.id);
+  });
+
+  it('should prefer connected user when tied on task count', async () => {
+    const dtoWithoutAssignTo = { ...mockCreateDto, assignToId: undefined };
+
+    const members = [{ id: 42 } as User, { id: 1 } as User];
+
+    const tasks = [{ assignedToId: 42 }, { assignedToId: 1 }] as ColocationTask[];
+
+    colocationRepository.getById.mockResolvedValue({ members } as Colocation);
+    taskRepository.findByColocationId.mockResolvedValue(tasks);
+    taskRepository.save.mockImplementation(async (task) => {
+      return { ...mockTaskEntity, assignedToId: task.assignedToId };
+    });
+
+    const result = await useCase.execute(mockColocationId, dtoWithoutAssignTo, mockConnectedUser);
+
+    expect(result.assignedToId).toBe(42);
+  });
+
+  it('should assign to connected user if no members', async () => {
+    const dtoWithoutAssignTo = { ...mockCreateDto, assignToId: undefined };
+
+    colocationRepository.getById.mockResolvedValue({ members: [] } as Colocation);
+    taskRepository.findByColocationId.mockResolvedValue([]);
+    taskRepository.save.mockImplementation(async (task) => {
+      return { ...mockTaskEntity, assignedToId: task.assignedToId };
+    });
+
+    const result = await useCase.execute(mockColocationId, dtoWithoutAssignTo, mockConnectedUser);
+
+    expect(result.assignedToId).toBe(mockConnectedUser.id);
   });
 });
