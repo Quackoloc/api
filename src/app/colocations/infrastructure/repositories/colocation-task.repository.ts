@@ -34,4 +34,8 @@ export class ColocationTaskRepository
   ): Promise<Nullable<ColocationTask>> {
     return await this.findOne({ where: { id }, relations: options });
   }
+
+  async deleteOneById(id: number): Promise<void> {
+    await this.softDelete({ id });
+  }
 }

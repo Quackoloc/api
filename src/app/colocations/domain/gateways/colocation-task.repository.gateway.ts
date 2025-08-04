@@ -16,6 +16,8 @@ export interface ColocationTaskRepositoryGateway {
     colocationId: number,
     options?: FindOptionsRelations<ColocationTask>
   ): Promise<ColocationTask[]>;
+
+  deleteOneById(id: number): Promise<void>;
 }
 
 export const ColocationTaskRepositoryToken = 'ColocationTaskRepositoryToken';
