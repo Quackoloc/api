@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -22,6 +23,7 @@ import { UpdateColocationTaskDto } from '../../application/dtos/update-colocatio
 import { UpdateColocationTaskUseCase } from '../../application/use-cases/update-colocation-task.use-case';
 import { ChangeColocationTaskStatusUseCase } from '../../application/use-cases/change-colocation-task-status.use-case';
 import { UpdateColocationTaskStatusDto } from '../../application/dtos/update-colocation-task-status.dto';
+import { DeleteColocationTaskUseCase } from '../../application/use-cases/delete-colocation-task.use-case';
 
 @Controller('colocations/:colocationId/tasks')
 export class ColocationTaskController {
@@ -29,7 +31,8 @@ export class ColocationTaskController {
     private readonly getColocationTasksUseCase: GetColocationTasksUseCase,
     private readonly createColocationTaskUseCase: CreateColocationTaskUseCase,
     private readonly updateColocationTaskUseCase: UpdateColocationTaskUseCase,
-    private readonly changeColocationTaskStatusUseCase: ChangeColocationTaskStatusUseCase
+    private readonly changeColocationTaskStatusUseCase: ChangeColocationTaskStatusUseCase,
+    private readonly deleteColocationTaskUseCase: DeleteColocationTaskUseCase
   ) {}
 
   @Get()
@@ -95,5 +98,18 @@ export class ColocationTaskController {
       updateColocationTaskStatusDto.status,
       connectedUser
     );
+  }
+
+  @Delete(':taskId')
+  @ApiResponse({ status: HttpStatus.OK, type: ColocationTaskDto })
+  @ApiOperation({ summary: 'Delete a colocation task' })
+  @HttpCode(HttpStatus.OK)
+  @RequireColocationMember()
+  async deleteColocationTask(
+    @Param('colocationId', ParseIntPipe) colocationId: number,
+    @Param('taskId', ParseIntPipe) taskId: number,
+    @GetConnectedUser() connectedUser: ConnectedUser
+  ): Promise<void> {
+    return await this.deleteColocationTaskUseCase.execute(taskId, connectedUser);
   }
 }
