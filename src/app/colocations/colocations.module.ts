@@ -28,6 +28,7 @@ import { CreateColocationTaskUseCase } from './application/use-cases/create-colo
 import { UpdateColocationTaskUseCase } from './application/use-cases/update-colocation-task.use-case';
 import { ChangeColocationTaskStatusUseCase } from './application/use-cases/change-colocation-task-status.use-case';
 import { TaskRotationScheduler } from '../schedulers/task-rotation.scheduler';
+import { DeleteColocationTaskUseCase } from './application/use-cases/delete-colocation-task.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Colocation]), UserModule, InvitationCode],
@@ -42,6 +43,7 @@ import { TaskRotationScheduler } from '../schedulers/task-rotation.scheduler';
     CreateColocationTaskUseCase,
     UpdateColocationTaskUseCase,
     ChangeColocationTaskStatusUseCase,
+    DeleteColocationTaskUseCase,
     TaskRotationScheduler,
     {
       provide: ColocationRepositoryToken,

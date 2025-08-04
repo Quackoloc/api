@@ -6,7 +6,6 @@ import { localConf } from '../config/database.config';
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionHandler } from '@nestjs/core/errors/exception-handler';
 import { ColocationsModule } from './colocations/colocations.module';
-import { TasksModule } from './tasks/tasks.module';
 import { UserModule } from './user/user.module';
 import { AppController } from './app.controller';
 import { SentryModule } from '@sentry/nestjs/setup';
@@ -27,7 +26,6 @@ import { ScheduleModule } from '@nestjs/schedule';
     AuthModule,
     UserModule,
     ColocationsModule,
-    TasksModule,
   ],
   providers: [
     {
