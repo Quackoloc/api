@@ -16,7 +16,7 @@ import { ColocationDto } from '../../application/dtos/colocation.dto';
 import { CreateColocationUseCase } from '../../application/use-cases/create-colocation.use-case';
 import { GetColocationsUseCase } from '../../application/use-cases/get-colocations.use-case';
 import { CreateInvitationCodeDto } from '../../application/dtos/create-invitation-code.dto';
-import { RequireColocationMember } from '../decorators/colocation-member.decorator';
+import { RequireColocationMember } from '../../../../common/decorators/colocation-member.decorator';
 import { CreateInvitationCodeUseCase } from '../../application/use-cases/create-invitation-code.use-case';
 import { InvitationCodeDto } from '../../application/dtos/invitation-code.dto';
 import { JoinColocationDto } from '../../application/dtos/join-colocation.dto';

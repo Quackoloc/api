@@ -11,7 +11,7 @@ import {
 import { DatesEntity } from '../../../../common/entities/dates-entity';
 import { hash } from 'bcryptjs';
 import { Colocation } from '../../../colocations/domain/entities/colocation.entity';
-import { ColocationTask } from '../../../colocations/domain/entities/colocation-task.entity';
+import { ColocationTask } from '../../../tasks/domain/entities/colocation-task.entity';
 
 @Entity()
 @Unique(['email'])

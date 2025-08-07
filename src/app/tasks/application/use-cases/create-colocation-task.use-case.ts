@@ -12,7 +12,7 @@ import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.
 import {
   ColocationRepositoryGateway,
   ColocationRepositoryToken,
-} from '../../domain/gateways/colocation.repository.gateway';
+} from '../../../colocations/domain/gateways/colocation.repository.gateway';
 
 @Injectable()
 export class CreateColocationTaskUseCase {

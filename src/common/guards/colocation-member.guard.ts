@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { IsColocationMemberUseCase } from '../../application/use-cases/is-colocation-member.use-case';
-import { UserIsNotMemberOfColocationException } from '../../domain/colocation.exceptions';
+import { IsColocationMemberUseCase } from '../../app/colocations/application/use-cases/is-colocation-member.use-case';
+import { UserIsNotMemberOfColocationException } from '../../app/colocations/domain/colocation.exceptions';
 
 @Injectable()
 export class ColocationMemberGuard implements CanActivate {
