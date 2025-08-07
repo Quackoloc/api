@@ -14,9 +14,9 @@ import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.
 import {
   ColocationRepositoryGateway,
   ColocationRepositoryToken,
-} from '../../domain/gateways/colocation.repository.gateway';
+} from '../../../colocations/domain/gateways/colocation.repository.gateway';
 import { User } from '../../../user/domain/entities/user.entity';
-import { Colocation } from '../../domain/entities/colocation.entity';
+import { Colocation } from '../../../colocations/domain/entities/colocation.entity';
 
 jest.mock('../../../../config/logger.config', () => ({
   logger: {

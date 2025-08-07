@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { AppController } from './app.controller';
 import { SentryModule } from '@sentry/nestjs/setup';
 import { ScheduleModule } from '@nestjs/schedule';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     AuthModule,
     UserModule,
     ColocationsModule,
+    TasksModule,
   ],
   providers: [
     {

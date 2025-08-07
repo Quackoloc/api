@@ -3,12 +3,12 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import {
   ColocationTaskRepositoryGateway,
   ColocationTaskRepositoryToken,
-} from '../colocations/domain/gateways/colocation-task.repository.gateway';
+} from '../tasks/domain/gateways/colocation-task.repository.gateway';
 import {
   ColocationRepositoryGateway,
   ColocationRepositoryToken,
 } from '../colocations/domain/gateways/colocation.repository.gateway';
-import { ColocationTaskStatus } from '../colocations/domain/enums/colocation-task-status.enum';
+import { ColocationTaskStatus } from '../tasks/domain/enums/colocation-task-status.enum';
 import { logger } from '../../config/logger.config';
 import { Colocation } from '../colocations/domain/entities/colocation.entity';
 

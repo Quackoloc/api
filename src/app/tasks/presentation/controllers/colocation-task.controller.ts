@@ -17,8 +17,8 @@ import { CreateColocationTaskDto } from '../../application/dtos/create-colocatio
 import { CreateColocationTaskUseCase } from '../../application/use-cases/create-colocation-task.use-case';
 import { GetConnectedUser } from '../../../../common/decorators/get-connected-user.decorator';
 import { ConnectedUser } from '../../../../common/types/connected-user.type';
-import { ColocationDto } from '../../application/dtos/colocation.dto';
-import { RequireColocationMember } from '../decorators/colocation-member.decorator';
+import { ColocationDto } from '../../../colocations/application/dtos/colocation.dto';
+import { RequireColocationMember } from '../../../../common/decorators/colocation-member.decorator';
 import { UpdateColocationTaskDto } from '../../application/dtos/update-colocation-task.dto';
 import { UpdateColocationTaskUseCase } from '../../application/use-cases/update-colocation-task.use-case';
 import { ChangeColocationTaskStatusUseCase } from '../../application/use-cases/change-colocation-task-status.use-case';

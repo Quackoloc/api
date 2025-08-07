@@ -19,16 +19,6 @@ import { IsColocationMemberUseCase } from './application/use-cases/is-colocation
 import { CreateInvitationCodeUseCase } from './application/use-cases/create-invitation-code.use-case';
 import { JoinColocationUseCase } from './application/use-cases/join-colocation.use-case';
 import { UpdateColocationUseCase } from './application/use-cases/update-colocation.use-case';
-import { ColocationTaskRepositoryToken } from './domain/gateways/colocation-task.repository.gateway';
-import { ColocationTaskRepository } from './infrastructure/repositories/colocation-task.repository';
-import { ColocationTask } from './domain/entities/colocation-task.entity';
-import { ColocationTaskController } from './presentation/controllers/colocation-task.controller';
-import { GetColocationTasksUseCase } from './application/use-cases/get-colocation-tasks.use-case';
-import { CreateColocationTaskUseCase } from './application/use-cases/create-colocation-task.use-case';
-import { UpdateColocationTaskUseCase } from './application/use-cases/update-colocation-task.use-case';
-import { ChangeColocationTaskStatusUseCase } from './application/use-cases/change-colocation-task-status.use-case';
-import { TaskRotationScheduler } from '../schedulers/task-rotation.scheduler';
-import { DeleteColocationTaskUseCase } from './application/use-cases/delete-colocation-task.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Colocation]), UserModule, InvitationCode],
@@ -39,12 +29,6 @@ import { DeleteColocationTaskUseCase } from './application/use-cases/delete-colo
     CreateInvitationCodeUseCase,
     JoinColocationUseCase,
     UpdateColocationUseCase,
-    GetColocationTasksUseCase,
-    CreateColocationTaskUseCase,
-    UpdateColocationTaskUseCase,
-    ChangeColocationTaskStatusUseCase,
-    DeleteColocationTaskUseCase,
-    TaskRotationScheduler,
     {
       provide: ColocationRepositoryToken,
       inject: [DataSource],
@@ -65,23 +49,13 @@ import { DeleteColocationTaskUseCase } from './application/use-cases/delete-colo
         );
       },
     },
-    {
-      provide: ColocationTaskRepositoryToken,
-      inject: [DataSource],
-      useFactory: (dataSource: DataSource) => {
-        const baseRepo = dataSource.getRepository(ColocationTask);
-        return new ColocationTaskRepository(
-          baseRepo.target,
-          baseRepo.manager,
-          baseRepo.queryRunner
-        );
-      },
-    },
+
     {
       provide: ColocationCodeServiceGateway,
       useClass: ColocationCodeService,
     },
   ],
-  controllers: [ColocationsController, ColocationTaskController],
+  controllers: [ColocationsController],
+  exports: [ColocationRepositoryToken, IsColocationMemberUseCase],
 })
 export class ColocationsModule {}

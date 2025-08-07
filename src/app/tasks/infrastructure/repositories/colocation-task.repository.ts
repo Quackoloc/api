@@ -2,7 +2,7 @@ import { FindOptionsRelations, Repository } from 'typeorm';
 import { ColocationTask } from '../../domain/entities/colocation-task.entity';
 import { ColocationTaskRepositoryGateway } from '../../domain/gateways/colocation-task.repository.gateway';
 import { Nullable } from 'src/common/types/nullable.type';
-import { ColocationTaskNotFoundException } from '../../domain/colocation.exceptions';
+import { ColocationTaskNotFoundException } from '../../../colocations/domain/colocation.exceptions';
 
 export class ColocationTaskRepository
   extends Repository<ColocationTask>
