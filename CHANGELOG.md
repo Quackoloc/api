@@ -1,3 +1,18 @@
+# [1.5.0](https://github.com/Quackoloc/api/compare/v1.4.0...v1.5.0) (2025-08-07)
+
+
+### Bug Fixes
+
+* **migrations:** generate first migration from empty database ([086f324](https://github.com/Quackoloc/api/commit/086f3240f0248b9f5e2492eaefc52fb8007fc678))
+
+
+### Features
+
+* **ci:** [QUAC-55] Lancer les tests / check lint / check format à chaque push sur le repo distant ([c3c8e21](https://github.com/Quackoloc/api/commit/c3c8e216240e04891cc7a7c4d7ea0b05858811f2))
+* **task:** [QUAC-62] Faire la route pour supprimer une tâche ([a9d35cf](https://github.com/Quackoloc/api/commit/a9d35cf794f5c29e06f3d43f4b83dc8e9c1cf1d3))
+* **tasks:** [QUAC-45] ETQU, quand je créé une tâche récurrente, je veux qu'elle soit assignée à la personne qui a le moins de tâches ([9034c04](https://github.com/Quackoloc/api/commit/9034c04d8f48c5551f3e49c9fe0944f0b2b8e37d))
+* **user:** [QUAC-74] ETQU, je veux pouvoir mettre à jour mon profil ([9182b90](https://github.com/Quackoloc/api/commit/9182b9064906817ffc9520b97abeccf43559f367))
+
 # [1.5.0](https://github.com/Quackoloc/api/compare/v1.4.0...v1.5.0) (2025-08-05)
 
 
