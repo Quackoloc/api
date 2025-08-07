@@ -8,6 +8,7 @@ import { UserRepository } from './infrastructure/repositories/user.repository';
 import { CreateUserUseCase } from './application/use-cases/create-user.use-case';
 import { DataSource } from 'typeorm';
 import { GetUserUseCase } from './application/use-cases/get-user.use-case';
+import { UpdateUserProfileUseCase } from './application/use-cases/update-user-profile.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, PendingUser])],
@@ -15,6 +16,7 @@ import { GetUserUseCase } from './application/use-cases/get-user.use-case';
   providers: [
     CreateUserUseCase,
     GetUserUseCase,
+    UpdateUserProfileUseCase,
     {
       provide: UserRepositoryToken,
       inject: [DataSource],
