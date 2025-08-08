@@ -24,7 +24,7 @@ export class CreateUserUseCase {
     user.firstname = createUserDto.firstname;
     user.lastname = createUserDto.lastname;
     user.password = createUserDto.password;
-    user.avatar = '';
+    user.avatar = `https://ui-avatars.com/api/?name=${user.firstname}+${user.lastname}`;
 
     const createdUser = await this.userRepository.save(user);
 
