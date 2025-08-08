@@ -19,3 +19,9 @@ export class UserEmailAlreadyExistsException extends UserException {
     super(`User with email: ${email} already exists.`);
   }
 }
+
+export class InvalidResetTokenException extends UserException {
+  constructor() {
+    super('Invalid or expired password reset token');
+  }
+}

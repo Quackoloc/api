@@ -9,6 +9,7 @@ import { CreateUserUseCase } from './application/use-cases/create-user.use-case'
 import { DataSource } from 'typeorm';
 import { GetUserUseCase } from './application/use-cases/get-user.use-case';
 import { UpdateUserProfileUseCase } from './application/use-cases/update-user-profile.use-case';
+import { ResetPasswordUseCase } from './application/use-cases/reset-password.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, PendingUser])],
@@ -17,6 +18,7 @@ import { UpdateUserProfileUseCase } from './application/use-cases/update-user-pr
     CreateUserUseCase,
     GetUserUseCase,
     UpdateUserProfileUseCase,
+    ResetPasswordUseCase,
     {
       provide: UserRepositoryToken,
       inject: [DataSource],

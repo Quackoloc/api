@@ -46,7 +46,11 @@ export class User {
   dates: DatesEntity;
 
   @BeforeInsert()
-  async hashPassword() {
-    this.password = await hash(this.password, 10);
+  async hashPasswordBeforeInsert() {
+    this.password = await this.generatePasswordHash(this.password);
+  }
+
+  async generatePasswordHash(password: string) {
+    return await hash(password, 10);
   }
 }
