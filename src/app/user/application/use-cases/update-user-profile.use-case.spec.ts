@@ -25,7 +25,7 @@ describe('UpdateUserProfileUseCase', () => {
     updatedAt: new Date(),
     deletedAt: null,
   };
-  mockUser.hashPassword = jest.fn();
+  mockUser.hashPasswordBeforeInsert = jest.fn();
 
   const connectedUser: ConnectedUser = {
     id: 1,
