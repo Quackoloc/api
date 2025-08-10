@@ -1,99 +1,196 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Quackoloc - API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A modern **RESTful API** built with **NestJS** and **TypeScript**, designed to provide a robust and scalable backend for
+shared housing management.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Technologies
 
-## Description
+* **NestJS** – Progressive Node.js framework
+* **TypeScript** – Strongly typed programming language
+* **TypeORM** – ORM for database interaction
+* **PostgreSQL** – Relational database
+* **JWT** – Authentication
+* **Docker** – Containerization
+* **Jest** – Unit and integration testing
+* **ESLint** + **Prettier** – Code quality and formatting
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## Requirements
+
+* Node.js (version specified in `.nvmrc`)
+* npm or yarn
+* Docker & Docker Compose
+
+---
+
+## Installation
+
+1. Use the correct Node.js version:
+
+   ```bash
+   nvm use
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables:
+
+   ```bash
+   cp .env.example .env
+   # Then edit the .env file with your configurations
+   ```
+
+4. Start the database with Docker:
+
+   ```bash
+   docker-compose up -d
+   ```
+
+5. Run migrations:
+
+    ```bash
+    npm run migration:run
+    ```
+
+Refer to the [Migrations](#migrations) section for more information about database migrations.
+
+---
+
+## Development
+
+* Start the application in development mode:
+
+  ```bash
+  npm run start:dev
+  ```
+
+* The API will be available at: `http://localhost:3000`
+
+---
+
+## Migrations
+
+This project uses **TypeORM** for database migrations.
+
+> Migrations are stored in the `migrations/` directory.
+> Make sure the database is running before executing these commands.
+
+### Create an empty migration
 
 ```bash
-$ yarn install
+npm run migration:create -- name-of-the-migration
 ```
 
-## Compile and run the project
+### Generate a migration from entities
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+npm run migration:generate -- name-of-the-migration
 ```
 
-## Run tests
+### Run migrations
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+npm run migration:run
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Revert the last migration
 
 ```bash
-$ yarn install -g mau
-$ mau deploy
+npm run migration:revert
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## Testing
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+# Run all tests
+npm test
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Run tests in watch mode
+npm run test:watch
 
-## Support
+# Generate coverage report
+npm run test:cov
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## Linting & Formatting
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# Check for lint errors
+npm run lint
 
-## License
+# Automatically fix lint errors
+npm run lint:fix
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+# Format code
+npm run format
+```
+
+---
+
+## Project Structure
+
+```
+src/
+├── app/                    # Core application modules
+│   ├── user/               # User module
+│   │   ├── application/    # Use cases
+│   │   ├── domain/         # Entities & interfaces
+│   │   └── infrastructure/ # Implementations & repositories
+│   └── ...
+├── common/                 # Shared code between modules
+│   ├── decorators/         # Custom decorators
+│   ├── exceptions/         # Custom exceptions
+│   └── interfaces/         # Shared interfaces
+├── config/                 # Configuration files
+├── middleware/             # Custom middleware
+├── main.ts                 # Application entry point
+└── data-source.ts          # TypeORM configuration
+```
+
+---
+
+## Docker
+
+```bash
+# Build the Docker image
+docker-compose build
+
+# Start containers
+docker-compose up -d
+
+# Stop containers
+docker-compose down
+```
+
+---
+
+## Contributing
+
+1. Create a feature branch:
+
+   ```bash
+   git checkout -b feature/QUAC-jira-ticket-number # e.g. feature/QUAC-51
+   ```
+
+2. Commit your changes:
+
+   ```bash
+   git commit -m "feat(scope): [QUAC-jira-ticket-number] add new feature"
+   ```
+
+3. Push to the remote repository:
+
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+4. Open a Pull Request
