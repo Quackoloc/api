@@ -1,4 +1,4 @@
-import { Between, Repository } from 'typeorm';
+import { LessThan, Repository } from 'typeorm';
 import { Colocation } from '../../domain/entities/colocation.entity';
 import { ColocationRepositoryGateway } from '../../domain/gateways/colocation.repository.gateway';
 import { ColocationNotFoundException } from '../../domain/colocation.exceptions';
@@ -38,7 +38,7 @@ export class ColocationRepository
 
     return this.find({
       where: {
-        nextRotationDate: Between(rotationDate, tomorrow),
+        nextRotationDate: LessThan(tomorrow),
       },
       relations: ['members'],
     });

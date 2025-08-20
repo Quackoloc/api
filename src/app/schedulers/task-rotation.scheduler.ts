@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import {
   ColocationTaskRepositoryGateway,
   ColocationTaskRepositoryToken,
@@ -21,7 +21,7 @@ export class TaskRotationScheduler {
     private readonly colocationRepository: ColocationRepositoryGateway
   ) {}
 
-  @Cron(CronExpression.EVERY_DAY_AT_1AM)
+  @Cron('1 12 * * *')
   async rotateTasks() {
     const rotationDate = this.getTodayAtMidnightUTC();
 
