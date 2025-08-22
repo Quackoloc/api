@@ -50,12 +50,11 @@ export class Colocation {
   dates: DatesEntity;
 
   @BeforeInsert()
-  setNextRotationDate() {
+  setNextRotationDate(baseDate?: Date) {
     if (this.tasksRotationFrequency != null) {
-      const now = new Date();
+      const now = baseDate ?? new Date();
 
       const utcNow = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-
       utcNow.setUTCDate(utcNow.getUTCDate() + this.tasksRotationFrequency);
       utcNow.setUTCHours(16, 0, 0, 0);
 
