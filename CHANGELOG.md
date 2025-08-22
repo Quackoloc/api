@@ -1,3 +1,15 @@
+# [1.6.0](https://github.com/Quackoloc/api/compare/v1.5.0...v1.6.0) (2025-08-22)
+
+
+### Features
+
+* **ci:** update ci.yml to run integration tests in pgsql db ([6d21b11](https://github.com/Quackoloc/api/commit/6d21b11d01ae2b166147778c87c9558955bfc865))
+* **cron:** [QUAC-79] Quand le cron se déclanche, il doit récupérer les colocation qui doivent avoir leur date de rotation mise à jour, mais également les colocations qui n'ont pas été traitées ([ac1d773](https://github.com/Quackoloc/api/commit/ac1d7738fc3ce4c16e58a33a58d82e89e53250f9))
+* **tasks:** [QUAC-80] Je veux pouvoir paramétrer les tâches récurrentes de ma colocation ([0cebc26](https://github.com/Quackoloc/api/commit/0cebc266563d20c9fee994b32ed1eff0aba508f4))
+* **tests:** add integration tests on repositories ([1f2eb34](https://github.com/Quackoloc/api/commit/1f2eb34302d39d5c9e012cd774e21b23f0cf8780))
+* **user:** [QUAC-58] ETQU, quand je créé un compte j'ai une image de profil avec mes initiales ([bc7a088](https://github.com/Quackoloc/api/commit/bc7a088d6c715d40e15725fa1040fe143d4a8aaa))
+* **user:** [QUAC-76] ETQU, je veux pouvoir mettre à jour mon mot de passe ([d5624b9](https://github.com/Quackoloc/api/commit/d5624b97b86a73494b989a42fd616ef808aee3a8))
+
 # [1.5.0](https://github.com/Quackoloc/api/compare/v1.4.0...v1.5.0) (2025-08-07)
 
 
