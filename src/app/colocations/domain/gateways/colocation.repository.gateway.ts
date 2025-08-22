@@ -14,6 +14,8 @@ export interface ColocationRepositoryGateway {
   getById(id: number, options?: FindOptionsRelations<Colocation>): Promise<Colocation>;
 
   findByRotationDate(rotationDate: Date): Promise<Colocation[]>;
+
+  isColocationMember(userId: number, colocationId: number): Promise<boolean>;
 }
 
 export const ColocationRepositoryToken = 'ColocationRepositoryToken';

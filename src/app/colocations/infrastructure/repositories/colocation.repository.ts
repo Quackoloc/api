@@ -43,4 +43,10 @@ export class ColocationRepository
       relations: ['members'],
     });
   }
+
+  async isColocationMember(userId: number, colocationId: number): Promise<boolean> {
+    const colocation = await this.findById(colocationId);
+
+    return !!colocation.members.find((member) => member.id === userId);
+  }
 }
