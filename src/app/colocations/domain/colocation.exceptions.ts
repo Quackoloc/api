@@ -35,6 +35,7 @@ export class UserIsAlreadyMemberOfColocationException extends ColocationExceptio
   }
 }
 
+// todo: move to colocation task exceptions (should have been moved with tasks module with tasks have been separated from colocation module)
 export class ColocationTaskNotFoundException extends ColocationExceptions {
   constructor(public readonly id: number) {
     super(`Colocation task with id: ${id} not found.`);
@@ -42,7 +43,24 @@ export class ColocationTaskNotFoundException extends ColocationExceptions {
 }
 
 export class MembersNotFoundException extends ColocationExceptions {
-  constructor(public readonly colocationId: number) {
-    super(`Members not found in colocation with id ${colocationId}.`);
+  constructor(
+    public readonly colocationId: number,
+    public readonly memberId: number
+  ) {
+    super(`Member with id : ${memberId} not found in colocation with id ${colocationId}.`);
+  }
+}
+
+export class UserTaskPreferenceNotFoundException extends ColocationExceptions {
+  constructor(public readonly id: number) {
+    super(`User task preference with id: ${id} not found.`);
+  }
+}
+
+export class CannotCreateUserTaskPreferenceException extends ColocationExceptions {
+  constructor(public readonly taskId: number) {
+    super(
+      `Cannot create user task preference for task with id : ${taskId} because task is not recurrent.`
+    );
   }
 }

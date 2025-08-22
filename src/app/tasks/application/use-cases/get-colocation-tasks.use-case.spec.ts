@@ -22,6 +22,7 @@ describe('GetColocationTasksUseCase', () => {
   mockTaskEntity.dueDate = new Date();
   mockTaskEntity.colocationId = mockColocationId;
   mockTaskEntity.assignedToId = 42;
+  mockTaskEntity.userPreferences = [];
   mockTaskEntity.dates = {
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -36,6 +37,7 @@ describe('GetColocationTasksUseCase', () => {
     dueDate: mockTaskEntity.dueDate,
     colocationId: mockTaskEntity.colocationId,
     assignedToId: mockTaskEntity.assignedToId,
+    userTaskPreferences: [],
   });
 
   beforeEach(async () => {
@@ -70,6 +72,7 @@ describe('GetColocationTasksUseCase', () => {
 
     expect(taskRepository.findByColocationId).toHaveBeenCalledWith(mockColocationId, {
       assignedTo: true,
+      userPreferences: true,
     });
     expect(ColocationTaskDto.fromEntity).toHaveBeenCalledWith(mockTaskEntity);
     expect(result).toEqual([mockTaskDto]);
@@ -84,6 +87,7 @@ describe('GetColocationTasksUseCase', () => {
 
     expect(taskRepository.findByColocationId).toHaveBeenCalledWith(mockColocationId, {
       assignedTo: true,
+      userPreferences: true,
     });
     expect(ColocationTaskDto.fromEntity).not.toHaveBeenCalled();
     expect(result).toEqual([]);
@@ -96,6 +100,7 @@ describe('GetColocationTasksUseCase', () => {
     await expect(useCase.execute(mockColocationId)).rejects.toThrow(error);
     expect(taskRepository.findByColocationId).toHaveBeenCalledWith(mockColocationId, {
       assignedTo: true,
+      userPreferences: true,
     });
   });
 });

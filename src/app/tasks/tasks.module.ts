@@ -12,15 +12,21 @@ import { DataSource } from 'typeorm';
 import { ColocationTaskRepository } from './infrastructure/repositories/colocation-task.repository';
 import { ColocationTaskController } from './presentation/controllers/colocation-task.controller';
 import { ColocationsModule } from '../colocations/colocations.module';
+import { UserTaskPreference } from './domain/entities/user-task-preference.entity';
+import { UserTaskPreferenceRepository } from './infrastructure/repositories/user-task-preference.repository';
+import { UserTaskPreferenceRepositoryToken } from './domain/gateways/user-task-preference.repository.gateway';
+import { ChangeUserTaskPreferenceUseCase } from './application/use-cases/change-user-task-preference.use-case';
+import { UserTaskPreferenceController } from './presentation/controllers/user-task-preference.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ColocationTask]), ColocationsModule],
+  imports: [TypeOrmModule.forFeature([ColocationTask, UserTaskPreference]), ColocationsModule],
   providers: [
     GetColocationTasksUseCase,
     CreateColocationTaskUseCase,
     UpdateColocationTaskUseCase,
     ChangeColocationTaskStatusUseCase,
     DeleteColocationTaskUseCase,
+    ChangeUserTaskPreferenceUseCase,
     TaskRotationScheduler,
     {
       provide: ColocationTaskRepositoryToken,
@@ -34,8 +40,20 @@ import { ColocationsModule } from '../colocations/colocations.module';
         );
       },
     },
+    {
+      provide: UserTaskPreferenceRepositoryToken,
+      inject: [DataSource],
+      useFactory: (dataSource: DataSource) => {
+        const baseRepo = dataSource.getRepository(UserTaskPreference);
+        return new UserTaskPreferenceRepository(
+          baseRepo.target,
+          baseRepo.manager,
+          baseRepo.queryRunner
+        );
+      },
+    },
   ],
-  controllers: [ColocationTaskController],
+  controllers: [ColocationTaskController, UserTaskPreferenceController],
   exports: [ColocationTaskRepositoryToken],
 })
 export class TasksModule {}

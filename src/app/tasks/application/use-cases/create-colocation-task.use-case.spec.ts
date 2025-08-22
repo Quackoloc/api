@@ -50,6 +50,7 @@ describe('CreateColocationTaskUseCase', () => {
   mockTaskEntity.status = ColocationTaskStatus.TODO;
   mockTaskEntity.assignedToId = mockCreateDto.assignToId;
   mockTaskEntity.colocationId = mockColocationId;
+  mockTaskEntity.userPreferences = [];
   mockTaskEntity.dates = {
     createdAt: new Date(),
     updatedAt: new Date(),
