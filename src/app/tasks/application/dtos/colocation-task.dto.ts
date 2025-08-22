@@ -3,6 +3,7 @@ import { ColocationTaskPriority } from '../../domain/enums/colocation-task-prior
 import { ColocationTaskStatus } from '../../domain/enums/colocation-task-status.enum';
 import { Nullable } from '../../../../common/types/nullable.type';
 import { ColocationTask } from '../../domain/entities/colocation-task.entity';
+import { UserTaskPreferenceDto } from './user-task-preference.dto';
 
 export class ColocationTaskDto {
   @ApiProperty({ example: 2 })
@@ -32,11 +33,18 @@ export class ColocationTaskDto {
   @ApiProperty({ example: true })
   isRecurrent: boolean;
 
+  @ApiProperty({ example: [UserTaskPreferenceDto] })
+  userTaskPreferences: UserTaskPreferenceDto[];
+
   constructor(colocationTask: Partial<ColocationTaskDto>) {
     Object.assign(this, colocationTask);
   }
 
   static fromEntity(entity: ColocationTask): ColocationTaskDto {
+    const userTaskPreferences = entity.userPreferences.map((userTaskPreference) =>
+      UserTaskPreferenceDto.fromEntity(userTaskPreference)
+    );
+
     return {
       id: entity.id,
       status: entity.status,
@@ -47,6 +55,7 @@ export class ColocationTaskDto {
       colocationId: entity.colocationId,
       assignedToId: entity.assignedToId,
       isRecurrent: entity.isRecurrent,
+      userTaskPreferences,
     };
   }
 }

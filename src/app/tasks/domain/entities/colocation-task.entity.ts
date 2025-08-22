@@ -1,10 +1,19 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ColocationTaskPriority } from '../enums/colocation-task-priority.enum';
 import { Colocation } from '../../../colocations/domain/entities/colocation.entity';
 import { User } from '../../../user/domain/entities/user.entity';
 import { DatesEntity } from '../../../../common/entities/dates-entity';
 import { ColocationTaskStatus } from '../enums/colocation-task-status.enum';
 import { Nullable } from '../../../../common/types/nullable.type';
+import { UserTaskPreference } from './user-task-preference.entity';
 
 @Entity()
 export class ColocationTask {
@@ -50,6 +59,9 @@ export class ColocationTask {
   @ManyToOne(() => User, (user) => user.tasks)
   @JoinColumn({ name: 'assignedToId' })
   assignedTo: User;
+
+  @OneToMany(() => UserTaskPreference, (preference) => preference.task)
+  userPreferences: UserTaskPreference[];
 
   @Column(() => DatesEntity, { prefix: false })
   dates: DatesEntity;

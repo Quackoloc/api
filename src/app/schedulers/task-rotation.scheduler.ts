@@ -21,7 +21,7 @@ export class TaskRotationScheduler {
     private readonly colocationRepository: ColocationRepositoryGateway
   ) {}
 
-  @Cron('1 12 * * *')
+  @Cron('11 15 * * *')
   async rotateTasks() {
     const rotationDate = this.getTodayAtMidnightUTC();
 
@@ -44,7 +44,10 @@ export class TaskRotationScheduler {
 
   private async rotateColocationTasks(colocation: Colocation) {
     try {
-      const tasks = await this.colocationTaskRepository.findByColocationId(colocation.id);
+      const tasks = await this.colocationTaskRepository.findByColocationId(colocation.id, {
+        userPreferences: true,
+        assignedTo: true,
+      });
       const recurringTasks = tasks.filter((task) => task.isRecurrent);
 
       if (recurringTasks.length === 0) {
@@ -88,6 +91,7 @@ export class TaskRotationScheduler {
 
       task.status = ColocationTaskStatus.TODO;
       task.assignedToId = nextAssignee.id;
+      task.assignedTo = nextAssignee;
 
       const savedTask = await this.colocationTaskRepository.save(task);
 
@@ -106,8 +110,25 @@ export class TaskRotationScheduler {
     const currentAssigneeIndex = sortedMembers.findIndex(
       (member) => member.id === task.assignedToId
     );
-    const nextAssigneeIndex = (currentAssigneeIndex + 1) % sortedMembers.length;
-    return sortedMembers[nextAssigneeIndex];
+
+    for (let i = 1; i <= sortedMembers.length; i++) {
+      const nextIndex = (currentAssigneeIndex + i) % sortedMembers.length;
+      const nextMember = sortedMembers[nextIndex];
+
+      const memberPreference = task.userPreferences?.find(
+        (pref: any) => pref.userId === nextMember.id
+      );
+
+      if (!memberPreference || memberPreference.isOptedIn) {
+        return nextMember;
+      }
+
+      if (nextIndex === currentAssigneeIndex) {
+        break;
+      }
+    }
+
+    return sortedMembers[currentAssigneeIndex];
   }
 
   private async updateColocationNextRotationDate(colocation: any) {

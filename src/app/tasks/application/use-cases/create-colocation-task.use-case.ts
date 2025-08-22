@@ -42,6 +42,7 @@ export class CreateColocationTaskUseCase {
 
     taskToCreate.colocationId = colocationId;
     taskToCreate.isRecurrent = createColocationTaskDto.isRecurrent;
+    taskToCreate.userPreferences = [];
 
     const task = await this.colocationTaskRepository.save(taskToCreate);
 
